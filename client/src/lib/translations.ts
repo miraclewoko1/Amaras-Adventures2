@@ -353,7 +353,7 @@ const translations: Record<Language, Translations> = {
     navigator: "Navigator",
     voyager: "Voyager",
     captain: "Captain",
-    copyright: "© EDUNIPLAY 2025",
+    copyright: "© 2025 EDUNIPLAY",
     pageTitle: "Princess Amara's Learning Adventures",
     
     // Math World
@@ -652,7 +652,7 @@ const translations: Record<Language, Translations> = {
     navigator: "항해사",
     voyager: "여행자",
     captain: "선장",
-    copyright: "© 에듀니플레이 2025",
+    copyright: "© 2025 에듀니플레이",
     pageTitle: "아마라 공주의 학습 모험",
     
     // Math World
