@@ -314,11 +314,11 @@ export default function MathLevel() {
 
     // Special rendering for size-select (cups)
     if (levelContent.type === "size-select") {
-      const sizeMap: Record<string, { height: number; width: number; label: string }> = {
-        tiny: { height: 48, width: 40, label: "Tiny" },
-        small: { height: 64, width: 56, label: "Small" },
-        medium: { height: 96, width: 80, label: "Medium" },
-        large: { height: 128, width: 96, label: "Large" },
+      const sizeMap: Record<string, { height: number; width: number; fontSize: number; label: string }> = {
+        tiny: { height: 48, width: 40, fontSize: 20, label: "Tiny" },
+        small: { height: 64, width: 56, fontSize: 28, label: "Small" },
+        medium: { height: 96, width: 80, fontSize: 40, label: "Medium" },
+        large: { height: 128, width: 96, fontSize: 52, label: "Large" },
       };
       
       return (
@@ -348,8 +348,8 @@ export default function MathLevel() {
                 data-testid={`item-${i}`}
               >
                 <div 
-                  className="bg-gradient-to-b from-orange-300 to-orange-500 rounded-t-lg rounded-b-2xl flex items-center justify-center text-white font-bold shadow-md"
-                  style={{ height: size.height, width: size.width }}
+                  className="bg-gradient-to-b from-orange-300 to-orange-500 rounded-t-lg rounded-b-2xl flex items-center justify-center shadow-md"
+                  style={{ height: size.height, width: size.width, fontSize: size.fontSize }}
                 >
                   🥤
                 </div>
