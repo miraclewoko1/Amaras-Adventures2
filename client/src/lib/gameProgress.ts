@@ -87,7 +87,7 @@ const MATH_LEVELS: Omit<LevelData, "completed" | "stars">[] = [
   { id: 3, title: "Matching Patterns", description: "Find the pattern!", type: "math" },
   { id: 4, title: "Complete the Sequence", description: "What comes next?", type: "math" },
   { id: 5, title: "Counting Animals", description: "Count the cute animals!", type: "math" },
-  { id: 6, title: "Pour the Water", description: "Fill the right cup!", type: "math" },
+  { id: 6, title: "Find the Right Size", description: "Which cup is medium?", type: "math" },
   { id: 7, title: "Pizza A-more", description: "Let's add up the pizza!", type: "math" },
   { id: 8, title: "Match Numbers", description: "Numbers and groups!", type: "math" },
   { id: 9, title: "Sort by Size", description: "Big, medium, small!", type: "math" },

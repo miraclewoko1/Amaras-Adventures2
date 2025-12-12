@@ -148,6 +148,58 @@ const defaultWalkthroughs: Record<string, WalkthroughStep[]> = {
       mascotEmotion: "celebrating",
     },
   ],
+  "size-select": [
+    {
+      title: "Size Detective!",
+      description: "Let's find the right size cup.",
+      mascotMessage: "Big, medium, or small? 🥤",
+      mascotEmotion: "happy",
+    },
+    {
+      title: "Look at All the Cups",
+      description: "See the different sized cups?",
+      mascotMessage: "Some are big, some are tiny!",
+      mascotEmotion: "curious",
+    },
+    {
+      title: "Find the Medium One",
+      description: "Which cup is not too big and not too small?",
+      mascotMessage: "Right in the middle! 🤔",
+      mascotEmotion: "thinking",
+    },
+    {
+      title: "Tap Your Answer!",
+      description: "Tap the medium-sized cup!",
+      mascotMessage: "You're a size expert! ⭐",
+      mascotEmotion: "celebrating",
+    },
+  ],
+  fractions: [
+    {
+      title: "Fraction Fun!",
+      description: "Let's make pieces add up to one whole.",
+      mascotMessage: "Fractions are pieces of a pie! 🥧",
+      mascotEmotion: "happy",
+    },
+    {
+      title: "Look at the Pieces",
+      description: "Each piece shows part of a whole.",
+      mascotMessage: "1/2 means one of two pieces!",
+      mascotEmotion: "curious",
+    },
+    {
+      title: "Pick Pieces That Fit",
+      description: "Choose pieces that add up to exactly one whole.",
+      mascotMessage: "Two halves make a whole! 🤔",
+      mascotEmotion: "thinking",
+    },
+    {
+      title: "Complete the Whole!",
+      description: "Select all the pieces you need!",
+      mascotMessage: "You're a fraction master! 🎉",
+      mascotEmotion: "celebrating",
+    },
+  ],
   matching: [
     {
       title: "Matching Time!",
