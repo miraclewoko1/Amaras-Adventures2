@@ -132,6 +132,32 @@ export interface Translations {
   mathL9Instruction: string;
   mathL10Instruction: string;
   
+  // Sprout Hints
+  hintCounting1: string;
+  hintCounting2: string;
+  hintCounting3: string;
+  hintPatterns1: string;
+  hintPatterns2: string;
+  hintPatterns3: string;
+  hintSequences1: string;
+  hintSequences2: string;
+  hintSequences3: string;
+  hintTapSelect1: string;
+  hintTapSelect2: string;
+  hintTapSelect3: string;
+  hintTapOrder1: string;
+  hintTapOrder2: string;
+  hintTapOrder3: string;
+  hintSizeSelect1: string;
+  hintSizeSelect2: string;
+  hintSizeSelect3: string;
+  hintAddition1: string;
+  hintAddition2: string;
+  hintAddition3: string;
+  hintFractions1: string;
+  hintFractions2: string;
+  hintFractions3: string;
+  
   // Adventure Level Content
   advL1Title: string;
   advL1Instruction: string;
@@ -434,6 +460,32 @@ const translations: Record<Language, Translations> = {
     mathL9Instruction: "Sort by size (use logic): Tap from biggest to smallest!",
     mathL10Instruction: "Select any number of crates that add up to 1 whole.",
     
+    // Sprout Hints
+    hintCounting1: "Count each one slowly!",
+    hintCounting2: "Touch them as you count!",
+    hintCounting3: "Start from the left!",
+    hintPatterns1: "Look for what repeats!",
+    hintPatterns2: "What comes after?",
+    hintPatterns3: "See the pattern - 3 things repeat!",
+    hintSequences1: "What number is missing?",
+    hintSequences2: "Skip count by 2!",
+    hintSequences3: "2, 4, 6... what's next?",
+    hintTapSelect1: "Find all the same ones!",
+    hintTapSelect2: "Tap the matching items!",
+    hintTapSelect3: "There are 3 to find!",
+    hintTapOrder1: "Which is biggest?",
+    hintTapOrder2: "Put them in order!",
+    hintTapOrder3: "Start with the most stars!",
+    hintSizeSelect1: "Look at the sizes!",
+    hintSizeSelect2: "Find the medium one!",
+    hintSizeSelect3: "It's not the biggest or smallest!",
+    hintAddition1: "Count the first group!",
+    hintAddition2: "Count the second group!",
+    hintAddition3: "Add them together!",
+    hintFractions1: "Make it equal to 1!",
+    hintFractions2: "Four quarters make 1!",
+    hintFractions3: "Or two halves make 1!",
+    
     // Adventure Level Content
     advL1Title: "Sort the Shapes",
     advL1Instruction: "Help Princess Amara sort the shapes into their homes!",
@@ -733,6 +785,32 @@ const translations: Record<Language, Translations> = {
     mathL8Instruction: "순서대로 별을 탭하세요: 별 4개, 별 3개, 별 2개",
     mathL9Instruction: "크기 순서대로 (논리 사용): 가장 큰 것부터 가장 작은 것까지 탭하세요!",
     mathL10Instruction: "합이 1이 되는 상자들을 선택하세요.",
+    
+    // Sprout Hints
+    hintCounting1: "하나씩 천천히 세어봐요!",
+    hintCounting2: "세면서 하나씩 터치해봐요!",
+    hintCounting3: "왼쪽부터 시작해요!",
+    hintPatterns1: "무엇이 반복되는지 찾아봐요!",
+    hintPatterns2: "다음에 뭐가 올까요?",
+    hintPatterns3: "패턴을 봐요 - 3개가 반복돼요!",
+    hintSequences1: "빠진 숫자가 뭘까요?",
+    hintSequences2: "2씩 건너뛰어 세어봐요!",
+    hintSequences3: "2, 4, 6... 다음은?",
+    hintTapSelect1: "같은 것들을 모두 찾아봐요!",
+    hintTapSelect2: "맞는 것들을 탭해요!",
+    hintTapSelect3: "3개를 찾아야 해요!",
+    hintTapOrder1: "어떤 게 가장 클까요?",
+    hintTapOrder2: "순서대로 놓아봐요!",
+    hintTapOrder3: "별이 가장 많은 것부터 시작해요!",
+    hintSizeSelect1: "크기를 잘 봐요!",
+    hintSizeSelect2: "중간 크기를 찾아봐요!",
+    hintSizeSelect3: "가장 크지도 작지도 않은 것이에요!",
+    hintAddition1: "첫 번째 그룹을 세어봐요!",
+    hintAddition2: "두 번째 그룹을 세어봐요!",
+    hintAddition3: "함께 더해봐요!",
+    hintFractions1: "1이 되게 만들어요!",
+    hintFractions2: "4분의 1이 4개면 1이에요!",
+    hintFractions3: "또는 반이 2개면 1이에요!",
     
     // Adventure Level Content
     advL1Title: "도형 정리하기",

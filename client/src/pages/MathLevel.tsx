@@ -158,14 +158,14 @@ export default function MathLevel() {
     learnerObserver.recordAction({ type: "hint_requested" });
     
     const hints: Record<string, string[]> = {
-      counting: ["Count each one slowly!", "Touch them as you count!", "Start from the left!"],
-      patterns: ["Look for what repeats!", "What comes after?", "See the pattern - 3 things repeat!"],
-      sequences: ["What number is missing?", "Skip count by 2!", "2, 4, 6... what's next?"],
-      "tap-select": ["Find all the same ones!", "Tap the matching items!", "There are 3 to find!"],
-      "tap-order": ["Which is biggest?", "Put them in order!", "Start with the most stars!"],
-      "size-select": ["Look at the sizes!", "Find the medium one!", "It's not the biggest or smallest!"],
-      addition: ["Count the first group!", "Count the second group!", "Add them together!"],
-      fractions: ["Make it equal to 1!", "Four quarters make 1!", "Or two halves make 1!"],
+      counting: [t.hintCounting1, t.hintCounting2, t.hintCounting3],
+      patterns: [t.hintPatterns1, t.hintPatterns2, t.hintPatterns3],
+      sequences: [t.hintSequences1, t.hintSequences2, t.hintSequences3],
+      "tap-select": [t.hintTapSelect1, t.hintTapSelect2, t.hintTapSelect3],
+      "tap-order": [t.hintTapOrder1, t.hintTapOrder2, t.hintTapOrder3],
+      "size-select": [t.hintSizeSelect1, t.hintSizeSelect2, t.hintSizeSelect3],
+      addition: [t.hintAddition1, t.hintAddition2, t.hintAddition3],
+      fractions: [t.hintFractions1, t.hintFractions2, t.hintFractions3],
     };
     
     const puzzleHints = hints[levelContent.type] || hints.counting;
@@ -173,7 +173,7 @@ export default function MathLevel() {
     setSproutMessage(hint);
     
     setTimeout(() => setSproutMessage(null), 4000);
-  }, [hintsUsed, levelContent.type]);
+  }, [hintsUsed, levelContent.type, t]);
 
   const handleItemTap = (index: number) => {
     if (showResult) return;
