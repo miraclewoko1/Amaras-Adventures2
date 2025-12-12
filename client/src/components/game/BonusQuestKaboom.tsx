@@ -411,11 +411,7 @@ export default function BonusQuestKaboom({ onComplete, onProgress }: BonusQuestK
           }
         });
 
-        k.onClick(() => {
-          if (!gameOver && player.isGrounded()) {
-            player.jump(JUMP_FORCE);
-          }
-        });
+        // Note: Jump on click is now handled by the DOM event handlers for better button detection
 
         // On-screen control buttons for mobile
         let movingLeft = false;
@@ -481,40 +477,75 @@ export default function BonusQuestKaboom({ onComplete, onProgress }: BonusQuestK
           k.z(301),
         ]);
 
-        // Touch controls for on-screen buttons
-        k.onTouchStart((id: any, pos: any) => {
+        // Direct DOM mouse/touch events for better iframe compatibility
+        const getCanvasPos = (e: MouseEvent | Touch): { x: number; y: number } => {
+          const rect = canvas.getBoundingClientRect();
+          const scaleX = canvas.width / rect.width;
+          const scaleY = canvas.height / rect.height;
+          const clientX = 'clientX' in e ? e.clientX : e.clientX;
+          const clientY = 'clientY' in e ? e.clientY : e.clientY;
+          return {
+            x: (clientX - rect.left) * scaleX,
+            y: (clientY - rect.top) * scaleY
+          };
+        };
+
+        const handlePointerDown = (pos: { x: number; y: number }) => {
           if (gameOver) return;
-          // Check if touching left button
-          if (pos.x >= 20 && pos.x <= 90 && pos.y >= k.height() - 70) {
+          console.log("Pointer down at:", pos.x, pos.y, "canvas height:", k.height());
+          
+          const buttonY = k.height() - 70;
+          let buttonPressed = false;
+          
+          // Check if clicking left button
+          if (pos.x >= 20 && pos.x <= 90 && pos.y >= buttonY) {
             movingLeft = true;
+            buttonPressed = true;
+            console.log("Moving left activated");
           }
-          // Check if touching right button
-          if (pos.x >= 100 && pos.x <= 170 && pos.y >= k.height() - 70) {
+          // Check if clicking right button
+          if (pos.x >= 100 && pos.x <= 170 && pos.y >= buttonY) {
             movingRight = true;
+            buttonPressed = true;
+            console.log("Moving right activated");
           }
-          // Check if touching jump button
-          if (pos.x >= k.width() - 100 && pos.x <= k.width() - 20 && pos.y >= k.height() - 70) {
+          // Check if clicking jump button
+          if (pos.x >= k.width() - 100 && pos.x <= k.width() - 20 && pos.y >= buttonY) {
             if (player.isGrounded()) {
               player.jump(JUMP_FORCE);
+              console.log("Jump from button");
             }
+            buttonPressed = true;
           }
-          // Tap anywhere else in upper area to jump
-          if (pos.y < k.height() - 80 && player.isGrounded()) {
+          // Tap anywhere else to jump
+          if (!buttonPressed && player.isGrounded()) {
             player.jump(JUMP_FORCE);
+            console.log("Jump from tap");
           }
-        });
+        };
 
-        k.onTouchMove((id: any, pos: any) => {
-          if (gameOver) return;
-          // Update button states based on current touch position
-          movingLeft = (pos.x >= 20 && pos.x <= 90 && pos.y >= k.height() - 70);
-          movingRight = (pos.x >= 100 && pos.x <= 170 && pos.y >= k.height() - 70);
-        });
-
-        k.onTouchEnd(() => {
+        const handlePointerUp = () => {
           movingLeft = false;
           movingRight = false;
+        };
+
+        // Mouse events
+        canvas.addEventListener('mousedown', (e: MouseEvent) => {
+          e.preventDefault();
+          handlePointerDown(getCanvasPos(e));
         });
+        canvas.addEventListener('mouseup', handlePointerUp);
+        canvas.addEventListener('mouseleave', handlePointerUp);
+
+        // Touch events
+        canvas.addEventListener('touchstart', (e: TouchEvent) => {
+          e.preventDefault();
+          if (e.touches.length > 0) {
+            handlePointerDown(getCanvasPos(e.touches[0]));
+          }
+        }, { passive: false });
+        canvas.addEventListener('touchend', handlePointerUp);
+        canvas.addEventListener('touchcancel', handlePointerUp);
 
         // Continuous movement based on button state
         k.onUpdate(() => {
