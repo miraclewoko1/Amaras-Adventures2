@@ -414,67 +414,77 @@ export default function BonusQuestKaboom({ onComplete, onProgress }: BonusQuestK
           }
         });
 
-        // Touch controls for mobile
+        // Touch controls for mobile - improved swipe handling
         let touchStartX: number | null = null;
-        let touchStartTime: number | null = null;
+        let touchStartY: number | null = null;
+        let touchCurrentX: number | null = null;
+        let isTouchActive = false;
+        let hasJumped = false;
 
         k.onTouchStart((id: any, pos: any) => {
           touchStartX = pos.x;
-          touchStartTime = Date.now();
+          touchStartY = pos.y;
+          touchCurrentX = pos.x;
+          isTouchActive = true;
+          hasJumped = false;
+        });
+
+        k.onTouchMove((id: any, pos: any) => {
+          if (!isTouchActive || gameOver) return;
+          touchCurrentX = pos.x;
           
-          // Tap to jump (immediate response for better feel)
-          if (!gameOver && player.isGrounded()) {
-            player.jump(JUMP_FORCE);
+          // Detect swipe up for jump (only once per touch)
+          if (touchStartY !== null && !hasJumped) {
+            const deltaY = touchStartY - pos.y;
+            if (deltaY > 40 && player.isGrounded()) {
+              player.jump(JUMP_FORCE);
+              hasJumped = true;
+            }
           }
         });
 
         k.onTouchEnd((id: any, pos: any) => {
-          if (touchStartX !== null && touchStartTime !== null) {
-            const deltaX = pos.x - touchStartX;
-            const duration = Date.now() - touchStartTime;
-
-            // Long press = interact (check for nearby interactable objects)
-            if (duration > 500) {
-              k.debug.log("Interact triggered");
-              // Check for nearby collectibles and collect them
-              k.get("collectible").forEach((c: any) => {
-                const dist = player.pos.dist(c.pos);
-                if (dist < 80) {
-                  const points = c.points as number;
-                  currentScore += points;
-                  currentCollectibles += 1;
-                  setScore(currentScore);
-                  setCollectibles(currentCollectibles);
-                  onProgress(currentScore, currentCollectibles);
-                  k.destroy(c);
-                }
-              });
-            } 
-            // Swipe right
-            else if (deltaX > 30) {
-              if (!gameOver) {
-                player.move(SPEED * 0.6, 0);
-                cameraX += 3;
-                if (!playerFacingRight) {
-                  player.flipX = false;
-                  playerFacingRight = true;
-                }
-              }
-            } 
-            // Swipe left
-            else if (deltaX < -30) {
-              if (!gameOver) {
-                player.move(-SPEED * 0.6, 0);
-                cameraX -= 3;
-                if (playerFacingRight) {
-                  player.flipX = true;
-                  playerFacingRight = false;
-                }
+          // Quick tap (short distance, short time) = jump
+          if (touchStartX !== null && touchStartY !== null && !hasJumped) {
+            const deltaX = Math.abs(pos.x - touchStartX);
+            const deltaY = Math.abs(pos.y - touchStartY);
+            if (deltaX < 20 && deltaY < 20) {
+              if (!gameOver && player.isGrounded()) {
+                player.jump(JUMP_FORCE);
               }
             }
           }
           touchStartX = null;
-          touchStartTime = null;
+          touchStartY = null;
+          touchCurrentX = null;
+          isTouchActive = false;
+          hasJumped = false;
+        });
+
+        // Continuous movement based on touch position (left/right side of screen)
+        k.onUpdate(() => {
+          if (!gameOver && isTouchActive && touchCurrentX !== null) {
+            const screenCenter = k.width() / 2;
+            
+            // Touch on right side of screen = move right
+            if (touchCurrentX > screenCenter + 40) {
+              player.move(SPEED * 0.8, 0);
+              cameraX += 1.5;
+              if (!playerFacingRight) {
+                player.flipX = false;
+                playerFacingRight = true;
+              }
+            }
+            // Touch on left side of screen = move left
+            else if (touchCurrentX < screenCenter - 40) {
+              player.move(-SPEED * 0.8, 0);
+              cameraX -= 1.5;
+              if (playerFacingRight) {
+                player.flipX = true;
+                playerFacingRight = false;
+              }
+            }
+          }
         });
 
         player.onCollide("collectible", (c) => {
@@ -617,7 +627,7 @@ export default function BonusQuestKaboom({ onComplete, onProgress }: BonusQuestK
         });
 
         k.add([
-          k.text("Arrow keys to move, Space/Up/Click to jump", { size: 12 }),
+          k.text("Tap to jump | Touch left/right to move", { size: 12 }),
           k.pos(k.width() / 2, k.height() - 15),
           k.color(80, 80, 80),
           k.anchor("center"),
@@ -888,7 +898,7 @@ export default function BonusQuestKaboom({ onComplete, onProgress }: BonusQuestK
         ctx.font = '12px sans-serif';
         ctx.fillStyle = '#555';
         ctx.textAlign = 'center';
-        ctx.fillText('Arrow keys to move, Space/Up/Click to jump', canvas.width / 2, canvas.height - 10);
+        ctx.fillText('Tap to jump | Touch left/right to move', canvas.width / 2, canvas.height - 10);
         ctx.textAlign = 'left';
 
         if (gameOver) {
