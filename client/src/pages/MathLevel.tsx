@@ -314,15 +314,15 @@ export default function MathLevel() {
 
     // Special rendering for size-select (cups)
     if (levelContent.type === "size-select") {
-      const sizeMap: Record<string, { height: string; width: string; label: string }> = {
-        tiny: { height: "h-12", width: "w-10", label: "Tiny" },
-        small: { height: "h-16", width: "w-14", label: "Small" },
-        medium: { height: "h-24", width: "w-20", label: "Medium" },
-        large: { height: "h-32", width: "w-24", label: "Large" },
+      const sizeMap: Record<string, { height: number; width: number; label: string }> = {
+        tiny: { height: 48, width: 40, label: "Tiny" },
+        small: { height: 64, width: 56, label: "Small" },
+        medium: { height: 96, width: 80, label: "Medium" },
+        large: { height: 128, width: 96, label: "Large" },
       };
       
       return (
-        <div className="flex justify-center items-end gap-6 mb-8 min-h-[160px]">
+        <div className="flex justify-center items-end gap-6 mb-8" style={{ minHeight: 160 }}>
           {levelContent.items.map((item, i) => {
             const isSelected = selectedItems.includes(i);
             const size = sizeMap[item] || sizeMap.medium;
@@ -347,7 +347,10 @@ export default function MathLevel() {
                 `}
                 data-testid={`item-${i}`}
               >
-                <div className={`${size.height} ${size.width} bg-gradient-to-b from-orange-300 to-orange-500 rounded-t-lg rounded-b-2xl flex items-center justify-center text-white font-bold shadow-md`}>
+                <div 
+                  className="bg-gradient-to-b from-orange-300 to-orange-500 rounded-t-lg rounded-b-2xl flex items-center justify-center text-white font-bold shadow-md"
+                  style={{ height: size.height, width: size.width }}
+                >
                   🥤
                 </div>
               </button>
