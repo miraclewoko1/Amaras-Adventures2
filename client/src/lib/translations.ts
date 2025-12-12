@@ -217,6 +217,7 @@ export interface Translations {
   hello: string;
   thankYouVeryMuch: string;
   howAreYou: string;
+  yes: string;
   
   // Level 7 Invention Labels
   vacuum: string;
@@ -518,6 +519,7 @@ const translations: Record<Language, Translations> = {
     hello: "Hello!",
     thankYouVeryMuch: "Thank you very much!",
     howAreYou: "How are you?",
+    yes: "Yes!",
     
     // Level 7 Invention Labels
     vacuum: "Vacuum",
@@ -817,6 +819,7 @@ const translations: Record<Language, Translations> = {
     hello: "안녕하세요!",
     thankYouVeryMuch: "정말 감사합니다!",
     howAreYou: "안녕하세요?",
+    yes: "네!",
     
     // Level 7 Invention Labels
     vacuum: "진공청소기",

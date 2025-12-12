@@ -24,57 +24,57 @@ interface LevelContentData {
 
 const LEVEL_CONTENT: Record<number, LevelContentData> = {
   1: {
-    items: ["🍎", "🍎", "🍎", "🍎", "🍎"],
-    correctAnswer: 5,
+    items: ["🍎", "🍎", "🍎", "🍎", "🍎", "🍎", "🍎", "🍎"],
+    correctAnswer: 8,
     type: "counting",
-    answerOptions: [3, 4, 5, 6],
+    answerOptions: [6, 7, 8, 9],
   },
   2: {
-    items: ["🔵", "🔺", "⭐", "🔵", "🔺"],
-    correctAnswer: [0, 3],
+    items: ["🔵", "🔺", "⭐", "🔵", "🔺", "🔵", "⬠", "⭐"],
+    correctAnswer: [0, 3, 5],
     type: "tap-select",
   },
   3: {
-    items: ["🌟", "🌙", "🌟", "🌙", "?"],
+    items: ["🌟", "🌙", "☀️", "🌟", "🌙", "☀️", "?"],
     correctAnswer: "🌟",
     type: "patterns",
-    answerOptions: ["🌟", "🌙", "☀️"],
+    answerOptions: ["🌟", "🌙", "☀️", "⭐"],
   },
   4: {
-    items: ["1", "2", "3", "?", "5"],
-    correctAnswer: "4",
+    items: ["2", "4", "6", "?", "10"],
+    correctAnswer: "8",
     type: "sequences",
-    answerOptions: ["3", "4", "6"],
+    answerOptions: ["7", "8", "9"],
   },
   5: {
-    items: ["🐶", "🐱", "🐶", "🐰", "🐶", "🐱"],
-    correctAnswer: 3,
+    items: ["🐶", "🐱", "🐶", "🐰", "🐶", "🐱", "🐶", "🐦", "🐱"],
+    correctAnswer: 4,
     type: "counting",
-    answerOptions: [2, 3, 4, 5],
+    answerOptions: [3, 4, 5, 6],
   },
   6: {
-    items: ["large", "small", "medium"],
+    items: ["large", "tiny", "medium", "small"],
     correctAnswer: 2,
     type: "size-select",
   },
   7: {
-    items: ["🍕"],
-    correctAnswer: 2,
-    type: "counting",
-    answerOptions: [1, 2, 3, 4],
+    items: ["🍕🍕🍕", "+", "🍕🍕🍕🍕"],
+    correctAnswer: 7,
+    type: "addition",
+    answerOptions: [5, 6, 7, 8],
   },
   8: {
-    items: ["⭐⭐⭐", "⭐⭐", "⭐⭐⭐⭐"],
-    correctAnswer: [2, 0, 1],
+    items: ["⭐⭐⭐⭐⭐", "⭐⭐", "⭐⭐⭐⭐", "⭐"],
+    correctAnswer: [3, 1, 2, 0],
     type: "tap-order",
   },
   9: {
-    items: ["🐘", "🐁", "🐕"],
-    correctAnswer: [0, 2, 1],
+    items: ["🐘", "🐁", "🐕", "🐈", "🐴"],
+    correctAnswer: [0, 4, 2, 3, 1],
     type: "tap-order",
   },
   10: {
-    items: ["1/2", "1/4", "1/4", "1/2"],
+    items: ["1/2", "1/4", "1/4", "1/3", "1/6"],
     correctAnswer: 1,
     type: "fractions",
   },
@@ -159,12 +159,13 @@ export default function MathLevel() {
     
     const hints: Record<string, string[]> = {
       counting: ["Count each one slowly!", "Touch them as you count!", "Start from the left!"],
-      patterns: ["Look for what repeats!", "What comes after?", "See the pattern?"],
-      sequences: ["What number is missing?", "Count up or down!", "Follow the order!"],
-      "tap-select": ["Find all the same ones!", "Tap the matching items!", "Look carefully!"],
-      "tap-order": ["Which is biggest?", "Put them in order!", "Start with the biggest!"],
-      "size-select": ["Look at the sizes!", "Find the right one!", "Compare them!"],
-      fractions: ["Make it equal to 1!", "Add the pieces!", "Two halves make a whole!"],
+      patterns: ["Look for what repeats!", "What comes after?", "See the pattern - 3 things repeat!"],
+      sequences: ["What number is missing?", "Skip count by 2!", "2, 4, 6... what's next?"],
+      "tap-select": ["Find all the same ones!", "Tap the matching items!", "There are 3 to find!"],
+      "tap-order": ["Which is biggest?", "Put them in order!", "Start with the most stars!"],
+      "size-select": ["Look at the sizes!", "Find the medium one!", "It's not the biggest or smallest!"],
+      addition: ["Count the first group!", "Count the second group!", "Add them together!"],
+      fractions: ["Make it equal to 1!", "Four quarters make 1!", "Or two halves make 1!"],
     };
     
     const puzzleHints = hints[levelContent.type] || hints.counting;
@@ -204,7 +205,7 @@ export default function MathLevel() {
   const checkAnswer = () => {
     let correct = false;
     
-    if (levelContent.type === "counting" || levelContent.type === "patterns" || levelContent.type === "sequences") {
+    if (levelContent.type === "counting" || levelContent.type === "patterns" || levelContent.type === "sequences" || levelContent.type === "addition") {
       correct = selectedAnswer === levelContent.correctAnswer;
     } else if (levelContent.type === "tap-select") {
       const correctIndices = levelContent.correctAnswer as number[];
@@ -273,7 +274,7 @@ export default function MathLevel() {
   };
 
   const canCheck = () => {
-    if (levelContent.type === "counting" || levelContent.type === "patterns" || levelContent.type === "sequences") {
+    if (levelContent.type === "counting" || levelContent.type === "patterns" || levelContent.type === "sequences" || levelContent.type === "addition") {
       return selectedAnswer !== null;
     }
     if (levelContent.type === "tap-select" || levelContent.type === "tap-order" || levelContent.type === "fractions") {
@@ -314,6 +315,7 @@ export default function MathLevel() {
     // Special rendering for size-select (cups)
     if (levelContent.type === "size-select") {
       const sizeMap: Record<string, { scale: string; label: string }> = {
+        tiny: { scale: "text-2xl", label: "Tiny" },
         small: { scale: "text-4xl", label: "Small" },
         medium: { scale: "text-6xl", label: "Medium" },
         large: { scale: "text-8xl", label: "Large" },
