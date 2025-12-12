@@ -1,0 +1,201 @@
+Core Idea:
+
+A simple, joyful K–3 learning app with:
+	•	Two subjects:
+Early Math + Early History
+	•	Two worlds:
+Math World + History World
+	•	A tiny map: 20 total levels
+(10 math + 10 history)
+	•	Princess Amara as the main character
+	•	1–3 friendly side characters
+	•	Super minimalist animation (Pocoyo-inspired)
+	•	Lightweight adaptive AI that tracks learning patterns (not predictions)
+
+🔸 the culture-forward historical figures:
+	•	King Sejong
+	•	Tariq ibn Ziyad
+	•	Abd al-Rahman I
+	•	Averroes (Ibn Rushd)
+	•	Ella Cara Deloria
+	•	Mary Golda Ross
+	•	Amelia Earhart
+	•	Katherine Johnson, Mary Jackson, Dorothy Vaughan
+	•	William Kamkwamba
+	•	Mary Beatrice Davidson Kenner
+
+This is the exact list integrated into the History World gameplay.
+
+⸻
+
+🧩 2. App Structure
+
+A. Home Screen
+	•	White minimalist background
+	•	Princess Amara stands center, waving
+	•	Two giant buttons:
+	1.	Math Adventure
+	2.	History Adventure
+	•	Underneath:
+“World Level 3 / 20”
+(simple progress bar)
+
+B. World Map
+	•	A straight horizontal path of circles
+	•	Circles = levels
+	•	When a level is complete, circle fills with color
+	•	Kids tap to go to the next mini-game
+
+C. Lessons (Gameplay)
+
+Each lesson is:
+	•	A tiny 30–60 sec activity
+	•	Simple dragging, sorting, tapping
+	•	Occasional meetings with historical figures in short dialogue bubbles
+
+Minimal assets, maximum learning.
+
+⸻
+
+📚 3. Content (Complete and Integrated)
+
+Math World (10 Levels)
+
+All extremely easy to implement:
+	1.	Counting fruit
+	2.	Sorting shapes
+	3.	Matching patterns
+	4.	Drag-to-complete sequences
+	5.	Counting animals
+	6.	Pouring water into the right size cup
+	7.	Simple fraction (“cut the apple in half”)
+	8.	Match numbers to groups
+	9.	Sorting objects by size
+	10.	Simple puzzle combining multiple skills
+
+⸻
+
+History World (10 Levels)
+
+This is where we integrate ALL your cultural figures simply and beautifully.
+
+Structure:
+
+The History World is divided into three “eras”:
+	1.	The Moors (3 levels)
+	2.	Indigenous & Diaspora Innovators (4 levels)
+	3.	Asian Navigators & Women Pioneers (3 levels)
+
+Each “era” has one main guide character the child meets.
+
+⸻
+
+⭐ Era 1: The Moors (3 Levels)
+
+Characters:
+	•	Tariq ibn Ziyad (lead guide)
+	•	Abd al-Rahman I (builder)
+	•	Averroes (thinker)
+
+Activities:
+
+Level 1 — Meet Tariq
+Drag-and-drop puzzle: “Help Tariq place the ships where they belong.”
+
+Level 2 — Build with Abd al-Rahman I
+Kids assemble simple shapes to “build” a tiny courtyard.
+
+Level 3 — Think With Averroes
+Kids sort pictures into two categories:
+	•	“Ideas”
+	•	“Tools”
+
+Very simple logic puzzle.
+
+⸻
+
+⭐ Era 2: Native American & African Innovators (4 Levels)
+
+Characters:
+	•	Ella Cara Deloria
+	•	Mary Golda Ross
+	•	William Kamkwamba
+	•	Mary Beatrice Davidson Kenner
+
+Activities:
+
+Level 4 — Ella Cara Deloria
+Match symbols/words → introduces simplicity of Dakota language patterns.
+
+Level 5 — Mary Golda Ross
+Kids move “space pieces” into the right order (just shapes).
+She says: “Engineers love patterns!”
+
+Level 6 — William Kamkwamba
+Kids drag windmill blades to assemble a small windmill.
+
+Level 7 — Mary Beatrice Davidson Kenner
+Kids sort inventors by category:
+	•	“Inventions for the home”
+	•	“Inventions for outdoors”
+
+⸻
+
+⭐ Era 3: Asian Navigators & Women Innovators (3 Levels)
+
+Characters:
+	•	King Sejong (main guide of this era — honors your Korean cultural influence)
+	•	Amelia Earhart
+	•	Katherine Johnson, Mary Jackson, Dorothy Vaughan (appear together in one simple scene)
+
+Activities:
+
+Level 8 — King Sejong
+A mini Hangul activity:
+Match a Hangul block shape to its sound (like ㄱ → “g”).
+
+Level 9 — Amelia Earhart
+Kids “trace” a very simple line for a plane path.
+
+Level 10 — NASA’s Hidden Figures
+Kids tap numbers to “send the rocket up.”
+Simple counting or sequencing.
+The three appear together as supportive characters.
+
+⸻
+
+🤖 4. Small AI Feature (Feasible for Limited Resources)
+
+The app silently tracks:
+	•	Which puzzles are completed quickly
+	•	Which ones are repeated
+	•	What type of puzzles the child prefers (visual, logic, sorting, story)
+
+At the end of each week, parents get 1–2 insights:
+	•	“Your child enjoys engineering puzzles.”
+	•	“Your child learns quickly with pattern games.”
+
+This is just rule-based, stored in local JSON — zero ML cost.
+
+⸻
+
+🎨 5. Art & Animation Style
+
+Minimalist:
+	•	White backgrounds
+	•	Thick outlines
+	•	Simple geometric shapes
+	•	Pocoyo-style soft colors
+	•	Zero shading needed
+
+Princess Amara:
+	•	Idle animation (slight sway)
+	•	Clap animation
+	•	Jump animation
+
+Historical Figures:
+	•	Single looping “talking” animation
+	•	Static standing pose
+	•	Simple soft facial expressions
+
+EASY 2D animation for a junior animator or AI-assisted illustration.

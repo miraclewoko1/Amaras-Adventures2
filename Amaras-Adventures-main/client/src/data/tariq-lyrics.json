@@ -1,0 +1,82 @@
+{
+  "title": "Across the Sea to Spain!",
+  "sections": [
+    {
+      "id": "verse1",
+      "label": "Verse 1",
+      "arrangement": "Solo",
+      "startTime": 13.50,
+      "lines": [
+        { "text": "Long ago, in seven-eleven,", "start": 13.50, "end": 17.66 },
+        { "text": "Tariq sailed beneath the heaven.", "start": 17.66, "end": 21.05 },
+        { "text": "Across the sea, so brave and bold,", "start": 21.05, "end": 24.74 },
+        { "text": "To Spain, where stories would unfold!", "start": 24.74, "end": 28.16 }
+      ]
+    },
+    {
+      "id": "chorus1",
+      "label": "Chorus",
+      "arrangement": "Full Group",
+      "startTime": 28.16,
+      "lines": [
+        { "text": "Across the sea to Spain we go!", "start": 28.16, "end": 31.67, "echo": "We go!" },
+        { "text": "To Jabal Tariq, rocks below!", "start": 31.67, "end": 35.49, "echo": "Below!" },
+        { "text": "With seven thousand Berber friends,", "start": 35.49, "end": 39.24 },
+        { "text": "We start a tale that never ends!", "start": 39.24, "end": 47.12 }
+      ]
+    },
+    {
+      "id": "verse2",
+      "label": "Verse 2",
+      "arrangement": "Solo",
+      "startTime": 47.12,
+      "lines": [
+        { "text": "King Roderic rode in with pride,", "start": 47.12, "end": 50.97 },
+        { "text": "But Tariq's troops stood side by side.", "start": 50.97, "end": 54.65 },
+        { "text": "At Guadalete, change began,", "start": 54.65, "end": 58.34 },
+        { "text": "A new story spread across the land!", "start": 58.34, "end": 61.80 }
+      ]
+    },
+    {
+      "id": "chorus2",
+      "label": "Chorus",
+      "arrangement": "Full Group",
+      "startTime": 61.80,
+      "lines": [
+        { "text": "Across the sea to Spain we go!", "start": 61.80, "end": 65.40, "echo": "We go!" },
+        { "text": "To Jabal Tariq, rocks below!", "start": 65.40, "end": 69.49, "echo": "Below!" },
+        { "text": "With seven thousand Berber friends,", "start": 69.49, "end": 72.70 },
+        { "text": "We start a tale that never ends!", "start": 72.70, "end": 80.03 }
+      ]
+    },
+    {
+      "id": "bridge",
+      "label": "Bridge",
+      "arrangement": "Reflective",
+      "startTime": 80.03,
+      "lines": [
+        { "text": "Toledo, Córdoba, shining bright,", "start": 80.03, "end": 84.11 },
+        { "text": "New cultures blooming in the light.", "start": 84.11, "end": 87.96 },
+        { "text": "Muslims, Christians, Jews all shared,", "start": 87.96, "end": 91.64 },
+        { "text": "Ideas, music, dreams they dared.", "start": 91.64, "end": 99.40 }
+      ]
+    },
+    {
+      "id": "finalChorus",
+      "label": "Final Chorus",
+      "arrangement": "Triumphant",
+      "startTime": 99.40,
+      "lines": [
+        { "text": "Across the sea to Spain we came!", "start": 99.40, "end": 102.76 },
+        { "text": "We built Al-Andalus with fame!", "start": 102.76, "end": 106.82 },
+        { "text": "A spark of science, art, and song—", "start": 106.82, "end": 110.54 },
+        { "text": "A legacy that still lives strong!", "start": 110.54, "end": 115.00 }
+      ]
+    }
+  ],
+  "prompts": [
+    { "emoji": "⛵️", "lyric": "Across the sea", "times": [21.05, 28.16, 61.80, 99.40] },
+    { "emoji": "📍", "lyric": "To Spain", "times": [24.74, 28.16, 61.80, 99.40] },
+    { "emoji": "🗺️", "lyric": "We go!", "times": [28.16, 61.80] }
+  ]
+}
