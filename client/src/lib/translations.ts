@@ -457,6 +457,33 @@ export interface Translations {
   historyWalkTitle4: string;
   historyWalkDesc4: string;
   historyWalkMascot4: string;
+  
+  // Reflective Feedback
+  feedbackAmazingJob: string;
+  feedbackGreatEffort: string;
+  feedbackKeepTrying: string;
+  feedbackSproutThinking: string;
+  feedbackHowYouSolvedIt: string;
+  feedbackWhatWorkedWell: string;
+  feedbackAnotherWay: string;
+  feedbackTime: string;
+  feedbackHints: string;
+  feedbackSteps: string;
+  feedbackTryAgain: string;
+  feedbackNextLevel: string;
+  feedbackDone: string;
+  feedbackSuccessStrategy: string;
+  feedbackSuccessWhatWorked: string;
+  feedbackSuccessAlternative: string;
+  feedbackSuccessEncouraging: string;
+  feedbackPartialStrategy: string;
+  feedbackPartialWhatWorked: string;
+  feedbackPartialAlternative: string;
+  feedbackPartialEncouraging: string;
+  feedbackRetryStrategy: string;
+  feedbackRetryWhatWorked: string;
+  feedbackRetryAlternative: string;
+  feedbackRetryEncouraging: string;
 }
 
 const translations: Record<Language, Translations> = {
@@ -917,6 +944,33 @@ const translations: Record<Language, Translations> = {
     historyWalkTitle4: "History Hero!",
     historyWalkDesc4: "You learned something amazing today!",
     historyWalkMascot4: "You're a history hero! 📚✨",
+    
+    // Reflective Feedback
+    feedbackAmazingJob: "Amazing Job! 🎉",
+    feedbackGreatEffort: "Great Effort! 💪",
+    feedbackKeepTrying: "Keep Trying! 🌟",
+    feedbackSproutThinking: "Sprout is thinking...",
+    feedbackHowYouSolvedIt: "How You Solved It",
+    feedbackWhatWorkedWell: "What Worked Well",
+    feedbackAnotherWay: "Another Way",
+    feedbackTime: "Time",
+    feedbackHints: "Hints",
+    feedbackSteps: "Steps",
+    feedbackTryAgain: "Try Again 🔄",
+    feedbackNextLevel: "Next Level →",
+    feedbackDone: "Done",
+    feedbackSuccessStrategy: "You found your own special way to solve it!",
+    feedbackSuccessWhatWorked: "Your patience and thinking helped you succeed!",
+    feedbackSuccessAlternative: "Next time, you could also try starting from a different spot!",
+    feedbackSuccessEncouraging: "Sprout is so proud of you! You're a wonderful problem solver! 🌱✨",
+    feedbackPartialStrategy: "You tried really hard and got close!",
+    feedbackPartialWhatWorked: "You never gave up - that's amazing!",
+    feedbackPartialAlternative: "Taking a small break can help your brain think of new ideas!",
+    feedbackPartialEncouraging: "Every try teaches you something new! Keep going! 🌟",
+    feedbackRetryStrategy: "You're learning how this puzzle works!",
+    feedbackRetryWhatWorked: "Trying is the first step to learning!",
+    feedbackRetryAlternative: "Try looking at the puzzle from a different angle!",
+    feedbackRetryEncouraging: "Sprout believes in you! Let's try again together! 🌱",
   },
   ko: {
     // Common UI
@@ -1375,6 +1429,33 @@ const translations: Record<Language, Translations> = {
     historyWalkTitle4: "역사 영웅!",
     historyWalkDesc4: "오늘 놀라운 것을 배웠어요!",
     historyWalkMascot4: "넌 역사 영웅이야! 📚✨",
+    
+    // Reflective Feedback
+    feedbackAmazingJob: "정말 잘했어요! 🎉",
+    feedbackGreatEffort: "열심히 했어요! 💪",
+    feedbackKeepTrying: "계속 해봐요! 🌟",
+    feedbackSproutThinking: "새싹이가 생각 중이에요...",
+    feedbackHowYouSolvedIt: "어떻게 풀었나요",
+    feedbackWhatWorkedWell: "잘한 점",
+    feedbackAnotherWay: "다른 방법",
+    feedbackTime: "시간",
+    feedbackHints: "힌트",
+    feedbackSteps: "단계",
+    feedbackTryAgain: "다시 해보기 🔄",
+    feedbackNextLevel: "다음 레벨 →",
+    feedbackDone: "완료",
+    feedbackSuccessStrategy: "네가 직접 특별한 방법을 찾았어!",
+    feedbackSuccessWhatWorked: "인내심과 생각하는 힘이 성공을 도왔어!",
+    feedbackSuccessAlternative: "다음에는 다른 곳에서 시작해볼 수도 있어!",
+    feedbackSuccessEncouraging: "새싹이가 정말 자랑스러워해! 넌 훌륭한 문제 해결사야! 🌱✨",
+    feedbackPartialStrategy: "정말 열심히 했고 거의 다 왔어!",
+    feedbackPartialWhatWorked: "포기하지 않았어 - 대단해!",
+    feedbackPartialAlternative: "잠깐 쉬면 새로운 아이디어가 떠오를 수 있어!",
+    feedbackPartialEncouraging: "매번 시도할 때마다 새로운 것을 배워! 계속해봐! 🌟",
+    feedbackRetryStrategy: "이 퍼즐이 어떻게 작동하는지 배우고 있어!",
+    feedbackRetryWhatWorked: "시도하는 것이 배움의 첫걸음이야!",
+    feedbackRetryAlternative: "퍼즐을 다른 각도에서 봐봐!",
+    feedbackRetryEncouraging: "새싹이가 널 믿어! 다시 같이 해보자! 🌱",
   },
 };
 

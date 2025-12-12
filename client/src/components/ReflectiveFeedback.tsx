@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import SproutMascot from "./SproutMascot";
+import { useLanguage } from "@/context/LanguageContext";
+import { getTranslations, Translations } from "@/lib/translations";
 
 interface ReflectiveFeedbackProps {
   puzzleType: string;
@@ -30,9 +32,35 @@ export default function ReflectiveFeedback({
   onRetry,
   onNextLevel,
 }: ReflectiveFeedbackProps) {
+  const { language } = useLanguage();
+  const t = getTranslations(language);
   const [feedback, setFeedback] = useState<FeedbackData | null>(null);
   const [loading, setLoading] = useState(true);
   const [currentSection, setCurrentSection] = useState(0);
+
+  function getDefaultFeedback(outcome: string, translations: Translations): FeedbackData {
+    if (outcome === "success") {
+      return {
+        strategyUsed: translations.feedbackSuccessStrategy,
+        whatWorkedWell: translations.feedbackSuccessWhatWorked,
+        alternativeApproach: translations.feedbackSuccessAlternative,
+        encouragingNote: translations.feedbackSuccessEncouraging,
+      };
+    } else if (outcome === "partial") {
+      return {
+        strategyUsed: translations.feedbackPartialStrategy,
+        whatWorkedWell: translations.feedbackPartialWhatWorked,
+        alternativeApproach: translations.feedbackPartialAlternative,
+        encouragingNote: translations.feedbackPartialEncouraging,
+      };
+    }
+    return {
+      strategyUsed: translations.feedbackRetryStrategy,
+      whatWorkedWell: translations.feedbackRetryWhatWorked,
+      alternativeApproach: translations.feedbackRetryAlternative,
+      encouragingNote: translations.feedbackRetryEncouraging,
+    };
+  }
 
   useEffect(() => {
     async function fetchFeedback() {
@@ -46,6 +74,7 @@ export default function ReflectiveFeedback({
             timeSpent,
             hintsUsed,
             outcome,
+            language,
           }),
         });
 
@@ -53,52 +82,40 @@ export default function ReflectiveFeedback({
           const data = await response.json();
           setFeedback(data);
         } else {
-          setFeedback(getDefaultFeedback(outcome));
+          setFeedback(getDefaultFeedback(outcome, t));
         }
       } catch (error) {
         console.error("Failed to fetch feedback:", error);
-        setFeedback(getDefaultFeedback(outcome));
+        setFeedback(getDefaultFeedback(outcome, t));
       } finally {
         setLoading(false);
       }
     }
 
     fetchFeedback();
-  }, [puzzleType, stepsRecorded, timeSpent, hintsUsed, outcome]);
+  }, [puzzleType, stepsRecorded, timeSpent, hintsUsed, outcome, language, t]);
 
-  function getDefaultFeedback(outcome: string): FeedbackData {
-    if (outcome === "success") {
-      return {
-        strategyUsed: "You found your own special way to solve it!",
-        whatWorkedWell: "Your patience and thinking helped you succeed!",
-        alternativeApproach: "Next time, you could also try starting from a different spot!",
-        encouragingNote: "Sprout is so proud of you! You're a wonderful problem solver! 🌱✨",
-      };
-    } else if (outcome === "partial") {
-      return {
-        strategyUsed: "You tried really hard and got close!",
-        whatWorkedWell: "You never gave up - that's amazing!",
-        alternativeApproach: "Taking a small break can help your brain think of new ideas!",
-        encouragingNote: "Every try teaches you something new! Keep going! 🌟",
-      };
+  useEffect(() => {
+    if (feedback) {
+      setFeedback(getDefaultFeedback(outcome, t));
     }
-    return {
-      strategyUsed: "You're learning how this puzzle works!",
-      whatWorkedWell: "Trying is the first step to learning!",
-      alternativeApproach: "Try looking at the puzzle from a different angle!",
-      encouragingNote: "Sprout believes in you! Let's try again together! 🌱",
-    };
-  }
+  }, [language]);
 
   const sections = feedback
     ? [
-        { title: "How You Solved It", content: feedback.strategyUsed, icon: "🧠" },
-        { title: "What Worked Well", content: feedback.whatWorkedWell, icon: "⭐" },
-        { title: "Another Way", content: feedback.alternativeApproach, icon: "💡" },
+        { title: t.feedbackHowYouSolvedIt, content: feedback.strategyUsed, icon: "🧠" },
+        { title: t.feedbackWhatWorkedWell, content: feedback.whatWorkedWell, icon: "⭐" },
+        { title: t.feedbackAnotherWay, content: feedback.alternativeApproach, icon: "💡" },
       ]
     : [];
 
   const mascotEmotion = outcome === "success" ? "celebrating" : outcome === "partial" ? "encouraging" : "curious";
+
+  const headingText = outcome === "success"
+    ? t.feedbackAmazingJob
+    : outcome === "partial"
+    ? t.feedbackGreatEffort
+    : t.feedbackKeepTrying;
 
   return (
     <motion.div
@@ -118,11 +135,7 @@ export default function ReflectiveFeedback({
             animate={{ y: 0 }}
             className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent"
           >
-            {outcome === "success"
-              ? "Amazing Job! 🎉"
-              : outcome === "partial"
-              ? "Great Effort! 💪"
-              : "Keep Trying! 🌟"}
+            {headingText}
           </motion.h2>
         </div>
 
@@ -133,7 +146,7 @@ export default function ReflectiveFeedback({
               transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
               className="w-12 h-12 border-4 border-purple-200 border-t-purple-600 rounded-full"
             />
-            <p className="mt-4 text-gray-600">Sprout is thinking...</p>
+            <p className="mt-4 text-gray-600">{t.feedbackSproutThinking}</p>
           </div>
         ) : (
           <>
@@ -182,19 +195,19 @@ export default function ReflectiveFeedback({
                   <p className="text-2xl font-bold text-purple-600">
                     {Math.round(timeSpent)}s
                   </p>
-                  <p className="text-xs text-gray-500">Time</p>
+                  <p className="text-xs text-gray-500">{t.feedbackTime}</p>
                 </div>
                 <div className="border-l border-gray-200" />
                 <div>
                   <p className="text-2xl font-bold text-blue-600">{hintsUsed}</p>
-                  <p className="text-xs text-gray-500">Hints</p>
+                  <p className="text-xs text-gray-500">{t.feedbackHints}</p>
                 </div>
                 <div className="border-l border-gray-200" />
                 <div>
                   <p className="text-2xl font-bold text-green-600">
                     {stepsRecorded.length}
                   </p>
-                  <p className="text-xs text-gray-500">Steps</p>
+                  <p className="text-xs text-gray-500">{t.feedbackSteps}</p>
                 </div>
               </div>
             </div>
@@ -205,7 +218,7 @@ export default function ReflectiveFeedback({
                   onClick={onRetry}
                   className="flex-1 py-3 rounded-full font-bold text-purple-600 bg-purple-100 hover:bg-purple-200 transition-colors"
                 >
-                  Try Again 🔄
+                  {t.feedbackTryAgain}
                 </button>
               )}
               {outcome === "success" && onNextLevel && (
@@ -213,14 +226,14 @@ export default function ReflectiveFeedback({
                   onClick={onNextLevel}
                   className="flex-1 py-3 rounded-full font-bold text-white bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 transition-colors"
                 >
-                  Next Level →
+                  {t.feedbackNextLevel}
                 </button>
               )}
               <button
                 onClick={onClose}
                 className="flex-1 py-3 rounded-full font-bold text-gray-600 bg-gray-100 hover:bg-gray-200 transition-colors"
               >
-                Done
+                {t.feedbackDone}
               </button>
             </div>
           </>
