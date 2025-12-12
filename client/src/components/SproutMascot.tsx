@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface SproutMascotProps {
@@ -11,11 +11,11 @@ interface SproutMascotProps {
 }
 
 const emotions = {
-  happy: { eyeScale: 1, mouthCurve: 8 },
-  thinking: { eyeScale: 0.8, mouthCurve: 0 },
-  celebrating: { eyeScale: 1.2, mouthCurve: 12 },
-  encouraging: { eyeScale: 1, mouthCurve: 6 },
-  curious: { eyeScale: 0.9, mouthCurve: 3 },
+  happy: { eyeScaleY: 1, mouthCurve: 10 },
+  thinking: { eyeScaleY: 0.6, mouthCurve: 2 },
+  celebrating: { eyeScaleY: 0.3, mouthCurve: 14 },
+  encouraging: { eyeScaleY: 1, mouthCurve: 8 },
+  curious: { eyeScaleY: 1.1, mouthCurve: 4 },
 };
 
 const SPROUT_GREEN = "#7AC943";
@@ -36,7 +36,9 @@ export default function SproutMascot({
 }: SproutMascotProps) {
   const [displayedMessage, setDisplayedMessage] = useState("");
   const [isTyping, setIsTyping] = useState(false);
-  const [bounce, setBounce] = useState(false);
+  const [isBlinking, setIsBlinking] = useState(false);
+  const [isWobbling, setIsWobbling] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const emotionData = emotions[emotion];
   const sizeData = sizes[size];
@@ -66,12 +68,20 @@ export default function SproutMascot({
   }, [message, onMessageComplete]);
 
   useEffect(() => {
-    const bounceInterval = setInterval(() => {
-      setBounce(true);
-      setTimeout(() => setBounce(false), 500);
-    }, 3000);
+    const blinkInterval = setInterval(() => {
+      setIsBlinking(true);
+      setTimeout(() => setIsBlinking(false), 150);
+    }, 3000 + Math.random() * 2000);
 
-    return () => clearInterval(bounceInterval);
+    const wobbleInterval = setInterval(() => {
+      setIsWobbling(true);
+      setTimeout(() => setIsWobbling(false), 600);
+    }, 4000 + Math.random() * 3000);
+
+    return () => {
+      clearInterval(blinkInterval);
+      clearInterval(wobbleInterval);
+    };
   }, []);
 
   const positionStyles = {
@@ -104,101 +114,99 @@ export default function SproutMascot({
       )}
 
       <motion.div
-        animate={bounce ? { y: [0, -10, 0] } : {}}
-        transition={{ duration: 0.5 }}
-        className="relative flex-shrink-0"
+        ref={containerRef}
+        animate={isWobbling ? { rotate: [0, -3, 3, -2, 2, 0] } : { scale: [1, 1.02, 1] }}
+        transition={isWobbling ? { duration: 0.6 } : { duration: 3, repeat: Infinity, ease: "easeInOut" }}
+        className="relative flex-shrink-0 cursor-pointer"
         style={{ width: sizeData.container, height: sizeData.container }}
+        onClick={() => setIsWobbling(true)}
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
       >
         <svg
           viewBox="0 0 100 120"
           className="w-full h-full"
-          style={{ filter: "drop-shadow(0 4px 6px rgba(0,0,0,0.1))" }}
+          style={{ filter: "drop-shadow(0 4px 8px rgba(0,0,0,0.15))" }}
         >
           <motion.g
-            animate={{ rotate: [0, 3, -3, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-            style={{ originX: "50%", originY: "100%" }}
+            animate={{ rotate: [0, 2, -2, 0] }}
+            transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+            style={{ transformOrigin: "50px 45px" }}
           >
             <ellipse 
-              cx="35" 
-              cy="18" 
-              rx="12" 
-              ry="22" 
+              cx="32" 
+              cy="22" 
+              rx="14" 
+              ry="26" 
               fill={SPROUT_GREEN} 
-              transform="rotate(-25 35 18)"
+              transform="rotate(-30 32 22)"
             />
             <ellipse 
-              cx="65" 
-              cy="18" 
-              rx="12" 
-              ry="22" 
+              cx="68" 
+              cy="22" 
+              rx="14" 
+              ry="26" 
               fill={SPROUT_GREEN} 
-              transform="rotate(25 65 18)"
+              transform="rotate(30 68 22)"
             />
           </motion.g>
           
           <ellipse
             cx="50"
-            cy="75"
-            rx="40"
-            ry="42"
+            cy="72"
+            rx="42"
+            ry="44"
             fill={SPROUT_GREEN}
           />
           
           <motion.g
-            animate={emotion === "celebrating" ? { scale: [1, 1.1, 1] } : {}}
-            transition={{ duration: 0.3, repeat: emotion === "celebrating" ? Infinity : 0 }}
+            animate={isBlinking ? { scaleY: 0.1 } : { scaleY: emotionData.eyeScaleY }}
+            transition={{ duration: 0.1 }}
+            style={{ transformOrigin: "50px 65px" }}
           >
             <ellipse 
               cx="35" 
-              cy="68" 
-              rx={7 * emotionData.eyeScale} 
-              ry={10 * emotionData.eyeScale} 
+              cy="65" 
+              rx="8" 
+              ry="11" 
               fill="#1a1a1a" 
             />
             <ellipse 
               cx="65" 
-              cy="68" 
-              rx={7 * emotionData.eyeScale} 
-              ry={10 * emotionData.eyeScale} 
+              cy="65" 
+              rx="8" 
+              ry="11" 
               fill="#1a1a1a" 
             />
           </motion.g>
           
-          <path
-            d={`M 35 88 Q 50 ${88 + emotionData.mouthCurve} 65 88`}
+          <motion.path
+            d={`M 32 88 Q 50 ${88 + emotionData.mouthCurve} 68 88`}
             stroke="#1a1a1a"
             strokeWidth="4"
             fill="none"
             strokeLinecap="round"
+            animate={emotion === "celebrating" ? { d: [`M 32 85 Q 50 ${85 + emotionData.mouthCurve + 4} 68 85`, `M 32 88 Q 50 ${88 + emotionData.mouthCurve} 68 88`] } : {}}
+            transition={{ duration: 0.3, repeat: emotion === "celebrating" ? Infinity : 0, repeatType: "reverse" }}
           />
           
           {emotion === "celebrating" && (
             <>
-              <motion.circle
-                cx="20"
-                cy="50"
-                r="4"
-                fill="#fbbf24"
-                animate={{ y: [0, -30], opacity: [1, 0] }}
-                transition={{ duration: 1, repeat: Infinity }}
-              />
-              <motion.circle
-                cx="80"
-                cy="55"
-                r="4"
-                fill="#f472b6"
-                animate={{ y: [0, -35], opacity: [1, 0] }}
-                transition={{ duration: 1.2, repeat: Infinity, delay: 0.3 }}
-              />
-              <motion.circle
-                cx="50"
-                cy="25"
-                r="4"
-                fill="#60a5fa"
-                animate={{ y: [0, -25], opacity: [1, 0] }}
-                transition={{ duration: 0.8, repeat: Infinity, delay: 0.6 }}
-              />
+              <motion.circle cx="15" cy="45" r="5" fill="#fbbf24"
+                animate={{ y: [0, -35], opacity: [1, 0], scale: [1, 0.5] }}
+                transition={{ duration: 1.2, repeat: Infinity }} />
+              <motion.circle cx="85" cy="50" r="5" fill="#f472b6"
+                animate={{ y: [0, -40], opacity: [1, 0], scale: [1, 0.5] }}
+                transition={{ duration: 1.4, repeat: Infinity, delay: 0.3 }} />
+              <motion.circle cx="50" cy="20" r="5" fill="#60a5fa"
+                animate={{ y: [0, -30], opacity: [1, 0], scale: [1, 0.5] }}
+                transition={{ duration: 1, repeat: Infinity, delay: 0.6 }} />
+              <motion.circle cx="25" cy="30" r="4" fill="#4ade80"
+                animate={{ y: [0, -25], opacity: [1, 0], scale: [1, 0.5] }}
+                transition={{ duration: 0.9, repeat: Infinity, delay: 0.2 }} />
+              <motion.circle cx="75" cy="35" r="4" fill="#a78bfa"
+                animate={{ y: [0, -30], opacity: [1, 0], scale: [1, 0.5] }}
+                transition={{ duration: 1.1, repeat: Infinity, delay: 0.5 }} />
             </>
           )}
         </svg>
