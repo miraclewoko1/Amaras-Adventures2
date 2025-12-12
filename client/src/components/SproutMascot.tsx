@@ -11,12 +11,14 @@ interface SproutMascotProps {
 }
 
 const emotions = {
-  happy: { eyes: "^_^", color: "#4ade80" },
-  thinking: { eyes: "o.o", color: "#fbbf24" },
-  celebrating: { eyes: "★_★", color: "#f472b6" },
-  encouraging: { eyes: "◕‿◕", color: "#60a5fa" },
-  curious: { eyes: "?.?", color: "#a78bfa" },
+  happy: { eyeScale: 1, mouthCurve: 8 },
+  thinking: { eyeScale: 0.8, mouthCurve: 0 },
+  celebrating: { eyeScale: 1.2, mouthCurve: 12 },
+  encouraging: { eyeScale: 1, mouthCurve: 6 },
+  curious: { eyeScale: 0.9, mouthCurve: 3 },
 };
+
+const SPROUT_GREEN = "#7AC943";
 
 const sizes = {
   small: { container: 60, fontSize: 12 },
@@ -112,133 +114,89 @@ export default function SproutMascot({
           className="w-full h-full"
           style={{ filter: "drop-shadow(0 4px 6px rgba(0,0,0,0.1))" }}
         >
-          <ellipse cx="50" cy="110" rx="25" ry="8" fill="#8B4513" opacity="0.3" />
-          
-          <ellipse
-            cx="50"
-            cy="75"
-            rx="35"
-            ry="40"
-            fill={emotionData.color}
-            className="transition-colors duration-300"
-          />
-          <ellipse
-            cx="50"
-            cy="75"
-            rx="28"
-            ry="32"
-            fill={emotionData.color}
-            opacity="0.6"
-          />
-          
           <motion.g
-            animate={emotion === "celebrating" ? { rotate: [0, -10, 10, 0] } : {}}
-            transition={{ duration: 0.5, repeat: emotion === "celebrating" ? Infinity : 0 }}
-            style={{ originX: "50%", originY: "50%" }}
-          >
-            <ellipse cx="35" cy="70" rx="8" ry="10" fill="white" />
-            <circle cx="35" cy="70" r="4" fill="#333" />
-            <ellipse cx="65" cy="70" rx="8" ry="10" fill="white" />
-            <circle cx="65" cy="70" r="4" fill="#333" />
-          </motion.g>
-          
-          {emotion === "happy" && (
-            <path
-              d="M 35 85 Q 50 95 65 85"
-              stroke="#333"
-              strokeWidth="3"
-              fill="none"
-              strokeLinecap="round"
-            />
-          )}
-          {emotion === "thinking" && (
-            <circle cx="50" cy="88" r="5" fill="#333" />
-          )}
-          {emotion === "celebrating" && (
-            <path
-              d="M 30 82 Q 50 100 70 82"
-              stroke="#333"
-              strokeWidth="3"
-              fill="none"
-              strokeLinecap="round"
-            />
-          )}
-          {emotion === "encouraging" && (
-            <path
-              d="M 38 85 Q 50 92 62 85"
-              stroke="#333"
-              strokeWidth="2"
-              fill="none"
-              strokeLinecap="round"
-            />
-          )}
-          {emotion === "curious" && (
-            <ellipse cx="50" cy="88" rx="6" ry="4" fill="#333" />
-          )}
-          
-          <ellipse cx="28" cy="72" rx="6" ry="4" fill="#ff9999" opacity="0.5" />
-          <ellipse cx="72" cy="72" rx="6" ry="4" fill="#ff9999" opacity="0.5" />
-          
-          <motion.g
-            animate={{ rotate: [0, 5, -5, 0] }}
+            animate={{ rotate: [0, 3, -3, 0] }}
             transition={{ duration: 2, repeat: Infinity }}
             style={{ originX: "50%", originY: "100%" }}
           >
-            <path
-              d="M 50 35 Q 45 20 50 5"
-              stroke="#228B22"
-              strokeWidth="4"
-              fill="none"
-              strokeLinecap="round"
+            <ellipse 
+              cx="35" 
+              cy="18" 
+              rx="12" 
+              ry="22" 
+              fill={SPROUT_GREEN} 
+              transform="rotate(-25 35 18)"
             />
-            <ellipse cx="42" cy="15" rx="8" ry="5" fill="#228B22" transform="rotate(-30 42 15)" />
-            <ellipse cx="58" cy="18" rx="8" ry="5" fill="#228B22" transform="rotate(30 58 18)" />
-            <ellipse cx="50" cy="8" rx="6" ry="4" fill="#32CD32" />
+            <ellipse 
+              cx="65" 
+              cy="18" 
+              rx="12" 
+              ry="22" 
+              fill={SPROUT_GREEN} 
+              transform="rotate(25 65 18)"
+            />
           </motion.g>
           
-          <motion.path
-            d="M 18 65 Q 8 75 18 85"
-            stroke={emotionData.color}
-            strokeWidth="8"
-            fill="none"
-            strokeLinecap="round"
-            animate={emotion === "celebrating" ? { d: ["M 18 65 Q 8 75 18 85", "M 12 60 Q 2 70 8 80"] } : {}}
-            transition={{ duration: 0.5, repeat: emotion === "celebrating" ? Infinity : 0, repeatType: "reverse" }}
+          <ellipse
+            cx="50"
+            cy="75"
+            rx="40"
+            ry="42"
+            fill={SPROUT_GREEN}
           />
-          <motion.path
-            d="M 82 65 Q 92 75 82 85"
-            stroke={emotionData.color}
-            strokeWidth="8"
+          
+          <motion.g
+            animate={emotion === "celebrating" ? { scale: [1, 1.1, 1] } : {}}
+            transition={{ duration: 0.3, repeat: emotion === "celebrating" ? Infinity : 0 }}
+          >
+            <ellipse 
+              cx="35" 
+              cy="68" 
+              rx={7 * emotionData.eyeScale} 
+              ry={10 * emotionData.eyeScale} 
+              fill="#1a1a1a" 
+            />
+            <ellipse 
+              cx="65" 
+              cy="68" 
+              rx={7 * emotionData.eyeScale} 
+              ry={10 * emotionData.eyeScale} 
+              fill="#1a1a1a" 
+            />
+          </motion.g>
+          
+          <path
+            d={`M 35 88 Q 50 ${88 + emotionData.mouthCurve} 65 88`}
+            stroke="#1a1a1a"
+            strokeWidth="4"
             fill="none"
             strokeLinecap="round"
-            animate={emotion === "celebrating" ? { d: ["M 82 65 Q 92 75 82 85", "M 88 60 Q 98 70 92 80"] } : {}}
-            transition={{ duration: 0.5, repeat: emotion === "celebrating" ? Infinity : 0, repeatType: "reverse" }}
           />
           
           {emotion === "celebrating" && (
             <>
               <motion.circle
                 cx="20"
-                cy="40"
-                r="3"
+                cy="50"
+                r="4"
                 fill="#fbbf24"
-                animate={{ y: [0, -20], opacity: [1, 0] }}
+                animate={{ y: [0, -30], opacity: [1, 0] }}
                 transition={{ duration: 1, repeat: Infinity }}
               />
               <motion.circle
                 cx="80"
-                cy="45"
-                r="3"
+                cy="55"
+                r="4"
                 fill="#f472b6"
-                animate={{ y: [0, -25], opacity: [1, 0] }}
+                animate={{ y: [0, -35], opacity: [1, 0] }}
                 transition={{ duration: 1.2, repeat: Infinity, delay: 0.3 }}
               />
               <motion.circle
                 cx="50"
-                cy="35"
-                r="3"
+                cy="25"
+                r="4"
                 fill="#60a5fa"
-                animate={{ y: [0, -30], opacity: [1, 0] }}
+                animate={{ y: [0, -25], opacity: [1, 0] }}
                 transition={{ duration: 0.8, repeat: Infinity, delay: 0.6 }}
               />
             </>
