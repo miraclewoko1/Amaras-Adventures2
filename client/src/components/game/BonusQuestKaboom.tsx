@@ -260,7 +260,7 @@ export default function BonusQuestKaboom({ onComplete, onProgress }: BonusQuestK
           "playerLabel",
         ]);
 
-        // Depth-based spawning for collectibles
+        // Depth-based spawning for collectibles - spawn at ground level mostly
         const spawnCollectible = () => {
           if (gameOver) return;
 
@@ -268,32 +268,35 @@ export default function BonusQuestKaboom({ onComplete, onProgress }: BonusQuestK
           const type = types[Math.floor(Math.random() * types.length)];
           const points = type === "book" ? 10 : type === "star" ? 5 : 3;
           
-          // Depth variation - items further back appear smaller
-          const depth = k.rand(0.8, 1.2);
-          const baseSize = 30;
+          const depth = 1.0;
+          const baseSize = 35;
           const size = baseSize * depth;
 
           const x = k.width() + 50;
-          const y = k.rand(100, k.height() - FLOOR_HEIGHT - 50);
+          // 70% spawn at ground level (easy to collect), 30% higher up (need to jump)
+          const spawnAtGround = Math.random() < 0.7;
+          const y = spawnAtGround 
+            ? k.height() - FLOOR_HEIGHT - size - 5
+            : k.rand(120, k.height() - FLOOR_HEIGHT - 80);
 
           // Shadow for collectible
           k.add([
             k.rect(size, size * 0.3),
-            k.pos(x + 3, y + size + 5),
+            k.pos(x + 3, k.height() - FLOOR_HEIGHT - 3),
             k.color(0, 0, 0),
             k.opacity(0.2),
-            k.move(k.LEFT, 150 * depth),
+            k.move(k.LEFT, 100),
             k.z(14),
             "collectibleShadow",
           ]);
 
           // Main collectible with depth-based z-ordering
-          const collectible = k.add([
+          k.add([
             k.rect(size, size),
             k.pos(x, y),
             k.color(type === "book" ? k.rgb(139, 69, 19) : type === "star" ? k.rgb(255, 215, 0) : k.rgb(255, 105, 180)),
             k.area(),
-            k.move(k.LEFT, 150 * depth),
+            k.move(k.LEFT, 100),
             k.z(15 + depth * 5),
             "collectible",
             { points, type, depth },
@@ -305,7 +308,7 @@ export default function BonusQuestKaboom({ onComplete, onProgress }: BonusQuestK
             k.pos(x + 2, y + 2),
             k.color(255, 255, 255),
             k.opacity(0.4),
-            k.move(k.LEFT, 150 * depth),
+            k.move(k.LEFT, 100),
             k.z(16 + depth * 5),
             "collectibleHighlight",
           ]);
@@ -414,71 +417,119 @@ export default function BonusQuestKaboom({ onComplete, onProgress }: BonusQuestK
           }
         });
 
-        // Touch controls for mobile - improved swipe handling
-        let touchStartX: number | null = null;
-        let touchStartY: number | null = null;
-        let touchCurrentX: number | null = null;
-        let isTouchActive = false;
-        let hasJumped = false;
+        // On-screen control buttons for mobile
+        let movingLeft = false;
+        let movingRight = false;
 
+        // Left arrow button
+        const leftBtn = k.add([
+          k.rect(70, 50),
+          k.pos(20, k.height() - 70),
+          k.color(100, 100, 200),
+          k.opacity(0.7),
+          k.area(),
+          k.fixed(),
+          k.z(300),
+          "leftBtn",
+        ]);
+        k.add([
+          k.text("<", { size: 30 }),
+          k.pos(45, k.height() - 55),
+          k.color(255, 255, 255),
+          k.anchor("center"),
+          k.fixed(),
+          k.z(301),
+        ]);
+
+        // Right arrow button
+        const rightBtn = k.add([
+          k.rect(70, 50),
+          k.pos(100, k.height() - 70),
+          k.color(100, 100, 200),
+          k.opacity(0.7),
+          k.area(),
+          k.fixed(),
+          k.z(300),
+          "rightBtn",
+        ]);
+        k.add([
+          k.text(">", { size: 30 }),
+          k.pos(135, k.height() - 55),
+          k.color(255, 255, 255),
+          k.anchor("center"),
+          k.fixed(),
+          k.z(301),
+        ]);
+
+        // Jump button
+        const jumpBtn = k.add([
+          k.rect(80, 50),
+          k.pos(k.width() - 100, k.height() - 70),
+          k.color(200, 100, 100),
+          k.opacity(0.7),
+          k.area(),
+          k.fixed(),
+          k.z(300),
+          "jumpBtn",
+        ]);
+        k.add([
+          k.text("JUMP", { size: 16 }),
+          k.pos(k.width() - 60, k.height() - 55),
+          k.color(255, 255, 255),
+          k.anchor("center"),
+          k.fixed(),
+          k.z(301),
+        ]);
+
+        // Touch controls for on-screen buttons
         k.onTouchStart((id: any, pos: any) => {
-          touchStartX = pos.x;
-          touchStartY = pos.y;
-          touchCurrentX = pos.x;
-          isTouchActive = true;
-          hasJumped = false;
+          if (gameOver) return;
+          // Check if touching left button
+          if (pos.x >= 20 && pos.x <= 90 && pos.y >= k.height() - 70) {
+            movingLeft = true;
+          }
+          // Check if touching right button
+          if (pos.x >= 100 && pos.x <= 170 && pos.y >= k.height() - 70) {
+            movingRight = true;
+          }
+          // Check if touching jump button
+          if (pos.x >= k.width() - 100 && pos.x <= k.width() - 20 && pos.y >= k.height() - 70) {
+            if (player.isGrounded()) {
+              player.jump(JUMP_FORCE);
+            }
+          }
+          // Tap anywhere else in upper area to jump
+          if (pos.y < k.height() - 80 && player.isGrounded()) {
+            player.jump(JUMP_FORCE);
+          }
         });
 
         k.onTouchMove((id: any, pos: any) => {
-          if (!isTouchActive || gameOver) return;
-          touchCurrentX = pos.x;
-          
-          // Detect swipe up for jump (only once per touch)
-          if (touchStartY !== null && !hasJumped) {
-            const deltaY = touchStartY - pos.y;
-            if (deltaY > 40 && player.isGrounded()) {
-              player.jump(JUMP_FORCE);
-              hasJumped = true;
-            }
-          }
+          if (gameOver) return;
+          // Update button states based on current touch position
+          movingLeft = (pos.x >= 20 && pos.x <= 90 && pos.y >= k.height() - 70);
+          movingRight = (pos.x >= 100 && pos.x <= 170 && pos.y >= k.height() - 70);
         });
 
-        k.onTouchEnd((id: any, pos: any) => {
-          // Quick tap (short distance, short time) = jump
-          if (touchStartX !== null && touchStartY !== null && !hasJumped) {
-            const deltaX = Math.abs(pos.x - touchStartX);
-            const deltaY = Math.abs(pos.y - touchStartY);
-            if (deltaX < 20 && deltaY < 20) {
-              if (!gameOver && player.isGrounded()) {
-                player.jump(JUMP_FORCE);
-              }
-            }
-          }
-          touchStartX = null;
-          touchStartY = null;
-          touchCurrentX = null;
-          isTouchActive = false;
-          hasJumped = false;
+        k.onTouchEnd(() => {
+          movingLeft = false;
+          movingRight = false;
         });
 
-        // Continuous movement based on touch position (left/right side of screen)
+        // Continuous movement based on button state
         k.onUpdate(() => {
-          if (!gameOver && isTouchActive && touchCurrentX !== null) {
-            const screenCenter = k.width() / 2;
-            
-            // Touch on right side of screen = move right
-            if (touchCurrentX > screenCenter + 40) {
-              player.move(SPEED * 0.8, 0);
-              cameraX += 1.5;
+          if (!gameOver) {
+            if (movingRight) {
+              player.move(SPEED, 0);
+              cameraX += 2;
               if (!playerFacingRight) {
                 player.flipX = false;
                 playerFacingRight = true;
               }
             }
-            // Touch on left side of screen = move left
-            else if (touchCurrentX < screenCenter - 40) {
-              player.move(-SPEED * 0.8, 0);
-              cameraX -= 1.5;
+            if (movingLeft) {
+              player.move(-SPEED, 0);
+              cameraX -= 2;
               if (playerFacingRight) {
                 player.flipX = true;
                 playerFacingRight = false;
@@ -627,8 +678,8 @@ export default function BonusQuestKaboom({ onComplete, onProgress }: BonusQuestK
         });
 
         k.add([
-          k.text("Tap to jump | Touch left/right to move", { size: 12 }),
-          k.pos(k.width() / 2, k.height() - 15),
+          k.text("Use buttons below or arrow keys", { size: 11 }),
+          k.pos(k.width() / 2, k.height() - 90),
           k.color(80, 80, 80),
           k.anchor("center"),
           k.fixed(),
