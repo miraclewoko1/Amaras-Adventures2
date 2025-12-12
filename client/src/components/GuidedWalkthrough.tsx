@@ -96,6 +96,58 @@ const defaultWalkthroughs: Record<string, WalkthroughStep[]> = {
       mascotEmotion: "encouraging",
     },
   ],
+  "tap-select": [
+    {
+      title: "Find the Circles!",
+      description: "Let's find all the blue circles together.",
+      mascotMessage: "Let's go shape hunting! 🔵",
+      mascotEmotion: "happy",
+    },
+    {
+      title: "Look Carefully",
+      description: "There are different shapes here. Find the circles!",
+      mascotMessage: "Circles are round like me!",
+      mascotEmotion: "curious",
+    },
+    {
+      title: "Tap Each One",
+      description: "When you find a blue circle, tap it!",
+      mascotMessage: "Tap all the matching ones!",
+      mascotEmotion: "encouraging",
+    },
+    {
+      title: "Great Job!",
+      description: "You found them all!",
+      mascotMessage: "You're a shape finder superstar! ⭐",
+      mascotEmotion: "celebrating",
+    },
+  ],
+  addition: [
+    {
+      title: "Pizza Adding Time!",
+      description: "Let's count pizza slices and add them together.",
+      mascotMessage: "Yum! Math with pizza is the best! 🍕",
+      mascotEmotion: "happy",
+    },
+    {
+      title: "Count the First Group",
+      description: "How many pizza slices are in the first box?",
+      mascotMessage: "Count the first group carefully!",
+      mascotEmotion: "curious",
+    },
+    {
+      title: "Count the Second Group",
+      description: "Now count the pizza slices in the second box.",
+      mascotMessage: "Now count the other group!",
+      mascotEmotion: "thinking",
+    },
+    {
+      title: "Add Them Up!",
+      description: "Put them together. How many in total?",
+      mascotMessage: "Add both groups together! 🎉",
+      mascotEmotion: "celebrating",
+    },
+  ],
   matching: [
     {
       title: "Matching Time!",
