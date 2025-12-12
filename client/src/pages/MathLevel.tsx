@@ -487,7 +487,18 @@ export default function MathLevel() {
             <ArrowLeft className="w-5 h-5" />
           </Button>
           <h1 className="text-lg font-bold text-foreground">
-            {t.level} {levelId}: {levelData?.title}
+            {t.level} {levelId}: {
+              levelId === 1 ? t.mathL1LevelTitle :
+              levelId === 2 ? t.mathL2LevelTitle :
+              levelId === 3 ? t.mathL3LevelTitle :
+              levelId === 4 ? t.mathL4LevelTitle :
+              levelId === 5 ? t.mathL5LevelTitle :
+              levelId === 6 ? t.mathL6LevelTitle :
+              levelId === 7 ? t.mathL7LevelTitle :
+              levelId === 8 ? t.mathL8LevelTitle :
+              levelId === 9 ? t.mathL9LevelTitle :
+              t.mathL10LevelTitle
+            }
           </h1>
           <div className="flex items-center gap-2">
             <Button
