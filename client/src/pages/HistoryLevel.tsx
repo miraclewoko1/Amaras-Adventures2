@@ -53,20 +53,20 @@ const LEVEL_CONTENT: Record<number, LevelContent> = {
   },
   4: {
     era: "innovators",
-    items: ["Anpetu Wi", "Hanhepi Wi", "Wičháȟpi"],
-    correctAnswer: ["sun", "moon", "star"],
+    items: ["Waqaa!", "Quyana cakneq!", "Assirtuten-qaa?"],
+    correctAnswer: ["hello", "thankyou", "howareyou"],
     type: "drag-match",
     randomize: true,
     dragMatchData: {
       items: [
-        { id: "anpetuwi", label: "Anpetu Wi", icon: "☀️" },
-        { id: "hanhepiwi", label: "Hanhepi Wi", icon: "🌙" },
-        { id: "wicahpi", label: "Wičháȟpi", icon: "⭐" },
+        { id: "waqaa", label: "Waqaa!", icon: "👋" },
+        { id: "quyana", label: "Quyana cakneq!", icon: "🙏" },
+        { id: "assirtuten", label: "Assirtuten-qaa?", icon: "😊" },
       ],
       dropZones: [
-        { id: "sun", label: "Sun", acceptsId: "anpetuwi", icon: "☀️" },
-        { id: "moon", label: "Moon", acceptsId: "hanhepiwi", icon: "🌙" },
-        { id: "star", label: "Star", acceptsId: "wicahpi", icon: "⭐" },
+        { id: "hello", label: "Hello!", acceptsId: "waqaa", icon: "👋" },
+        { id: "thankyou", label: "Thank you very much!", acceptsId: "quyana", icon: "🙏" },
+        { id: "howareyou", label: "How are you?", acceptsId: "assirtuten", icon: "😊" },
       ],
     },
   },
@@ -131,7 +131,7 @@ function getHistoryLevelText(levelId: number, t: Translations): { figure: string
     1: { figure: t.tariqIbnZiyad, title: t.tariqTitle, greeting: t.histL1Greeting, activity: t.histL1Activity },
     2: { figure: t.abdAlRahmanName, title: t.abdAlRahmanTitle, greeting: t.histL2Greeting, activity: t.histL2Activity },
     3: { figure: t.averroesName, title: t.averroesTitle, greeting: t.histL3Greeting, activity: t.histL3Activity },
-    4: { figure: t.ellaCataName, title: t.ellaCataTitle, greeting: t.histL4Greeting, activity: t.histL4Activity },
+    4: { figure: t.paulJohnName, title: t.paulJohnTitle, greeting: t.histL4Greeting, activity: t.histL4Activity },
     5: { figure: t.maryGoldaName, title: t.maryGoldaTitle, greeting: t.histL5Greeting, activity: t.histL5Activity },
     6: { figure: t.williamName, title: t.williamTitle, greeting: t.histL6Greeting, activity: t.histL6Activity },
     7: { figure: t.maryKennerName, title: t.maryKennerTitle, greeting: t.histL7Greeting, activity: t.histL7Activity },
@@ -146,14 +146,14 @@ function getTranslatedDragMatchData(levelId: number, t: Translations): DragMatch
   if (levelId === 4) {
     return {
       items: [
-        { id: "anpetuwi", label: "Anpetu Wi", icon: "☀️" },
-        { id: "hanhepiwi", label: "Hanhepi Wi", icon: "🌙" },
-        { id: "wicahpi", label: "Wičháȟpi", icon: "⭐" },
+        { id: "waqaa", label: "Waqaa!", icon: "👋" },
+        { id: "quyana", label: "Quyana cakneq!", icon: "🙏" },
+        { id: "assirtuten", label: "Assirtuten-qaa?", icon: "😊" },
       ],
       dropZones: [
-        { id: "sun", label: t.sun, acceptsId: "anpetuwi", icon: "☀️" },
-        { id: "moon", label: t.moon, acceptsId: "hanhepiwi", icon: "🌙" },
-        { id: "star", label: t.star, acceptsId: "wicahpi", icon: "⭐" },
+        { id: "hello", label: t.hello, acceptsId: "waqaa", icon: "👋" },
+        { id: "thankyou", label: t.thankYouVeryMuch, acceptsId: "quyana", icon: "🙏" },
+        { id: "howareyou", label: t.howAreYou, acceptsId: "assirtuten", icon: "😊" },
       ],
     };
   }

@@ -194,8 +194,8 @@ export interface Translations {
   abdAlRahmanTitle: string;
   averroesName: string;
   averroesTitle: string;
-  ellaCataName: string;
-  ellaCataTitle: string;
+  paulJohnName: string;
+  paulJohnTitle: string;
   maryGoldaName: string;
   maryGoldaTitle: string;
   williamName: string;
@@ -214,6 +214,9 @@ export interface Translations {
   moon: string;
   star: string;
   welcomeToSpain: string;
+  hello: string;
+  thankYouVeryMuch: string;
+  howAreYou: string;
   
   // Level 7 Invention Labels
   vacuum: string;
@@ -471,8 +474,8 @@ const translations: Record<Language, Translations> = {
     histL2Activity: "Build the courtyard! Tap in order: Palace, Trees, Fountain!",
     histL3Greeting: "Thinking is my favorite thing! I studied science and philosophy. Can you find which ones are IDEAS?",
     histL3Activity: "Tap all the IDEAS (not tools)!",
-    histL4Greeting: "The Dakota language is beautiful! Let me teach you some words.",
-    histL4Activity: "Drag each word to its English meaning!",
+    histL4Greeting: "Waqaa! The Yup'ik language is beautiful. Let me teach you some words and phrases we use every day. These are the words my parents taught me, and I taught my children and grandchildren. Now I share them with you.",
+    histL4Activity: "Drag each Yup'ik word to its English meaning!",
     histL5Greeting: "Engineers love patterns! I helped design spacecraft. Let's put these pieces in order for launch!",
     histL5Activity: "Arrange for launch: Rocket, Satellite, then Star!",
     histL6Greeting: "Meet the inventor who brought his own spin to a bright idea! I built a windmill from scrap to bring electricity to my village!",
@@ -492,8 +495,8 @@ const translations: Record<Language, Translations> = {
     abdAlRahmanTitle: "The Builder King",
     averroesName: "Averroes",
     averroesTitle: "The Great Philosopher",
-    ellaCataName: "Ella Cara Deloria",
-    ellaCataTitle: "Dakota Language Scholar",
+    paulJohnName: "Paul Joseph John",
+    paulJohnTitle: "Yup'ik Elder and Cultural Leader",
     maryGoldaName: "Mary Golda Ross",
     maryGoldaTitle: "First Native American Female Engineer",
     williamName: "William Kamkwamba",
@@ -512,6 +515,9 @@ const translations: Record<Language, Translations> = {
     moon: "Moon",
     star: "Star",
     welcomeToSpain: "Welcome to Spain",
+    hello: "Hello!",
+    thankYouVeryMuch: "Thank you very much!",
+    howAreYou: "How are you?",
     
     // Level 7 Invention Labels
     vacuum: "Vacuum",
@@ -526,8 +532,8 @@ const translations: Record<Language, Translations> = {
     histL2LevelDesc: "Build a beautiful courtyard!",
     histL3LevelTitle: "Think with Averroes",
     histL3LevelDesc: "Ideas or tools?",
-    histL4LevelTitle: "Dakota Words",
-    histL4LevelDesc: "Learn with Ella!",
+    histL4LevelTitle: "Yup'ik Words",
+    histL4LevelDesc: "Learn with Paul!",
     histL5LevelTitle: "Space Engineer",
     histL5LevelDesc: "Engineers love patterns!",
     histL6LevelTitle: "Build a Windmill",
@@ -767,8 +773,8 @@ const translations: Record<Language, Translations> = {
     histL2Activity: "정원을 만들어요! 순서대로 탭하세요: 궁전, 나무, 분수!",
     histL3Greeting: "생각하는 것이 내가 가장 좋아하는 일이에요! 나는 과학과 철학을 공부했어요. 어떤 것이 아이디어인지 찾을 수 있나요?",
     histL3Activity: "아이디어만 탭하세요 (도구가 아닌)!",
-    histL4Greeting: "다코타 언어는 아름다워요! 몇 가지 단어를 가르쳐 드릴게요.",
-    histL4Activity: "각 단어를 영어 의미로 드래그하세요!",
+    histL4Greeting: "와카! 유픽 언어는 아름다워요. 매일 사용하는 단어와 문구를 가르쳐 드릴게요. 이것은 부모님이 저에게 가르쳐 주신 단어들이고, 저는 자녀들과 손자들에게 가르쳤어요. 이제 여러분과 나누고 싶어요.",
+    histL4Activity: "각 유픽 단어를 영어 의미로 드래그하세요!",
     histL5Greeting: "엔지니어는 패턴을 좋아해요! 나는 우주선 설계를 도왔어요. 발사를 위해 이 조각들을 순서대로 놓아봐요!",
     histL5Activity: "발사 준비: 로켓, 위성, 그리고 별 순서로!",
     histL6Greeting: "밝은 아이디어를 가진 발명가를 만나보세요! 나는 마을에 전기를 공급하기 위해 폐품으로 풍차를 만들었어요!",
@@ -788,8 +794,8 @@ const translations: Record<Language, Translations> = {
     abdAlRahmanTitle: "건축가 왕",
     averroesName: "아베로에스",
     averroesTitle: "위대한 철학자",
-    ellaCataName: "엘라 카라 델로리아",
-    ellaCataTitle: "다코타 언어 학자",
+    paulJohnName: "폴 조셉 존",
+    paulJohnTitle: "유픽 장로 및 문화 지도자",
     maryGoldaName: "메리 골다 로스",
     maryGoldaTitle: "최초의 원주민 여성 엔지니어",
     williamName: "윌리엄 캄콤바",
@@ -808,6 +814,9 @@ const translations: Record<Language, Translations> = {
     moon: "달",
     star: "별",
     welcomeToSpain: "스페인에 오신 것을 환영합니다",
+    hello: "안녕하세요!",
+    thankYouVeryMuch: "정말 감사합니다!",
+    howAreYou: "안녕하세요?",
     
     // Level 7 Invention Labels
     vacuum: "진공청소기",
@@ -822,8 +831,8 @@ const translations: Record<Language, Translations> = {
     histL2LevelDesc: "아름다운 정원을 만들어요!",
     histL3LevelTitle: "아베로에스와 생각하기",
     histL3LevelDesc: "아이디어일까, 도구일까?",
-    histL4LevelTitle: "Dakota Words",
-    histL4LevelDesc: "Learn with Ella!",
+    histL4LevelTitle: "유픽 단어",
+    histL4LevelDesc: "폴과 함께 배워요!",
     histL5LevelTitle: "우주 엔지니어",
     histL5LevelDesc: "엔지니어는 패턴을 좋아해요!",
     histL6LevelTitle: "풍차 만들기",

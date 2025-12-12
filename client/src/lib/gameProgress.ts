@@ -98,7 +98,7 @@ const HISTORY_LEVELS: Omit<LevelData, "completed" | "stars">[] = [
   { id: 1, title: "Meet Tariq", description: "Help Tariq with his ships!", type: "history", era: "moors", historicalFigure: "Tariq ibn Ziyad" },
   { id: 2, title: "Build with Abd al-Rahman", description: "Build a beautiful courtyard!", type: "history", era: "moors", historicalFigure: "Abd al-Rahman I" },
   { id: 3, title: "Think with Averroes", description: "Ideas or tools?", type: "history", era: "moors", historicalFigure: "Averroes" },
-  { id: 4, title: "Dakota Words", description: "Learn with Ella!", type: "history", era: "innovators", historicalFigure: "Ella Cara Deloria" },
+  { id: 4, title: "Yup'ik Words", description: "Learn with Paul!", type: "history", era: "innovators", historicalFigure: "Paul Joseph John" },
   { id: 5, title: "Space Engineer", description: "Engineers love patterns!", type: "history", era: "innovators", historicalFigure: "Mary Golda Ross" },
   { id: 6, title: "Build a Windmill", description: "His own spin on a bright idea!", type: "history", era: "innovators", historicalFigure: "William Kamkwamba" },
   { id: 7, title: "Sort Inventions", description: "Home or outdoors?", type: "history", era: "innovators", historicalFigure: "Mary Beatrice Davidson Kenner" },

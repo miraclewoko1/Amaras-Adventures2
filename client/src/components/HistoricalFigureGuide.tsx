@@ -5,7 +5,7 @@ import { getTranslations } from "@/lib/translations";
 import tariqImg from "@assets/generated_images/tariq_ibn_ziyad_cartoon.png";
 import abdAlRahmanImg from "@assets/generated_images/abd_al-rahman_i_cartoon.png";
 import averroesImg from "@assets/generated_images/averroes_philosopher_cartoon.png";
-import ellaDeloriaImg from "@assets/generated_images/ella_cara_deloria_cartoon.png";
+import paulJohnImg from "@assets/generated_images/paul_joseph_john_yupik_elder.png";
 import maryRossImg from "@assets/generated_images/mary_golda_ross_engineer_cartoon.png";
 import williamKamkwambaImg from "@assets/generated_images/william_kamkwamba_windmill_boy.png";
 import maryKennerImg from "@assets/generated_images/mary_kenner_full_body_inventor.png";
@@ -26,7 +26,7 @@ const figureImages: Record<string, string> = {
   "Tariq ibn Ziyad": tariqImg,
   "Abd al-Rahman I": abdAlRahmanImg,
   "Averroes": averroesImg,
-  "Ella Cara Deloria": ellaDeloriaImg,
+  "Paul Joseph John": paulJohnImg,
   "Mary Golda Ross": maryRossImg,
   "William Kamkwamba": williamKamkwambaImg,
   "Mary Beatrice Davidson Kenner": maryKennerImg,
@@ -37,7 +37,7 @@ const figureImages: Record<string, string> = {
   "타리크 이븐 지야드": tariqImg,
   "압드 알 라흐만 1세": abdAlRahmanImg,
   "아베로에스": averroesImg,
-  "엘라 카라 델로리아": ellaDeloriaImg,
+  "폴 조셉 존": paulJohnImg,
   "메리 골다 로스": maryRossImg,
   "윌리엄 캄콤바": williamKamkwambaImg,
   "메리 비어트리스 데이비슨 케너": maryKennerImg,
