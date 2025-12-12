@@ -400,7 +400,8 @@ export default function HistoryLevel() {
           const isSelected = selectedItems.includes(originalIndex);
           const orderIndex = selectedItems.indexOf(originalIndex);
           const showNumber = levelContent.type === "tap-order" && isSelected;
-          const showLabel = levelId === 7;
+          const showLabel = levelId === 7 || levelContent.itemLabels;
+          const itemLabel = levelId === 7 ? getLevel7Label(originalIndex) : (levelContent.itemLabels?.[originalIndex] || "");
           
           return (
             <button
@@ -424,7 +425,7 @@ export default function HistoryLevel() {
             >
               <span className="text-2xl">{item}</span>
               {showLabel && (
-                <span className="text-xs font-medium text-foreground/80">{getLevel7Label(originalIndex)}</span>
+                <span className="text-xs font-medium text-foreground/80">{itemLabel}</span>
               )}
               {showNumber && (
                 <span className="absolute -top-2 -right-2 w-7 h-7 bg-primary text-primary-foreground rounded-full text-sm font-bold flex items-center justify-center">
