@@ -500,7 +500,7 @@ const translations: Record<Language, Translations> = {
     maryGoldaName: "Mary Golda Ross",
     maryGoldaTitle: "First Native American Female Engineer",
     williamName: "William Kamkwamba",
-    williamTitle: "The Boy Who Harnessed the Wind",
+    williamTitle: "The Boy Who Harnessed a Win",
     maryKennerName: "Mary Beatrice Davidson Kenner",
     maryKennerTitle: "Brilliant Inventor",
     kingSejongName: "King Sejong",

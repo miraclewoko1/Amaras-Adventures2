@@ -27,6 +27,7 @@ interface LevelContent {
   randomize?: boolean;
   teachContent?: string;
   dragMatchData?: DragMatchData;
+  itemLabels?: string[];
 }
 
 const LEVEL_CONTENT: Record<number, LevelContent> = {
@@ -46,12 +47,20 @@ const LEVEL_CONTENT: Record<number, LevelContent> = {
   },
   3: {
     era: "moors",
-    items: ["💡", "🔨", "📚", "🔧"],
+    items: ["🌹", "🔨", "📚", "🔧"],
     correctAnswer: [0, 2],
     type: "tap-select",
     randomize: true,
+    itemLabels: ["Love", "Hammer", "Knowledge", "Wrench"],
   },
   4: {
+    era: "innovators",
+    items: ["🚀", "🛰️", "🌟"],
+    correctAnswer: [0, 1, 2],
+    type: "tap-order",
+    randomize: true,
+  },
+  5: {
     era: "innovators",
     items: ["Waqaa!", "Quyana cakneq!", "Assirtuten-qaa?"],
     correctAnswer: ["hello", "thankyou", "howareyou"],
@@ -69,13 +78,6 @@ const LEVEL_CONTENT: Record<number, LevelContent> = {
         { id: "howareyou", label: "How are you?", acceptsId: "assirtuten", icon: "😊" },
       ],
     },
-  },
-  5: {
-    era: "innovators",
-    items: ["🚀", "🛰️", "🌟"],
-    correctAnswer: [0, 1, 2],
-    type: "tap-order",
-    randomize: true,
   },
   6: {
     era: "innovators",
@@ -131,8 +133,8 @@ function getHistoryLevelText(levelId: number, t: Translations): { figure: string
     1: { figure: t.tariqIbnZiyad, title: t.tariqTitle, greeting: t.histL1Greeting, activity: t.histL1Activity },
     2: { figure: t.abdAlRahmanName, title: t.abdAlRahmanTitle, greeting: t.histL2Greeting, activity: t.histL2Activity },
     3: { figure: t.averroesName, title: t.averroesTitle, greeting: t.histL3Greeting, activity: t.histL3Activity },
-    4: { figure: t.paulJohnName, title: t.paulJohnTitle, greeting: t.histL4Greeting, activity: t.histL4Activity },
-    5: { figure: t.maryGoldaName, title: t.maryGoldaTitle, greeting: t.histL5Greeting, activity: t.histL5Activity },
+    4: { figure: t.maryGoldaName, title: t.maryGoldaTitle, greeting: t.histL4Greeting, activity: t.histL4Activity },
+    5: { figure: t.paulJohnName, title: t.paulJohnTitle, greeting: t.histL5Greeting, activity: t.histL5Activity },
     6: { figure: t.williamName, title: t.williamTitle, greeting: t.histL6Greeting, activity: t.histL6Activity },
     7: { figure: t.maryKennerName, title: t.maryKennerTitle, greeting: t.histL7Greeting, activity: t.histL7Activity },
     8: { figure: t.kingSejongName, title: t.kingSejongTitle, greeting: t.histL8Greeting, activity: t.histL8Activity },
@@ -143,7 +145,7 @@ function getHistoryLevelText(levelId: number, t: Translations): { figure: string
 }
 
 function getTranslatedDragMatchData(levelId: number, t: Translations): DragMatchData | undefined {
-  if (levelId === 4) {
+  if (levelId === 5) {
     return {
       items: [
         { id: "waqaa", label: "Waqaa!", icon: "👋" },
