@@ -113,7 +113,7 @@ export default function MathLevel() {
   const [showWalkthrough, setShowWalkthrough] = useState(false);
   const [showReflectiveFeedback, setShowReflectiveFeedback] = useState(false);
   const [hintsUsed, setHintsUsed] = useState(0);
-  const [sproutMessage, setSproutMessage] = useState<string | null>(null);
+  const [sproutHintKey, setSproutHintKey] = useState<{ type: string; index: number } | null>(null);
   const [sessionId, setSessionId] = useState<string | null>(null);
 
   useEffect(() => {
@@ -128,7 +128,7 @@ export default function MathLevel() {
     setSelectedItems([]);
     setStartTime(Date.now());
     setHintsUsed(0);
-    setSproutMessage(null);
+    setSproutHintKey(null);
     setShowReflectiveFeedback(false);
     
     const newSessionId = learnerObserver.startSession(
@@ -157,6 +157,15 @@ export default function MathLevel() {
     setHintsUsed((prev) => prev + 1);
     learnerObserver.recordAction({ type: "hint_requested" });
     
+    const hintIndex = Math.min(hintsUsed, 2);
+    setSproutHintKey({ type: levelContent.type, index: hintIndex });
+    
+    setTimeout(() => setSproutHintKey(null), 4000);
+  }, [hintsUsed, levelContent.type]);
+  
+  const getSproutMessage = (): string | null => {
+    if (!sproutHintKey) return null;
+    const { type, index } = sproutHintKey;
     const hints: Record<string, string[]> = {
       counting: [t.hintCounting1, t.hintCounting2, t.hintCounting3],
       patterns: [t.hintPatterns1, t.hintPatterns2, t.hintPatterns3],
@@ -167,13 +176,9 @@ export default function MathLevel() {
       addition: [t.hintAddition1, t.hintAddition2, t.hintAddition3],
       fractions: [t.hintFractions1, t.hintFractions2, t.hintFractions3],
     };
-    
-    const puzzleHints = hints[levelContent.type] || hints.counting;
-    const hint = puzzleHints[Math.min(hintsUsed, puzzleHints.length - 1)];
-    setSproutMessage(hint);
-    
-    setTimeout(() => setSproutMessage(null), 4000);
-  }, [hintsUsed, levelContent.type, t]);
+    const puzzleHints = hints[type] || hints.counting;
+    return puzzleHints[index] || puzzleHints[0];
+  };
 
   const handleItemTap = (index: number) => {
     if (showResult) return;
@@ -613,10 +618,10 @@ export default function MathLevel() {
           </div>
         )}
         
-        {sproutMessage && (
+        {sproutHintKey && (
           <div className="fixed bottom-4 right-4 z-40">
             <SproutMascot
-              message={sproutMessage}
+              message={getSproutMessage() || ""}
               emotion="encouraging"
               size="medium"
               position="left"
