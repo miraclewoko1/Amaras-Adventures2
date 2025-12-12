@@ -1,12 +1,16 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { useLocation, useParams } from "wouter";
 import { Button } from "@/components/ui/button";
 import PrincessAmara from "@/components/PrincessAmara";
 import HistoricalFigureGuide from "@/components/HistoricalFigureGuide";
 import ConfettiEffect from "@/components/ConfettiEffect";
+import SproutMascot from "@/components/SproutMascot";
+import GuidedWalkthrough from "@/components/GuidedWalkthrough";
+import ReflectiveFeedback from "@/components/ReflectiveFeedback";
 import { DragDropPuzzle } from "@/components/game";
-import { ArrowLeft, Star, RotateCcw, ArrowRight } from "lucide-react";
+import { ArrowLeft, Star, RotateCcw, ArrowRight, HelpCircle, BookOpen } from "lucide-react";
 import { loadProgress, completeLevel, trackLearningPattern, GameProgress } from "@/lib/gameProgress";
+import { learnerObserver } from "@/lib/learnerObserver";
 import hiddenFiguresImg from "@assets/generated_images/hidden_figures_nasa_trio.png";
 import TariqLevelOneExperience from "@/components/history/TariqLevelOneExperience";
 import { useLanguage } from "@/context/LanguageContext";
@@ -200,6 +204,10 @@ export default function HistoryLevel() {
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [isCorrect, setIsCorrect] = useState(false);
   const [shuffleKey, setShuffleKey] = useState(0);
+  const [showWalkthrough, setShowWalkthrough] = useState(false);
+  const [showReflectiveFeedback, setShowReflectiveFeedback] = useState(false);
+  const [hintsUsed, setHintsUsed] = useState(0);
+  const [sproutMessage, setSproutMessage] = useState<string | null>(null);
 
   useEffect(() => {
     setProgress(loadProgress());
@@ -213,7 +221,34 @@ export default function HistoryLevel() {
     setIsCorrect(false);
     setStartTime(Date.now());
     setShuffleKey(prev => prev + 1);
+    setHintsUsed(0);
+    setSproutMessage(null);
+    setShowReflectiveFeedback(false);
+    
+    learnerObserver.startSession(
+      LEVEL_CONTENT[levelId]?.type || "tap-order",
+      levelId,
+      "history"
+    );
   }, [levelId]);
+
+  const handleHintRequest = useCallback(() => {
+    setHintsUsed((prev) => prev + 1);
+    learnerObserver.recordAction({ type: "hint_requested" });
+    
+    const hints: Record<string, string[]> = {
+      "tap-order": ["Put them in order!", "What comes first?", "Think about the steps!"],
+      "tap-select": ["Pick the right ones!", "Which ones match?", "Look carefully!"],
+      "drag-match": ["Match them up!", "Connect the pairs!", "Which ones go together?"],
+      "tap-order-no-number": ["Count down!", "What's the order?", "3, 2, 1..."],
+    };
+    
+    const puzzleHints = hints[LEVEL_CONTENT[levelId]?.type || "tap-order"] || hints["tap-order"];
+    const hint = puzzleHints[Math.min(hintsUsed, puzzleHints.length - 1)];
+    setSproutMessage(hint);
+    
+    setTimeout(() => setSproutMessage(null), 4000);
+  }, [hintsUsed, levelId]);
 
   const levelContent = LEVEL_CONTENT[levelId] || LEVEL_CONTENT[1];
   const levelData = progress?.historyLevels.find((l) => l.id === levelId);

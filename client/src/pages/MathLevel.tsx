@@ -1,10 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useLocation, useParams } from "wouter";
 import { Button } from "@/components/ui/button";
 import PrincessAmara from "@/components/PrincessAmara";
 import ConfettiEffect from "@/components/ConfettiEffect";
-import { ArrowLeft, Star, RotateCcw, ArrowRight } from "lucide-react";
+import SproutMascot from "@/components/SproutMascot";
+import GuidedWalkthrough from "@/components/GuidedWalkthrough";
+import ReflectiveFeedback from "@/components/ReflectiveFeedback";
+import { ArrowLeft, Star, RotateCcw, ArrowRight, HelpCircle, BookOpen } from "lucide-react";
 import { loadProgress, completeLevel, trackLearningPattern, GameProgress } from "@/lib/gameProgress";
+import { learnerObserver } from "@/lib/learnerObserver";
 import { useLanguage } from "@/context/LanguageContext";
 import { getTranslations } from "@/lib/translations";
 import { FlagIcon } from "@/components/FlagIcon";
@@ -106,6 +110,11 @@ export default function MathLevel() {
   const [showConfetti, setShowConfetti] = useState(false);
   const [startTime, setStartTime] = useState(Date.now());
   const [selectedItems, setSelectedItems] = useState<number[]>([]);
+  const [showWalkthrough, setShowWalkthrough] = useState(false);
+  const [showReflectiveFeedback, setShowReflectiveFeedback] = useState(false);
+  const [hintsUsed, setHintsUsed] = useState(0);
+  const [sproutMessage, setSproutMessage] = useState<string | null>(null);
+  const [sessionId, setSessionId] = useState<string | null>(null);
 
   useEffect(() => {
     setProgress(loadProgress());
@@ -118,6 +127,16 @@ export default function MathLevel() {
     setShowConfetti(false);
     setSelectedItems([]);
     setStartTime(Date.now());
+    setHintsUsed(0);
+    setSproutMessage(null);
+    setShowReflectiveFeedback(false);
+    
+    const newSessionId = learnerObserver.startSession(
+      LEVEL_CONTENT[levelId]?.type || "counting",
+      levelId,
+      "math"
+    );
+    setSessionId(newSessionId);
   }, [levelId]);
 
   const levelContent = LEVEL_CONTENT[levelId] || LEVEL_CONTENT[1];
@@ -127,10 +146,41 @@ export default function MathLevel() {
   const handleSelectAnswer = (answer: number | string) => {
     if (showResult) return;
     setSelectedAnswer(answer);
+    learnerObserver.recordAction({
+      type: "tap",
+      target: String(answer),
+      correct: answer === levelContent.correctAnswer,
+    });
   };
+
+  const handleHintRequest = useCallback(() => {
+    setHintsUsed((prev) => prev + 1);
+    learnerObserver.recordAction({ type: "hint_requested" });
+    
+    const hints: Record<string, string[]> = {
+      counting: ["Count each one slowly!", "Touch them as you count!", "Start from the left!"],
+      patterns: ["Look for what repeats!", "What comes after?", "See the pattern?"],
+      sequences: ["What number is missing?", "Count up or down!", "Follow the order!"],
+      "tap-select": ["Find all the same ones!", "Tap the matching items!", "Look carefully!"],
+      "tap-order": ["Which is biggest?", "Put them in order!", "Start with the biggest!"],
+      "size-select": ["Look at the sizes!", "Find the right one!", "Compare them!"],
+      fractions: ["Make it equal to 1!", "Add the pieces!", "Two halves make a whole!"],
+    };
+    
+    const puzzleHints = hints[levelContent.type] || hints.counting;
+    const hint = puzzleHints[Math.min(hintsUsed, puzzleHints.length - 1)];
+    setSproutMessage(hint);
+    
+    setTimeout(() => setSproutMessage(null), 4000);
+  }, [hintsUsed, levelContent.type]);
 
   const handleItemTap = (index: number) => {
     if (showResult) return;
+    
+    learnerObserver.recordAction({
+      type: "tap",
+      target: levelContent.items[index] || `item-${index}`,
+    });
     
     if (levelContent.type === "tap-single" || levelContent.type === "size-select") {
       setSelectedItems([index]);
@@ -138,6 +188,7 @@ export default function MathLevel() {
       if (selectedItems.includes(index)) {
         const idx = selectedItems.indexOf(index);
         setSelectedItems(selectedItems.slice(0, idx));
+        learnerObserver.recordAction({ type: "undo" });
       } else {
         setSelectedItems([...selectedItems, index]);
       }
@@ -183,6 +234,8 @@ export default function MathLevel() {
     setIsCorrect(correct);
     setShowResult(true);
     
+    learnerObserver.endSession(correct);
+    
     if (correct) {
       setShowConfetti(true);
       const timeTaken = (Date.now() - startTime) / 1000;
@@ -194,6 +247,8 @@ export default function MathLevel() {
         newProgress = trackLearningPattern(newProgress, levelContent.type, wasQuick);
         setProgress(newProgress);
       }
+      
+      setTimeout(() => setShowReflectiveFeedback(true), 1500);
     }
   };
 
@@ -206,11 +261,15 @@ export default function MathLevel() {
   };
 
   const handleRetry = () => {
+    learnerObserver.recordAction({ type: "retry" });
     setSelectedAnswer(null);
     setShowResult(false);
     setIsCorrect(false);
     setSelectedItems([]);
     setStartTime(Date.now());
+    
+    const newSessionId = learnerObserver.startSession(levelContent.type, levelId, "math");
+    setSessionId(newSessionId);
   };
 
   const canCheck = () => {
@@ -371,6 +430,28 @@ export default function MathLevel() {
     <div className="min-h-screen bg-gradient-to-b from-purple-50 to-pink-50 dark:from-purple-950/20 dark:to-pink-950/20">
       {showConfetti && <ConfettiEffect show={showConfetti} />}
       
+      {showWalkthrough && (
+        <GuidedWalkthrough
+          puzzleType={levelContent.type}
+          steps={[]}
+          onComplete={() => setShowWalkthrough(false)}
+          onSkip={() => setShowWalkthrough(false)}
+        />
+      )}
+      
+      {showReflectiveFeedback && (
+        <ReflectiveFeedback
+          puzzleType={levelContent.type}
+          timeSpent={learnerObserver.getTimeElapsed()}
+          hintsUsed={hintsUsed}
+          stepsRecorded={learnerObserver.getStepsRecorded()}
+          outcome={isCorrect ? "success" : "partial"}
+          onClose={() => setShowReflectiveFeedback(false)}
+          onRetry={handleRetry}
+          onNextLevel={handleNext}
+        />
+      )}
+      
       <header className="sticky top-0 z-50 bg-white/90 dark:bg-card/90 backdrop-blur border-b border-border">
         <div className="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
           <Button
@@ -385,6 +466,24 @@ export default function MathLevel() {
             {t.level} {levelId}: {levelData?.title}
           </h1>
           <div className="flex items-center gap-2">
+            <Button
+              size="icon"
+              variant="ghost"
+              onClick={() => setShowWalkthrough(true)}
+              className="text-purple-500 hover:text-purple-600"
+              title="Show tutorial"
+            >
+              <BookOpen className="w-5 h-5" />
+            </Button>
+            <Button
+              size="icon"
+              variant="ghost"
+              onClick={handleHintRequest}
+              className="text-blue-500 hover:text-blue-600"
+              title="Get a hint"
+            >
+              <HelpCircle className="w-5 h-5" />
+            </Button>
             <Button
               size="sm"
               variant="outline"
@@ -476,6 +575,17 @@ export default function MathLevel() {
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Button>
             )}
+          </div>
+        )}
+        
+        {sproutMessage && (
+          <div className="fixed bottom-4 right-4 z-40">
+            <SproutMascot
+              message={sproutMessage}
+              emotion="encouraging"
+              size="medium"
+              position="left"
+            />
           </div>
         )}
       </main>

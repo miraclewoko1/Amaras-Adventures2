@@ -1,16 +1,86 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
+import {
+  generateAdaptiveFeedback,
+  generateReflectiveFeedback,
+  generateCareerInsights,
+  type AdaptiveFeedbackRequest,
+  type ReflectiveFeedbackRequest,
+  type CareerInsightRequest,
+} from "./ai-service";
 
 export async function registerRoutes(
   httpServer: Server,
   app: Express
 ): Promise<Server> {
-  // put application routes here
-  // prefix all routes with /api
+  app.post("/api/adaptive-feedback", async (req, res) => {
+    try {
+      const request: AdaptiveFeedbackRequest = req.body;
+      
+      if (!request.learnerName || !request.currentLevel || !request.observation) {
+        return res.status(400).json({ error: "Missing required fields" });
+      }
 
-  // use storage to perform CRUD operations on the storage interface
-  // e.g. storage.insertUser(user) or storage.getUserByUsername(username)
+      const feedback = await generateAdaptiveFeedback(request);
+      res.json(feedback);
+    } catch (error) {
+      console.error("Adaptive feedback error:", error);
+      res.status(500).json({ error: "Failed to generate feedback" });
+    }
+  });
+
+  app.post("/api/reflective-feedback", async (req, res) => {
+    try {
+      const request: ReflectiveFeedbackRequest = req.body;
+      
+      if (!request.puzzleType || !request.stepsRecorded) {
+        return res.status(400).json({ error: "Missing required fields" });
+      }
+
+      const feedback = await generateReflectiveFeedback(request);
+      res.json(feedback);
+    } catch (error) {
+      console.error("Reflective feedback error:", error);
+      res.status(500).json({ error: "Failed to generate feedback" });
+    }
+  });
+
+  app.post("/api/career-insights", async (req, res) => {
+    try {
+      const request: CareerInsightRequest = req.body;
+      
+      if (!request.learningPatterns || !request.strengths) {
+        return res.status(400).json({ error: "Missing required fields" });
+      }
+
+      const insights = await generateCareerInsights(request);
+      res.json(insights);
+    } catch (error) {
+      console.error("Career insights error:", error);
+      res.status(500).json({ error: "Failed to generate insights" });
+    }
+  });
+
+  app.post("/api/learner-observation", async (req, res) => {
+    try {
+      const { sessionId, observation } = req.body;
+      
+      if (!sessionId || !observation) {
+        return res.status(400).json({ error: "Missing sessionId or observation" });
+      }
+
+      res.json({ 
+        success: true, 
+        message: "Observation recorded",
+        sessionId,
+        timestamp: new Date().toISOString()
+      });
+    } catch (error) {
+      console.error("Learner observation error:", error);
+      res.status(500).json({ error: "Failed to record observation" });
+    }
+  });
 
   return httpServer;
 }
