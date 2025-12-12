@@ -325,6 +325,138 @@ export interface Translations {
   bonusQuestNote: string;
   bonusQuestGame: string;
   playBonusQuest: string;
+  
+  // Walkthrough UI
+  walkthroughSkip: string;
+  walkthroughBack: string;
+  walkthroughNext: string;
+  walkthroughLetsGo: string;
+  
+  // Counting walkthrough
+  countingTitle1: string;
+  countingDesc1: string;
+  countingMascot1: string;
+  countingTitle2: string;
+  countingDesc2: string;
+  countingMascot2: string;
+  countingTitle3: string;
+  countingDesc3: string;
+  countingMascot3: string;
+  countingTitle4: string;
+  countingDesc4: string;
+  countingMascot4: string;
+  
+  // Sorting walkthrough
+  sortingTitle1: string;
+  sortingDesc1: string;
+  sortingMascot1: string;
+  sortingTitle2: string;
+  sortingDesc2: string;
+  sortingMascot2: string;
+  sortingTitle3: string;
+  sortingDesc3: string;
+  sortingMascot3: string;
+  sortingTitle4: string;
+  sortingDesc4: string;
+  sortingMascot4: string;
+  
+  // Patterns walkthrough
+  patternsTitle1: string;
+  patternsDesc1: string;
+  patternsMascot1: string;
+  patternsTitle2: string;
+  patternsDesc2: string;
+  patternsMascot2: string;
+  patternsTitle3: string;
+  patternsDesc3: string;
+  patternsMascot3: string;
+  patternsTitle4: string;
+  patternsDesc4: string;
+  patternsMascot4: string;
+  
+  // Tap-select walkthrough
+  tapSelectTitle1: string;
+  tapSelectDesc1: string;
+  tapSelectMascot1: string;
+  tapSelectTitle2: string;
+  tapSelectDesc2: string;
+  tapSelectMascot2: string;
+  tapSelectTitle3: string;
+  tapSelectDesc3: string;
+  tapSelectMascot3: string;
+  tapSelectTitle4: string;
+  tapSelectDesc4: string;
+  tapSelectMascot4: string;
+  
+  // Addition walkthrough
+  additionTitle1: string;
+  additionDesc1: string;
+  additionMascot1: string;
+  additionTitle2: string;
+  additionDesc2: string;
+  additionMascot2: string;
+  additionTitle3: string;
+  additionDesc3: string;
+  additionMascot3: string;
+  additionTitle4: string;
+  additionDesc4: string;
+  additionMascot4: string;
+  
+  // Size-select walkthrough
+  sizeSelectTitle1: string;
+  sizeSelectDesc1: string;
+  sizeSelectMascot1: string;
+  sizeSelectTitle2: string;
+  sizeSelectDesc2: string;
+  sizeSelectMascot2: string;
+  sizeSelectTitle3: string;
+  sizeSelectDesc3: string;
+  sizeSelectMascot3: string;
+  sizeSelectTitle4: string;
+  sizeSelectDesc4: string;
+  sizeSelectMascot4: string;
+  
+  // Fractions walkthrough
+  fractionsTitle1: string;
+  fractionsDesc1: string;
+  fractionsMascot1: string;
+  fractionsTitle2: string;
+  fractionsDesc2: string;
+  fractionsMascot2: string;
+  fractionsTitle3: string;
+  fractionsDesc3: string;
+  fractionsMascot3: string;
+  fractionsTitle4: string;
+  fractionsDesc4: string;
+  fractionsMascot4: string;
+  
+  // Matching walkthrough
+  matchingTitle1: string;
+  matchingDesc1: string;
+  matchingMascot1: string;
+  matchingTitle2: string;
+  matchingDesc2: string;
+  matchingMascot2: string;
+  matchingTitle3: string;
+  matchingDesc3: string;
+  matchingMascot3: string;
+  matchingTitle4: string;
+  matchingDesc4: string;
+  matchingMascot4: string;
+  
+  // History walkthrough
+  historyWalkTitle1: string;
+  historyWalkDesc1: string;
+  historyWalkMascot1: string;
+  historyWalkTitle2: string;
+  historyWalkDesc2: string;
+  historyWalkMascot2: string;
+  historyWalkTitle3: string;
+  historyWalkDesc3: string;
+  historyWalkMascot3: string;
+  historyWalkTitle4: string;
+  historyWalkDesc4: string;
+  historyWalkMascot4: string;
 }
 
 const translations: Record<Language, Translations> = {
@@ -653,6 +785,138 @@ const translations: Record<Language, Translations> = {
     bonusQuestNote: "Your best score will be saved to your progress folder!",
     bonusQuestGame: "Bonus Quest Game",
     playBonusQuest: "Play Bonus Quest",
+    
+    // Walkthrough UI
+    walkthroughSkip: "Skip",
+    walkthroughBack: "Back",
+    walkthroughNext: "Next →",
+    walkthroughLetsGo: "Let's Go! 🚀",
+    
+    // Counting walkthrough
+    countingTitle1: "Let's Count Together!",
+    countingDesc1: "We're going to count how many items we see.",
+    countingMascot1: "Hi friend! Let's count together! 🌟",
+    countingTitle2: "Look Carefully",
+    countingDesc2: "First, look at all the items on the screen.",
+    countingMascot2: "Take your time to see everything!",
+    countingTitle3: "Point and Count",
+    countingDesc3: "Touch each item as you count. One... two... three!",
+    countingMascot3: "Touch each one as you count!",
+    countingTitle4: "Find Your Answer",
+    countingDesc4: "Now tap the number that matches how many you counted.",
+    countingMascot4: "You've got this! Pick the right number! 🎉",
+    
+    // Sorting walkthrough
+    sortingTitle1: "Sorting Fun!",
+    sortingDesc1: "We're going to put things where they belong.",
+    sortingMascot1: "Let's organize things together! 🌈",
+    sortingTitle2: "Look at the Groups",
+    sortingDesc2: "See the different places where things can go?",
+    sortingMascot2: "Each group has a special place!",
+    sortingTitle3: "Match and Move",
+    sortingDesc3: "Drag each item to the group where it fits best.",
+    sortingMascot3: "Think about which ones are alike!",
+    sortingTitle4: "Great Job!",
+    sortingDesc4: "Keep going until everything is sorted!",
+    sortingMascot4: "You're a sorting superstar! ⭐",
+    
+    // Patterns walkthrough
+    patternsTitle1: "Pattern Detective!",
+    patternsDesc1: "Let's find what comes next in the pattern.",
+    patternsMascot1: "Patterns are like puzzles! 🧩",
+    patternsTitle2: "Look for Clues",
+    patternsDesc2: "See how things repeat? That's a pattern!",
+    patternsMascot2: "What do you notice repeating?",
+    patternsTitle3: "Think Ahead",
+    patternsDesc3: "What should come next to continue the pattern?",
+    patternsMascot3: "Hmm... what comes next? 🤔",
+    patternsTitle4: "Choose Wisely",
+    patternsDesc4: "Pick the answer that keeps the pattern going!",
+    patternsMascot4: "Trust your pattern powers! ✨",
+    
+    // Tap-select walkthrough
+    tapSelectTitle1: "Find the Circles!",
+    tapSelectDesc1: "Let's find all the blue circles together.",
+    tapSelectMascot1: "Let's go shape hunting! 🔵",
+    tapSelectTitle2: "Look Carefully",
+    tapSelectDesc2: "There are different shapes here. Find the circles!",
+    tapSelectMascot2: "Circles are round like me!",
+    tapSelectTitle3: "Tap Each One",
+    tapSelectDesc3: "When you find a blue circle, tap it!",
+    tapSelectMascot3: "Tap all the matching ones!",
+    tapSelectTitle4: "Great Job!",
+    tapSelectDesc4: "You found them all!",
+    tapSelectMascot4: "You're a shape finder superstar! ⭐",
+    
+    // Addition walkthrough
+    additionTitle1: "Pizza Adding Time!",
+    additionDesc1: "Let's count pizza slices and add them together.",
+    additionMascot1: "Yum! Math with pizza is the best! 🍕",
+    additionTitle2: "Count the First Group",
+    additionDesc2: "How many pizza slices are in the first box?",
+    additionMascot2: "Count the first group carefully!",
+    additionTitle3: "Count the Second Group",
+    additionDesc3: "Now count the pizza slices in the second box.",
+    additionMascot3: "Now count the other group!",
+    additionTitle4: "Add Them Up!",
+    additionDesc4: "Put them together. How many in total?",
+    additionMascot4: "Add both groups together! 🎉",
+    
+    // Size-select walkthrough
+    sizeSelectTitle1: "Size Detective!",
+    sizeSelectDesc1: "Let's find the right size cup.",
+    sizeSelectMascot1: "Big, medium, or small? 🥤",
+    sizeSelectTitle2: "Look at All the Cups",
+    sizeSelectDesc2: "See the different sized cups?",
+    sizeSelectMascot2: "Some are big, some are tiny!",
+    sizeSelectTitle3: "Find the Medium One",
+    sizeSelectDesc3: "Which cup is not too big and not too small?",
+    sizeSelectMascot3: "Right in the middle! 🤔",
+    sizeSelectTitle4: "Tap Your Answer!",
+    sizeSelectDesc4: "Tap the medium-sized cup!",
+    sizeSelectMascot4: "You're a size expert! ⭐",
+    
+    // Fractions walkthrough
+    fractionsTitle1: "Fraction Fun!",
+    fractionsDesc1: "Let's make pieces add up to one whole.",
+    fractionsMascot1: "Fractions are pieces of a pie! 🥧",
+    fractionsTitle2: "Look at the Pieces",
+    fractionsDesc2: "Each piece shows part of a whole.",
+    fractionsMascot2: "1/2 means one of two pieces!",
+    fractionsTitle3: "Pick Pieces That Fit",
+    fractionsDesc3: "Choose pieces that add up to exactly one whole.",
+    fractionsMascot3: "Two halves make a whole! 🤔",
+    fractionsTitle4: "Complete the Whole!",
+    fractionsDesc4: "Select all the pieces you need!",
+    fractionsMascot4: "You're a fraction master! 🎉",
+    
+    // Matching walkthrough
+    matchingTitle1: "Matching Time!",
+    matchingDesc1: "Let's find things that go together.",
+    matchingMascot1: "Finding pairs is so fun! 💫",
+    matchingTitle2: "Look for Pairs",
+    matchingDesc2: "Some things belong together, like shoes!",
+    matchingMascot2: "Which ones are best friends?",
+    matchingTitle3: "Connect Them",
+    matchingDesc3: "Draw a line or tap to connect matching items.",
+    matchingMascot3: "Connect the ones that match!",
+    matchingTitle4: "Perfect Match!",
+    matchingDesc4: "Keep matching until you find all the pairs!",
+    matchingMascot4: "You're a matching master! 🏆",
+    
+    // History walkthrough
+    historyWalkTitle1: "Time Travel Adventure!",
+    historyWalkDesc1: "Let's learn about amazing people from the past.",
+    historyWalkMascot1: "History is full of heroes! 🌍",
+    historyWalkTitle2: "Meet Someone Special",
+    historyWalkDesc2: "This person did something incredible!",
+    historyWalkMascot2: "Listen to their story...",
+    historyWalkTitle3: "Help Them Out",
+    historyWalkDesc3: "Can you help complete their task?",
+    historyWalkMascot3: "Let's help together!",
+    historyWalkTitle4: "History Hero!",
+    historyWalkDesc4: "You learned something amazing today!",
+    historyWalkMascot4: "You're a history hero! 📚✨",
   },
   ko: {
     // Common UI
@@ -979,6 +1243,138 @@ const translations: Record<Language, Translations> = {
     bonusQuestNote: "최고 점수가 진행 폴더에 저장됩니다!",
     bonusQuestGame: "보너스 퀘스트 게임",
     playBonusQuest: "보너스 퀘스트 플레이",
+    
+    // Walkthrough UI
+    walkthroughSkip: "건너뛰기",
+    walkthroughBack: "뒤로",
+    walkthroughNext: "다음 →",
+    walkthroughLetsGo: "시작하자! 🚀",
+    
+    // Counting walkthrough
+    countingTitle1: "함께 세어보자!",
+    countingDesc1: "물건이 몇 개인지 세어볼 거예요.",
+    countingMascot1: "안녕 친구! 함께 세어보자! 🌟",
+    countingTitle2: "잘 살펴보세요",
+    countingDesc2: "화면에 있는 모든 물건을 살펴보세요.",
+    countingMascot2: "천천히 살펴보세요!",
+    countingTitle3: "가리키며 세기",
+    countingDesc3: "세면서 각 물건을 터치해요. 하나... 둘... 셋!",
+    countingMascot3: "세면서 각각 터치해봐!",
+    countingTitle4: "정답 찾기",
+    countingDesc4: "센 숫자와 같은 숫자를 탭해주세요.",
+    countingMascot4: "할 수 있어! 맞는 숫자를 골라봐! 🎉",
+    
+    // Sorting walkthrough
+    sortingTitle1: "분류하기 재미있어!",
+    sortingDesc1: "물건들을 제자리에 놓을 거예요.",
+    sortingMascot1: "함께 정리하자! 🌈",
+    sortingTitle2: "그룹 살펴보기",
+    sortingDesc2: "물건이 갈 수 있는 다른 장소들이 보이나요?",
+    sortingMascot2: "각 그룹에는 특별한 자리가 있어!",
+    sortingTitle3: "맞추고 옮기기",
+    sortingDesc3: "각 물건을 가장 잘 맞는 그룹으로 끌어다 놓으세요.",
+    sortingMascot3: "어떤 것들이 비슷한지 생각해봐!",
+    sortingTitle4: "잘했어요!",
+    sortingDesc4: "모든 것이 분류될 때까지 계속해봐요!",
+    sortingMascot4: "넌 분류 슈퍼스타야! ⭐",
+    
+    // Patterns walkthrough
+    patternsTitle1: "패턴 탐정!",
+    patternsDesc1: "패턴에서 다음에 뭐가 올지 찾아보자.",
+    patternsMascot1: "패턴은 퍼즐 같아! 🧩",
+    patternsTitle2: "단서 찾기",
+    patternsDesc2: "반복되는 것이 보이나요? 그게 패턴이에요!",
+    patternsMascot2: "뭐가 반복되는지 알겠어?",
+    patternsTitle3: "앞서 생각하기",
+    patternsDesc3: "패턴을 이어가려면 뭐가 와야 할까요?",
+    patternsMascot3: "음... 다음엔 뭐가 올까? 🤔",
+    patternsTitle4: "현명하게 선택하기",
+    patternsDesc4: "패턴을 이어가는 답을 골라보세요!",
+    patternsMascot4: "네 패턴 능력을 믿어! ✨",
+    
+    // Tap-select walkthrough
+    tapSelectTitle1: "원을 찾아라!",
+    tapSelectDesc1: "함께 파란 원을 모두 찾아보자.",
+    tapSelectMascot1: "모양 사냥을 떠나자! 🔵",
+    tapSelectTitle2: "잘 살펴보세요",
+    tapSelectDesc2: "여기에 다른 모양들이 있어요. 원을 찾아봐요!",
+    tapSelectMascot2: "원은 나처럼 둥글어!",
+    tapSelectTitle3: "각각 탭하기",
+    tapSelectDesc3: "파란 원을 찾으면 탭해주세요!",
+    tapSelectMascot3: "같은 것들을 모두 탭해!",
+    tapSelectTitle4: "잘했어요!",
+    tapSelectDesc4: "전부 찾았어요!",
+    tapSelectMascot4: "넌 모양 찾기 슈퍼스타야! ⭐",
+    
+    // Addition walkthrough
+    additionTitle1: "피자 더하기 시간!",
+    additionDesc1: "피자 조각을 세고 더해보자.",
+    additionMascot1: "야! 피자로 수학하는 게 최고야! 🍕",
+    additionTitle2: "첫 번째 그룹 세기",
+    additionDesc2: "첫 번째 상자에 피자 조각이 몇 개 있나요?",
+    additionMascot2: "첫 번째 그룹을 잘 세어봐!",
+    additionTitle3: "두 번째 그룹 세기",
+    additionDesc3: "이제 두 번째 상자에 피자 조각을 세어보세요.",
+    additionMascot3: "이제 다른 그룹을 세어봐!",
+    additionTitle4: "더해봐!",
+    additionDesc4: "합치면 총 몇 개일까요?",
+    additionMascot4: "두 그룹을 더해봐! 🎉",
+    
+    // Size-select walkthrough
+    sizeSelectTitle1: "크기 탐정!",
+    sizeSelectDesc1: "맞는 크기의 컵을 찾아보자.",
+    sizeSelectMascot1: "크거나, 중간이거나, 작거나? 🥤",
+    sizeSelectTitle2: "모든 컵 살펴보기",
+    sizeSelectDesc2: "다른 크기의 컵들이 보이나요?",
+    sizeSelectMascot2: "어떤 것은 크고, 어떤 것은 작아!",
+    sizeSelectTitle3: "중간 것 찾기",
+    sizeSelectDesc3: "너무 크지도 작지도 않은 컵은 어떤 거예요?",
+    sizeSelectMascot3: "딱 중간! 🤔",
+    sizeSelectTitle4: "정답을 탭해봐!",
+    sizeSelectDesc4: "중간 크기 컵을 탭해주세요!",
+    sizeSelectMascot4: "넌 크기 전문가야! ⭐",
+    
+    // Fractions walkthrough
+    fractionsTitle1: "분수 재미!",
+    fractionsDesc1: "조각들을 합쳐서 하나를 만들어보자.",
+    fractionsMascot1: "분수는 파이 조각이야! 🥧",
+    fractionsTitle2: "조각 살펴보기",
+    fractionsDesc2: "각 조각은 전체의 일부를 나타내요.",
+    fractionsMascot2: "1/2은 두 조각 중 하나야!",
+    fractionsTitle3: "맞는 조각 고르기",
+    fractionsDesc3: "정확히 하나를 만드는 조각들을 선택하세요.",
+    fractionsMascot3: "반쪽 둘이면 하나가 돼! 🤔",
+    fractionsTitle4: "전체 완성하기!",
+    fractionsDesc4: "필요한 조각들을 모두 선택해주세요!",
+    fractionsMascot4: "넌 분수 마스터야! 🎉",
+    
+    // Matching walkthrough
+    matchingTitle1: "짝짓기 시간!",
+    matchingDesc1: "어울리는 것들을 찾아보자.",
+    matchingMascot1: "짝 찾기 정말 재미있어! 💫",
+    matchingTitle2: "짝 찾아보기",
+    matchingDesc2: "어떤 것들은 함께 어울려요, 신발처럼!",
+    matchingMascot2: "어떤 것들이 친한 친구일까?",
+    matchingTitle3: "연결하기",
+    matchingDesc3: "어울리는 것들을 선이나 탭으로 연결하세요.",
+    matchingMascot3: "어울리는 것들을 연결해!",
+    matchingTitle4: "완벽한 짝!",
+    matchingDesc4: "모든 짝을 찾을 때까지 계속해봐요!",
+    matchingMascot4: "넌 짝짓기 마스터야! 🏆",
+    
+    // History walkthrough
+    historyWalkTitle1: "시간 여행 모험!",
+    historyWalkDesc1: "과거의 놀라운 사람들에 대해 배워보자.",
+    historyWalkMascot1: "역사에는 영웅이 가득해! 🌍",
+    historyWalkTitle2: "특별한 사람 만나기",
+    historyWalkDesc2: "이 사람은 대단한 일을 했어요!",
+    historyWalkMascot2: "그들의 이야기를 들어봐...",
+    historyWalkTitle3: "도와주기",
+    historyWalkDesc3: "그들의 일을 완성하는 걸 도와줄 수 있나요?",
+    historyWalkMascot3: "함께 도와주자!",
+    historyWalkTitle4: "역사 영웅!",
+    historyWalkDesc4: "오늘 놀라운 것을 배웠어요!",
+    historyWalkMascot4: "넌 역사 영웅이야! 📚✨",
   },
 };
 

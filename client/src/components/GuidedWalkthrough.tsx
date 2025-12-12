@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import SproutMascot from "./SproutMascot";
+import { useLanguage } from "@/context/LanguageContext";
+import { getTranslations, Translations } from "@/lib/translations";
 
 interface WalkthroughStep {
   title: string;
@@ -17,242 +19,244 @@ interface GuidedWalkthroughProps {
   onSkip: () => void;
 }
 
-const defaultWalkthroughs: Record<string, WalkthroughStep[]> = {
-  counting: [
-    {
-      title: "Let's Count Together!",
-      description: "We're going to count how many items we see.",
-      mascotMessage: "Hi friend! Let's count together! 🌟",
-      mascotEmotion: "happy",
-    },
-    {
-      title: "Look Carefully",
-      description: "First, look at all the items on the screen.",
-      mascotMessage: "Take your time to see everything!",
-      mascotEmotion: "curious",
-    },
-    {
-      title: "Point and Count",
-      description: "Touch each item as you count. One... two... three!",
-      mascotMessage: "Touch each one as you count!",
-      mascotEmotion: "encouraging",
-    },
-    {
-      title: "Find Your Answer",
-      description: "Now tap the number that matches how many you counted.",
-      mascotMessage: "You've got this! Pick the right number! 🎉",
-      mascotEmotion: "celebrating",
-    },
-  ],
-  sorting: [
-    {
-      title: "Sorting Fun!",
-      description: "We're going to put things where they belong.",
-      mascotMessage: "Let's organize things together! 🌈",
-      mascotEmotion: "happy",
-    },
-    {
-      title: "Look at the Groups",
-      description: "See the different places where things can go?",
-      mascotMessage: "Each group has a special place!",
-      mascotEmotion: "curious",
-    },
-    {
-      title: "Match and Move",
-      description: "Drag each item to the group where it fits best.",
-      mascotMessage: "Think about which ones are alike!",
-      mascotEmotion: "thinking",
-    },
-    {
-      title: "Great Job!",
-      description: "Keep going until everything is sorted!",
-      mascotMessage: "You're a sorting superstar! ⭐",
-      mascotEmotion: "celebrating",
-    },
-  ],
-  patterns: [
-    {
-      title: "Pattern Detective!",
-      description: "Let's find what comes next in the pattern.",
-      mascotMessage: "Patterns are like puzzles! 🧩",
-      mascotEmotion: "happy",
-    },
-    {
-      title: "Look for Clues",
-      description: "See how things repeat? That's a pattern!",
-      mascotMessage: "What do you notice repeating?",
-      mascotEmotion: "curious",
-    },
-    {
-      title: "Think Ahead",
-      description: "What should come next to continue the pattern?",
-      mascotMessage: "Hmm... what comes next? 🤔",
-      mascotEmotion: "thinking",
-    },
-    {
-      title: "Choose Wisely",
-      description: "Pick the answer that keeps the pattern going!",
-      mascotMessage: "Trust your pattern powers! ✨",
-      mascotEmotion: "encouraging",
-    },
-  ],
-  "tap-select": [
-    {
-      title: "Find the Circles!",
-      description: "Let's find all the blue circles together.",
-      mascotMessage: "Let's go shape hunting! 🔵",
-      mascotEmotion: "happy",
-    },
-    {
-      title: "Look Carefully",
-      description: "There are different shapes here. Find the circles!",
-      mascotMessage: "Circles are round like me!",
-      mascotEmotion: "curious",
-    },
-    {
-      title: "Tap Each One",
-      description: "When you find a blue circle, tap it!",
-      mascotMessage: "Tap all the matching ones!",
-      mascotEmotion: "encouraging",
-    },
-    {
-      title: "Great Job!",
-      description: "You found them all!",
-      mascotMessage: "You're a shape finder superstar! ⭐",
-      mascotEmotion: "celebrating",
-    },
-  ],
-  addition: [
-    {
-      title: "Pizza Adding Time!",
-      description: "Let's count pizza slices and add them together.",
-      mascotMessage: "Yum! Math with pizza is the best! 🍕",
-      mascotEmotion: "happy",
-    },
-    {
-      title: "Count the First Group",
-      description: "How many pizza slices are in the first box?",
-      mascotMessage: "Count the first group carefully!",
-      mascotEmotion: "curious",
-    },
-    {
-      title: "Count the Second Group",
-      description: "Now count the pizza slices in the second box.",
-      mascotMessage: "Now count the other group!",
-      mascotEmotion: "thinking",
-    },
-    {
-      title: "Add Them Up!",
-      description: "Put them together. How many in total?",
-      mascotMessage: "Add both groups together! 🎉",
-      mascotEmotion: "celebrating",
-    },
-  ],
-  "size-select": [
-    {
-      title: "Size Detective!",
-      description: "Let's find the right size cup.",
-      mascotMessage: "Big, medium, or small? 🥤",
-      mascotEmotion: "happy",
-    },
-    {
-      title: "Look at All the Cups",
-      description: "See the different sized cups?",
-      mascotMessage: "Some are big, some are tiny!",
-      mascotEmotion: "curious",
-    },
-    {
-      title: "Find the Medium One",
-      description: "Which cup is not too big and not too small?",
-      mascotMessage: "Right in the middle! 🤔",
-      mascotEmotion: "thinking",
-    },
-    {
-      title: "Tap Your Answer!",
-      description: "Tap the medium-sized cup!",
-      mascotMessage: "You're a size expert! ⭐",
-      mascotEmotion: "celebrating",
-    },
-  ],
-  fractions: [
-    {
-      title: "Fraction Fun!",
-      description: "Let's make pieces add up to one whole.",
-      mascotMessage: "Fractions are pieces of a pie! 🥧",
-      mascotEmotion: "happy",
-    },
-    {
-      title: "Look at the Pieces",
-      description: "Each piece shows part of a whole.",
-      mascotMessage: "1/2 means one of two pieces!",
-      mascotEmotion: "curious",
-    },
-    {
-      title: "Pick Pieces That Fit",
-      description: "Choose pieces that add up to exactly one whole.",
-      mascotMessage: "Two halves make a whole! 🤔",
-      mascotEmotion: "thinking",
-    },
-    {
-      title: "Complete the Whole!",
-      description: "Select all the pieces you need!",
-      mascotMessage: "You're a fraction master! 🎉",
-      mascotEmotion: "celebrating",
-    },
-  ],
-  matching: [
-    {
-      title: "Matching Time!",
-      description: "Let's find things that go together.",
-      mascotMessage: "Finding pairs is so fun! 💫",
-      mascotEmotion: "happy",
-    },
-    {
-      title: "Look for Pairs",
-      description: "Some things belong together, like shoes!",
-      mascotMessage: "Which ones are best friends?",
-      mascotEmotion: "curious",
-    },
-    {
-      title: "Connect Them",
-      description: "Draw a line or tap to connect matching items.",
-      mascotMessage: "Connect the ones that match!",
-      mascotEmotion: "encouraging",
-    },
-    {
-      title: "Perfect Match!",
-      description: "Keep matching until you find all the pairs!",
-      mascotMessage: "You're a matching master! 🏆",
-      mascotEmotion: "celebrating",
-    },
-  ],
-  history: [
-    {
-      title: "Time Travel Adventure!",
-      description: "Let's learn about amazing people from the past.",
-      mascotMessage: "History is full of heroes! 🌍",
-      mascotEmotion: "happy",
-    },
-    {
-      title: "Meet Someone Special",
-      description: "This person did something incredible!",
-      mascotMessage: "Listen to their story...",
-      mascotEmotion: "curious",
-    },
-    {
-      title: "Help Them Out",
-      description: "Can you help complete their task?",
-      mascotMessage: "Let's help together!",
-      mascotEmotion: "encouraging",
-    },
-    {
-      title: "History Hero!",
-      description: "You learned something amazing today!",
-      mascotMessage: "You're a history hero! 📚✨",
-      mascotEmotion: "celebrating",
-    },
-  ],
-};
+function getDefaultWalkthroughs(t: Translations): Record<string, WalkthroughStep[]> {
+  return {
+    counting: [
+      {
+        title: t.countingTitle1,
+        description: t.countingDesc1,
+        mascotMessage: t.countingMascot1,
+        mascotEmotion: "happy",
+      },
+      {
+        title: t.countingTitle2,
+        description: t.countingDesc2,
+        mascotMessage: t.countingMascot2,
+        mascotEmotion: "curious",
+      },
+      {
+        title: t.countingTitle3,
+        description: t.countingDesc3,
+        mascotMessage: t.countingMascot3,
+        mascotEmotion: "encouraging",
+      },
+      {
+        title: t.countingTitle4,
+        description: t.countingDesc4,
+        mascotMessage: t.countingMascot4,
+        mascotEmotion: "celebrating",
+      },
+    ],
+    sorting: [
+      {
+        title: t.sortingTitle1,
+        description: t.sortingDesc1,
+        mascotMessage: t.sortingMascot1,
+        mascotEmotion: "happy",
+      },
+      {
+        title: t.sortingTitle2,
+        description: t.sortingDesc2,
+        mascotMessage: t.sortingMascot2,
+        mascotEmotion: "curious",
+      },
+      {
+        title: t.sortingTitle3,
+        description: t.sortingDesc3,
+        mascotMessage: t.sortingMascot3,
+        mascotEmotion: "thinking",
+      },
+      {
+        title: t.sortingTitle4,
+        description: t.sortingDesc4,
+        mascotMessage: t.sortingMascot4,
+        mascotEmotion: "celebrating",
+      },
+    ],
+    patterns: [
+      {
+        title: t.patternsTitle1,
+        description: t.patternsDesc1,
+        mascotMessage: t.patternsMascot1,
+        mascotEmotion: "happy",
+      },
+      {
+        title: t.patternsTitle2,
+        description: t.patternsDesc2,
+        mascotMessage: t.patternsMascot2,
+        mascotEmotion: "curious",
+      },
+      {
+        title: t.patternsTitle3,
+        description: t.patternsDesc3,
+        mascotMessage: t.patternsMascot3,
+        mascotEmotion: "thinking",
+      },
+      {
+        title: t.patternsTitle4,
+        description: t.patternsDesc4,
+        mascotMessage: t.patternsMascot4,
+        mascotEmotion: "encouraging",
+      },
+    ],
+    "tap-select": [
+      {
+        title: t.tapSelectTitle1,
+        description: t.tapSelectDesc1,
+        mascotMessage: t.tapSelectMascot1,
+        mascotEmotion: "happy",
+      },
+      {
+        title: t.tapSelectTitle2,
+        description: t.tapSelectDesc2,
+        mascotMessage: t.tapSelectMascot2,
+        mascotEmotion: "curious",
+      },
+      {
+        title: t.tapSelectTitle3,
+        description: t.tapSelectDesc3,
+        mascotMessage: t.tapSelectMascot3,
+        mascotEmotion: "encouraging",
+      },
+      {
+        title: t.tapSelectTitle4,
+        description: t.tapSelectDesc4,
+        mascotMessage: t.tapSelectMascot4,
+        mascotEmotion: "celebrating",
+      },
+    ],
+    addition: [
+      {
+        title: t.additionTitle1,
+        description: t.additionDesc1,
+        mascotMessage: t.additionMascot1,
+        mascotEmotion: "happy",
+      },
+      {
+        title: t.additionTitle2,
+        description: t.additionDesc2,
+        mascotMessage: t.additionMascot2,
+        mascotEmotion: "curious",
+      },
+      {
+        title: t.additionTitle3,
+        description: t.additionDesc3,
+        mascotMessage: t.additionMascot3,
+        mascotEmotion: "thinking",
+      },
+      {
+        title: t.additionTitle4,
+        description: t.additionDesc4,
+        mascotMessage: t.additionMascot4,
+        mascotEmotion: "celebrating",
+      },
+    ],
+    "size-select": [
+      {
+        title: t.sizeSelectTitle1,
+        description: t.sizeSelectDesc1,
+        mascotMessage: t.sizeSelectMascot1,
+        mascotEmotion: "happy",
+      },
+      {
+        title: t.sizeSelectTitle2,
+        description: t.sizeSelectDesc2,
+        mascotMessage: t.sizeSelectMascot2,
+        mascotEmotion: "curious",
+      },
+      {
+        title: t.sizeSelectTitle3,
+        description: t.sizeSelectDesc3,
+        mascotMessage: t.sizeSelectMascot3,
+        mascotEmotion: "thinking",
+      },
+      {
+        title: t.sizeSelectTitle4,
+        description: t.sizeSelectDesc4,
+        mascotMessage: t.sizeSelectMascot4,
+        mascotEmotion: "celebrating",
+      },
+    ],
+    fractions: [
+      {
+        title: t.fractionsTitle1,
+        description: t.fractionsDesc1,
+        mascotMessage: t.fractionsMascot1,
+        mascotEmotion: "happy",
+      },
+      {
+        title: t.fractionsTitle2,
+        description: t.fractionsDesc2,
+        mascotMessage: t.fractionsMascot2,
+        mascotEmotion: "curious",
+      },
+      {
+        title: t.fractionsTitle3,
+        description: t.fractionsDesc3,
+        mascotMessage: t.fractionsMascot3,
+        mascotEmotion: "thinking",
+      },
+      {
+        title: t.fractionsTitle4,
+        description: t.fractionsDesc4,
+        mascotMessage: t.fractionsMascot4,
+        mascotEmotion: "celebrating",
+      },
+    ],
+    matching: [
+      {
+        title: t.matchingTitle1,
+        description: t.matchingDesc1,
+        mascotMessage: t.matchingMascot1,
+        mascotEmotion: "happy",
+      },
+      {
+        title: t.matchingTitle2,
+        description: t.matchingDesc2,
+        mascotMessage: t.matchingMascot2,
+        mascotEmotion: "curious",
+      },
+      {
+        title: t.matchingTitle3,
+        description: t.matchingDesc3,
+        mascotMessage: t.matchingMascot3,
+        mascotEmotion: "encouraging",
+      },
+      {
+        title: t.matchingTitle4,
+        description: t.matchingDesc4,
+        mascotMessage: t.matchingMascot4,
+        mascotEmotion: "celebrating",
+      },
+    ],
+    history: [
+      {
+        title: t.historyWalkTitle1,
+        description: t.historyWalkDesc1,
+        mascotMessage: t.historyWalkMascot1,
+        mascotEmotion: "happy",
+      },
+      {
+        title: t.historyWalkTitle2,
+        description: t.historyWalkDesc2,
+        mascotMessage: t.historyWalkMascot2,
+        mascotEmotion: "curious",
+      },
+      {
+        title: t.historyWalkTitle3,
+        description: t.historyWalkDesc3,
+        mascotMessage: t.historyWalkMascot3,
+        mascotEmotion: "encouraging",
+      },
+      {
+        title: t.historyWalkTitle4,
+        description: t.historyWalkDesc4,
+        mascotMessage: t.historyWalkMascot4,
+        mascotEmotion: "celebrating",
+      },
+    ],
+  };
+}
 
 export default function GuidedWalkthrough({
   puzzleType,
@@ -260,7 +264,11 @@ export default function GuidedWalkthrough({
   onComplete,
   onSkip,
 }: GuidedWalkthroughProps) {
+  const { language } = useLanguage();
+  const t = getTranslations(language);
   const [currentStep, setCurrentStep] = useState(0);
+  
+  const defaultWalkthroughs = getDefaultWalkthroughs(t);
   const walkthroughSteps = steps.length > 0 ? steps : defaultWalkthroughs[puzzleType] || defaultWalkthroughs.patterns;
 
   const handleNext = () => {
@@ -307,7 +315,7 @@ export default function GuidedWalkthrough({
             onClick={onSkip}
             className="text-gray-500 hover:text-gray-700 text-sm font-medium"
           >
-            Skip
+            {t.walkthroughSkip}
           </button>
         </div>
 
@@ -347,13 +355,13 @@ export default function GuidedWalkthrough({
                 : "bg-white text-purple-600 hover:bg-purple-50 shadow-md"
             }`}
           >
-            Back
+            {t.walkthroughBack}
           </button>
           <button
             onClick={handleNext}
             className="px-6 py-3 rounded-full font-bold text-lg bg-gradient-to-r from-purple-500 to-blue-500 text-white hover:from-purple-600 hover:to-blue-600 shadow-lg transform hover:scale-105 transition-all"
           >
-            {isLastStep ? "Let's Go! 🚀" : "Next →"}
+            {isLastStep ? t.walkthroughLetsGo : t.walkthroughNext}
           </button>
         </div>
       </motion.div>
