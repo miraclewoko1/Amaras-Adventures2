@@ -314,15 +314,15 @@ export default function MathLevel() {
 
     // Special rendering for size-select (cups)
     if (levelContent.type === "size-select") {
-      const sizeMap: Record<string, { scale: string; label: string }> = {
-        tiny: { scale: "text-2xl", label: "Tiny" },
-        small: { scale: "text-4xl", label: "Small" },
-        medium: { scale: "text-6xl", label: "Medium" },
-        large: { scale: "text-8xl", label: "Large" },
+      const sizeMap: Record<string, { height: string; width: string; label: string }> = {
+        tiny: { height: "h-12", width: "w-10", label: "Tiny" },
+        small: { height: "h-16", width: "w-14", label: "Small" },
+        medium: { height: "h-24", width: "w-20", label: "Medium" },
+        large: { height: "h-32", width: "w-24", label: "Large" },
       };
       
       return (
-        <div className="flex justify-center items-end gap-8 mb-8">
+        <div className="flex justify-center items-end gap-6 mb-8 min-h-[160px]">
           {levelContent.items.map((item, i) => {
             const isSelected = selectedItems.includes(i);
             const size = sizeMap[item] || sizeMap.medium;
@@ -333,7 +333,7 @@ export default function MathLevel() {
                 onClick={() => handleItemTap(i)}
                 disabled={showResult}
                 className={`
-                  transition-all duration-200 p-4 rounded-2xl relative flex flex-col items-center
+                  transition-all duration-200 p-2 rounded-2xl relative flex flex-col items-center justify-end
                   ${!showResult
                     ? `cursor-pointer ${
                         isSelected 
@@ -347,10 +347,29 @@ export default function MathLevel() {
                 `}
                 data-testid={`item-${i}`}
               >
-                <span className={size.scale}>🥤</span>
+                <div className={`${size.height} ${size.width} bg-gradient-to-b from-orange-300 to-orange-500 rounded-t-lg rounded-b-2xl flex items-center justify-center text-white font-bold shadow-md`}>
+                  🥤
+                </div>
               </button>
             );
           })}
+        </div>
+      );
+    }
+    
+    // Special rendering for addition problems
+    if (levelContent.type === "addition") {
+      return (
+        <div className="flex justify-center items-center gap-4 mb-8">
+          <div className="bg-gradient-to-br from-yellow-100 to-yellow-200 dark:from-yellow-900/30 dark:to-yellow-800/30 rounded-2xl p-6 shadow-md">
+            <div className="text-4xl">{levelContent.items[0]}</div>
+          </div>
+          <div className="text-5xl font-bold text-primary">+</div>
+          <div className="bg-gradient-to-br from-yellow-100 to-yellow-200 dark:from-yellow-900/30 dark:to-yellow-800/30 rounded-2xl p-6 shadow-md">
+            <div className="text-4xl">{levelContent.items[2]}</div>
+          </div>
+          <div className="text-5xl font-bold text-primary">=</div>
+          <div className="text-5xl font-bold text-primary">?</div>
         </div>
       );
     }
