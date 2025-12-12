@@ -64,8 +64,8 @@ const LEVEL_CONTENT: Record<number, LevelContentData> = {
     answerOptions: [5, 6, 7, 8],
   },
   8: {
-    items: ["⭐⭐⭐⭐⭐", "⭐⭐", "⭐⭐⭐⭐", "⭐"],
-    correctAnswer: [0, 2, 1, 3],
+    items: ["⭐⭐⭐⭐", "⭐⭐⭐", "⭐⭐", "⭐"],
+    correctAnswer: [0, 1, 2],
     type: "tap-order",
   },
   9: {
