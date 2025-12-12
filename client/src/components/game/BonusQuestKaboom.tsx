@@ -243,9 +243,9 @@ export default function BonusQuestKaboom({ onComplete, onProgress }: BonusQuestK
         }
         const player = k.add(playerComponents);
         
-        // Grace period - disable collision with obstacles for first 2 seconds
+        // Grace period - disable collision with obstacles for first 4 seconds
         let collisionEnabled = false;
-        k.wait(2, () => {
+        k.wait(4, () => {
           collisionEnabled = true;
           console.log("Collision detection enabled after grace period");
         });
@@ -321,7 +321,8 @@ export default function BonusQuestKaboom({ onComplete, onProgress }: BonusQuestK
           const baseHeight = 40;
           const width = baseWidth * depth;
           const height = baseHeight * depth;
-          const speed = 180 * depth;
+          // Slower speed for child-friendly gameplay (was 180)
+          const speed = 120 * depth;
 
           const obstacleX = k.width() + 30;
           const obstacleY = k.height() - FLOOR_HEIGHT;
@@ -363,8 +364,15 @@ export default function BonusQuestKaboom({ onComplete, onProgress }: BonusQuestK
           ]);
         };
 
+        // Start spawning collectibles immediately
         k.loop(1.5, spawnCollectible);
-        k.loop(3, spawnObstacle);
+        
+        // Delay first obstacle spawn by 5 seconds to give player time to get ready
+        // Then spawn obstacles every 4 seconds (slower pace for young children)
+        k.wait(5, () => {
+          spawnObstacle();
+          k.loop(4, spawnObstacle);
+        });
 
         k.onKeyDown("right", () => {
           if (!gameOver) {
@@ -708,7 +716,8 @@ export default function BonusQuestKaboom({ onComplete, onProgress }: BonusQuestK
         }
 
         // Spawn obstacles with depth-based scaling
-        if (timestamp - lastObstacleTime > 3000 && !gameOver) {
+        // Delay first obstacle by 5 seconds, then spawn every 4 seconds (child-friendly pace)
+        if (timestamp > 5000 && timestamp - lastObstacleTime > 4000 && !gameOver) {
           const depth = 0.8 + Math.random() * 0.4;
           const baseWidth = 30;
           const baseHeight = 40;
@@ -718,7 +727,8 @@ export default function BonusQuestKaboom({ onComplete, onProgress }: BonusQuestK
             width: baseWidth * depth,
             height: baseHeight * depth,
             depth,
-            speed: 3 * depth,
+            // Slower speed for easier gameplay (was 3)
+            speed: 2 * depth,
           });
           lastObstacleTime = timestamp;
         }
@@ -773,8 +783,9 @@ export default function BonusQuestKaboom({ onComplete, onProgress }: BonusQuestK
           o.x -= o.speed;
           if (o.x < -50) obstacles.splice(i, 1);
 
-          // Collision detection
+          // Collision detection - only after grace period (4 seconds)
           if (
+            timestamp > 4000 &&
             player.x < o.x + o.width &&
             player.x + player.width > o.x &&
             player.y < o.y + o.height &&
