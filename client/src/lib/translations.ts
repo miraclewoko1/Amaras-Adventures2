@@ -250,6 +250,8 @@ export interface Translations {
   lawnMower: string;
   toaster: string;
   sprinkler: string;
+  washingMachine: string;
+  electricCar: string;
   
   // History Level Titles
   histL1LevelTitle: string;
@@ -737,6 +739,8 @@ const translations: Record<Language, Translations> = {
     lawnMower: "Lawn Mower",
     toaster: "Toaster",
     sprinkler: "Sprinkler",
+    washingMachine: "Washing Machine",
+    electricCar: "Electric Car",
     
     // History Level Titles
     histL1LevelTitle: "Meet Tariq",
@@ -1222,6 +1226,8 @@ const translations: Record<Language, Translations> = {
     lawnMower: "잔디 깎는 기계",
     toaster: "토스터",
     sprinkler: "스프링클러",
+    washingMachine: "세탁기",
+    electricCar: "전기차",
     
     // History Level Titles
     histL1LevelTitle: "타리크 만나기",

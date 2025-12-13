@@ -420,7 +420,7 @@ export default function HistoryLevel() {
   };
 
   const getLevel7Label = (originalIndex: number): string => {
-    const labels = [t.vacuum, t.lawnMower, t.toaster, t.sprinkler];
+    const labels = [t.vacuum, t.toaster, t.washingMachine, t.electricCar, t.lawnMower, t.sprinkler];
     return labels[originalIndex] || "";
   };
 
