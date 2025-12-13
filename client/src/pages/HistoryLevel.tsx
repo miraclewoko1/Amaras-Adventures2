@@ -62,8 +62,8 @@ const LEVEL_CONTENT: Record<number, LevelContent> = {
   4: {
     era: "innovators",
     items: ["📐", "🚀", "🛰️", "🌟", "🌙"],
-    correctAnswer: [0, 1, 2, 3, 4],
-    type: "tap-order",
+    correctAnswer: [1, 2, 3],
+    type: "tap-select",
     randomize: true,
     itemLabels: ["Calculate", "Rocket", "Satellite", "Star", "Moon"],
   },
