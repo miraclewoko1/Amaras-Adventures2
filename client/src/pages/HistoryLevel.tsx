@@ -49,7 +49,7 @@ const LEVEL_CONTENT: Record<number, LevelContent> = {
     correctAnswer: [0, 1, 2, 3, 4],
     type: "tap-order",
     randomize: true,
-    itemLabels: ["Build", "Palace", "Gardens", "Fountains", "Flowers"],
+    itemLabels: ["Crane", "Palace", "Trees", "Fountain", "Flowers"],
   },
   3: {
     era: "moors",
