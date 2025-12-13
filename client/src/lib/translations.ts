@@ -1218,7 +1218,7 @@ const translations: Record<Language, Translations> = {
     welcomeToSpain: "스페인에 오신 것을 환영합니다",
     hello: "안녕하세요!",
     thankYouVeryMuch: "정말 감사합니다!",
-    howAreYou: "안녕하세요?",
+    howAreYou: "어떻게 지내세요?",
     yes: "네!",
     
     // Level 7 Invention Labels
