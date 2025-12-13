@@ -701,7 +701,7 @@ const translations: Record<Language, Translations> = {
     histL9Greeting: "I flew across oceans! Help me trace my flight path around the world!",
     histL9Activity: "Trace the flight! Tap in order: Plane, Ocean, then World!",
     histL10Greeting: "We used math to send astronauts to space! Let's count down together!",
-    histL10Activity: "Tap the countdown in order: 3, 2, 1, then Rocket!",
+    histL10Activity: "Tap the countdown in order: 5, 4, 3, 2, 1, then Rocket!",
     
     // History Figure Names/Titles
     tariqTitle: "Great General & Explorer",
@@ -1188,7 +1188,7 @@ const translations: Record<Language, Translations> = {
     histL9Greeting: "나는 바다를 건너 날았어요! 세계 일주 비행 경로를 따라가는 것을 도와주세요!",
     histL9Activity: "비행 경로를 따라가요! 순서대로 탭하세요: 비행기, 바다, 세계!",
     histL10Greeting: "우리는 수학을 사용하여 우주비행사를 우주로 보냈어요! 함께 카운트다운을 해봐요!",
-    histL10Activity: "순서대로 카운트다운을 탭하세요: 3, 2, 1, 로켓!",
+    histL10Activity: "순서대로 카운트다운을 탭하세요: 5, 4, 3, 2, 1, 로켓!",
     
     // History Figure Names/Titles
     tariqTitle: "위대한 장군이자 탐험가",
