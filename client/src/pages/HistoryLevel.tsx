@@ -53,11 +53,11 @@ const LEVEL_CONTENT: Record<number, LevelContent> = {
   },
   3: {
     era: "moors",
-    items: ["🌹", "🔨", "📚", "🔧", "💡", "🎨"],
+    items: ["🌹", "🔨", "📚", "🔧", "🎨", "🪛"],
     correctAnswer: [0, 2, 4],
     type: "tap-select",
     randomize: true,
-    itemLabels: ["Love", "Hammer", "Knowledge", "Wrench", "Ideas", "Art"],
+    itemLabels: ["Love", "Hammer", "Knowledge", "Wrench", "Art", "Screwdriver"],
   },
   4: {
     era: "innovators",
