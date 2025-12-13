@@ -288,6 +288,14 @@ export default function HistoryLevel() {
     return dragData?.items || [];
   }, [levelId, shuffleKey, levelContent.type, levelContent.randomize, translatedDragMatchData, levelContent.dragMatchData]);
 
+  const shuffledDragMatchDropZones = useMemo(() => {
+    const dragData = translatedDragMatchData || levelContent.dragMatchData;
+    if (levelContent.type === "drag-match" && dragData && levelContent.randomize) {
+      return shuffleArray([...dragData.dropZones]);
+    }
+    return dragData?.dropZones || [];
+  }, [levelId, shuffleKey, levelContent.type, levelContent.randomize, translatedDragMatchData, levelContent.dragMatchData]);
+
   const handleStartActivity = () => {
     setPhase("activity");
     setStartTime(Date.now());
@@ -439,7 +447,7 @@ export default function HistoryLevel() {
             ...item,
             color: "bg-gradient-to-br from-amber-400 to-orange-400"
           }))}
-          dropZones={dragData.dropZones}
+          dropZones={shuffledDragMatchDropZones}
           onComplete={handleDragMatchComplete}
           instruction={levelText.activity}
         />
