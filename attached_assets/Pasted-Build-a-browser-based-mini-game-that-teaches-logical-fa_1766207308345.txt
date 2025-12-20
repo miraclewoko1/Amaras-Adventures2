@@ -1,0 +1,60 @@
+Build a browser-based mini-game that teaches logical fallacies to K–3 students using simple language, colorful visuals, and interactive choices.
+
+Inspiration Source:
+Use https://yourlogicalfallacyis.com/ as the conceptual reference for the types of fallacies, but rewrite all explanations in kid-friendly, layman’s terms suitable for early elementary learners.
+
+Core Features:
+
+1. Fallacy Cards (Kid-Friendly Definitions)
+   Create a set of illustrated cards. Each card introduces one fallacy in simple language:
+   - "Jumping to Conclusions" (Hasty Generalization)
+   - "Everyone Says So!" (Bandwagon)
+   - "That’s Not What I Asked!" (Strawman)
+   - "You’re Just Being Mean!" (Ad Hominem)
+   - "It Happened Before, So It Will Happen Again!" (False Cause)
+
+   Each card should include:
+   • A simple definition in kid language  
+   • A short example using friendly characters (animals, kids, or creatures)  
+   • A big, colorful icon  
+
+2. Interactive Game Modes
+   A. “Spot the Mistake!”
+      - Show a short scenario with two characters talking.
+      - Students choose which fallacy card matches the mistake.
+      - Provide positive feedback and a simple explanation.
+
+   B. “Fix the Mistake!”
+      - Show a fallacy scenario.
+      - Students drag-and-drop a better response to “fix” the thinking.
+
+   C. “Choose the Fair Answer!”
+      - Present two answers: one fallacy, one fair reasoning.
+      - Students tap the fair one.
+
+3. Accessibility & Simplicity
+   - Use large buttons, emojis, and simple sentences.
+   - Add optional voice narration for non-readers.
+   - Include gentle sound effects and animations.
+
+4. Progress Tracking
+   - After each round, save a JSON entry:
+     {
+       "student_id": "string",
+       "activity_id": "logical_fallacies_k3",
+       "fallacy_correct": ["jumping_to_conclusions", "bandwagon"],
+       "fallacy_incorrect": ["strawman"],
+       "timestamp": "ISO string",
+       "growth_level": "emerging | developing | proficient | advanced"
+     }
+
+5. Teacher/Parent Dashboard
+   - Display which fallacies the student understands.
+   - Show improvement over time.
+   - Allow replay of specific fallacies the student struggles with.
+
+Requirements:
+- Use HTML/CSS/JS with modular functions.
+- Keep all definitions and examples in kid-friendly language.
+- Ensure the game is responsive for tablets.
+- Comment code clearly so new fallacies can be added easily.

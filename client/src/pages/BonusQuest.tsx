@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import PrincessAmara from "@/components/PrincessAmara";
-import BonusQuestKaboom from "@/components/game/BonusQuestKaboom";
-import { ArrowLeft, Gamepad2, Trophy } from "lucide-react";
+import LogicalFallaciesGame from "@/components/game/LogicalFallaciesGame";
+import { ArrowLeft, Brain, Trophy } from "lucide-react";
 import { loadProgress, saveBonusPoints, getBonusPointsForActivity, GameProgress } from "@/lib/gameProgress";
 import { useLanguage } from "@/context/LanguageContext";
 import { getTranslations } from "@/lib/translations";
@@ -14,7 +14,6 @@ export default function BonusQuest() {
   const [progress, setProgress] = useState<GameProgress | null>(null);
   const [showResults, setShowResults] = useState(false);
   const [lastScore, setLastScore] = useState(0);
-  const [lastCollectibles, setLastCollectibles] = useState(0);
   const { language, toggleLanguage } = useLanguage();
   const t = getTranslations(language);
 
@@ -22,31 +21,29 @@ export default function BonusQuest() {
     setProgress(loadProgress());
   }, []);
 
-  const bestScore = progress ? getBonusPointsForActivity(progress, "bonus_quest_game") : 0;
+  const bestScore = progress ? getBonusPointsForActivity(progress, "logical_fallacies_game") : 0;
 
-  const handleGameComplete = (score: number, collectibles: number) => {
+  const handleGameComplete = (score: number, correct: string[], incorrect: string[]) => {
     setLastScore(score);
-    setLastCollectibles(collectibles);
     setShowResults(true);
 
     if (progress && score > 0) {
-      const newProgress = saveBonusPoints(progress, "bonus_quest_game", score);
+      const newProgress = saveBonusPoints(progress, "logical_fallacies_game", score);
       setProgress(newProgress);
     }
   };
 
-  const handleProgress = (score: number, collectibles: number) => {
+  const handleProgress = (score: number, total: number) => {
     setLastScore(score);
-    setLastCollectibles(collectibles);
   };
 
   const getMessage = () => {
     if (showResults) {
-      if (lastScore >= 50) return t.bonusQuestAmazing || "Amazing! You collected so many treasures!";
-      if (lastScore >= 30) return t.bonusQuestGreat || "Great job helping me collect treasures!";
-      return t.bonusQuestGood || "Good effort! Want to try again?";
+      if (lastScore >= 50) return "Amazing! You're becoming a thinking detective! You spotted so many thinking mistakes!";
+      if (lastScore >= 30) return "Great job learning about thinking traps! Keep practicing!";
+      return "Good effort! Learning to think clearly takes practice. Want to try again?";
     }
-    return t.bonusQuestWelcome || "Let's go on a special adventure together! Help me collect books, stars, and hearts!";
+    return "Welcome, young detective! Let's learn to spot thinking mistakes together. When we think clearly, we make better choices!";
   };
 
   return (
@@ -62,10 +59,10 @@ export default function BonusQuest() {
             <ArrowLeft className="w-5 h-5" />
           </Button>
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-yellow-400 to-orange-400 flex items-center justify-center">
-              <Gamepad2 className="w-5 h-5 text-white" />
+            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-400 to-pink-400 flex items-center justify-center">
+              <Brain className="w-5 h-5 text-white" />
             </div>
-            <h1 className="text-xl font-bold text-foreground">{t.bonusQuest || "Bonus Quest"}</h1>
+            <h1 className="text-xl font-bold text-foreground">Think Like a Detective!</h1>
           </div>
           <div className="flex items-center gap-2">
             {bestScore > 0 && (
@@ -96,7 +93,7 @@ export default function BonusQuest() {
         </div>
 
         <div className="bg-white dark:bg-card rounded-3xl shadow-lg p-6 border border-border">
-          <BonusQuestKaboom
+          <LogicalFallaciesGame
             onComplete={handleGameComplete}
             onProgress={handleProgress}
           />
@@ -104,7 +101,7 @@ export default function BonusQuest() {
 
         <div className="mt-6 text-center">
           <p className="text-sm text-muted-foreground">
-            {t.bonusQuestNote || "Your best score will be saved to your progress folder!"}
+            Learn to spot thinking mistakes and think more clearly!
           </p>
           <Button
             variant="outline"
