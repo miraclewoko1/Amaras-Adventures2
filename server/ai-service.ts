@@ -48,6 +48,7 @@ export interface ReflectiveFeedbackRequest {
   timeSpent: number;
   hintsUsed: number;
   outcome: "success" | "partial" | "retry";
+  language?: "en" | "ko";
 }
 
 export interface ReflectiveFeedbackResponse {
@@ -133,10 +134,16 @@ Generate personalized, encouraging feedback that celebrates how this child learn
 export async function generateReflectiveFeedback(
   request: ReflectiveFeedbackRequest
 ): Promise<ReflectiveFeedbackResponse> {
+  const isKorean = request.language === "ko";
+  const languageInstruction = isKorean 
+    ? "Respond ENTIRELY in Korean (한국어). Use simple Korean words appropriate for young children ages 3-7."
+    : "Respond in English.";
+  
   const systemPrompt = `You are Sprout, a friendly learning companion for young children.
 After they complete a puzzle, you help them understand what strategies they used to solve it.
 Use simple, encouraging language appropriate for ages 3-7.
 Focus on HOW they solved it, not just that they solved it.
+${languageInstruction}
 Respond in JSON format matching the ReflectiveFeedbackResponse structure.`;
 
   const userPrompt = `A child just completed a ${request.puzzleType} puzzle.
@@ -147,7 +154,7 @@ Here's what happened:
 - Outcome: ${request.outcome}
 - Steps they took: ${request.stepsRecorded.join(" → ")}
 
-Generate reflective feedback that helps them understand their problem-solving approach.`;
+Generate reflective feedback that helps them understand their problem-solving approach.${isKorean ? " 모든 답변은 반드시 한국어로 작성해주세요." : ""}`;
 
   try {
     const response = await openai.chat.completions.create({
@@ -166,14 +173,33 @@ Generate reflective feedback that helps them understand their problem-solving ap
     }
 
     const parsed = JSON.parse(content);
+    const defaultFallbacks = isKorean ? {
+      strategyUsed: "여러 가지 방법을 시도해서 답을 찾았어요!",
+      whatWorkedWell: "끈기 있게 노력한 점이 좋았어요!",
+      alternativeApproach: "다음에는 비슷한 것끼리 모아보는 방법도 있어요!",
+      encouragingNote: "훌륭한 문제 해결사가 되어가고 있어요! 🌱",
+    } : {
+      strategyUsed: "You tried different ideas until one worked!",
+      whatWorkedWell: "Your patience helped you solve it!",
+      alternativeApproach: "Next time, you could also try grouping similar things together!",
+      encouragingNote: "You're becoming a great problem solver! 🌱",
+    };
     return {
-      strategyUsed: parsed.strategyUsed || "You tried different ideas until one worked!",
-      whatWorkedWell: parsed.whatWorkedWell || "Your patience helped you solve it!",
-      alternativeApproach: parsed.alternativeApproach || "Next time, you could also try grouping similar things together!",
-      encouragingNote: parsed.encouragingNote || "You're becoming a great problem solver! 🌱",
+      strategyUsed: parsed.strategyUsed || defaultFallbacks.strategyUsed,
+      whatWorkedWell: parsed.whatWorkedWell || defaultFallbacks.whatWorkedWell,
+      alternativeApproach: parsed.alternativeApproach || defaultFallbacks.alternativeApproach,
+      encouragingNote: parsed.encouragingNote || defaultFallbacks.encouragingNote,
     };
   } catch (error) {
     console.error("Reflective feedback error:", error);
+    if (isKorean) {
+      return {
+        strategyUsed: "열심히 탐색해서 방법을 찾았어요!",
+        whatWorkedWell: "포기하지 않은 점이 정말 대단해요!",
+        alternativeApproach: "퍼즐을 푸는 방법은 여러 가지가 있어요!",
+        encouragingNote: "새싹이가 자랑스러워해요! 🌱",
+      };
+    }
     return {
       strategyUsed: "You explored and found a way!",
       whatWorkedWell: "You didn't give up - that's amazing!",

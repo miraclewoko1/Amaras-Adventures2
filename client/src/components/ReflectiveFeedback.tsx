@@ -96,10 +96,10 @@ export default function ReflectiveFeedback({
   }, [puzzleType, stepsRecorded, timeSpent, hintsUsed, outcome, language, t]);
 
   useEffect(() => {
-    if (feedback) {
+    if (feedback && !loading) {
       setFeedback(getDefaultFeedback(outcome, t));
     }
-  }, [language]);
+  }, [language, outcome, t]);
 
   const sections = feedback
     ? [
