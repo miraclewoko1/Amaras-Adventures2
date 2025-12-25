@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight, Trophy, Music, Palette, Brain, Heart, Compass, Anchor, Zap, Sparkles } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
-import { getTranslations } from "@/lib/translations";
+import { getTranslations, getTranslatedBadgeName } from "@/lib/translations";
 import { 
   loadProgress, 
   saveAssessment, 
@@ -203,7 +203,7 @@ export default function TariqLevelOneExperience({ onComplete }: TariqLevelOneExp
             className="flex flex-col items-center justify-center min-h-[400px] gap-6"
           >
             <PrincessAmara
-              message="You did it! You learned all about Tariq ibn Ziyad and his amazing journey!"
+              message={t.tariqCompletionMessage}
               size="large"
             />
             {earnedBadges.length > 0 && (
@@ -215,7 +215,7 @@ export default function TariqLevelOneExperience({ onComplete }: TariqLevelOneExp
               >
                 <h3 className="text-xl font-bold text-foreground mb-4 flex items-center justify-center gap-2">
                   <Trophy className="w-6 h-6 text-yellow-500" />
-                  New Badges Earned!
+                  {t.newBadgesEarned}
                 </h3>
                 <div className="flex flex-wrap justify-center gap-3">
                   {earnedBadges.map((badge) => (
@@ -234,7 +234,7 @@ export default function TariqLevelOneExperience({ onComplete }: TariqLevelOneExp
                       {badge.icon === "heart" && <Heart className="w-4 h-4 mr-2" />}
                       {badge.icon === "compass" && <Compass className="w-4 h-4 mr-2" />}
                       {badge.icon === "anchor" && <Anchor className="w-4 h-4 mr-2" />}
-                      {badge.name}
+                      {getTranslatedBadgeName(language, badge.id)}
                     </Badge>
                   ))}
                 </div>
