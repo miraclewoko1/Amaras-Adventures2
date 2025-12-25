@@ -1161,8 +1161,8 @@ const translations: Record<Language, Translations> = {
     animals: "동물",
     sounds: "소리",
     levelNotFound: "레벨을 찾을 수 없어요",
-    helpTemplate: (name: string) => `${name}을 도와주세요!`,
-    learnedAboutTemplate: (name: string) => `대단해! ${name}에 대해 배웠어요!`,
+    helpTemplate: (name: string) => `${name}를 도와주세요!`,
+    learnedAboutTemplate: (name: string) => `대단해요! ${name}에 대해 배웠어요!`,
     
     // Math Level Instructions
     mathL1Instruction: "사과가 몇 개 보이나요?",

@@ -209,6 +209,71 @@ Generate reflective feedback that helps them understand their problem-solving ap
   }
 }
 
+export interface TranslationRequest {
+  texts: { key: string; text: string }[];
+  targetLanguage: "ko";
+}
+
+export interface TranslationResponse {
+  translations: { key: string; text: string }[];
+}
+
+export async function translateToKorean(
+  texts: { key: string; text: string }[]
+): Promise<TranslationResponse> {
+  const systemPrompt = `You are a professional Korean translator specializing in content for young children (ages 3-7).
+Translate the given English texts to natural, colloquial Korean that children can understand.
+
+Guidelines:
+- Use simple, friendly Korean appropriate for young children
+- Use polite but casual speech endings (해요체)
+- Keep the tone warm and encouraging
+- Translate names phonetically using Korean characters
+- Ensure proper Korean sentence structure (subject-object-verb)
+- Use appropriate particles (은/는, 을/를, 이/가, etc.)
+
+Respond in JSON format with an array of translations matching the input keys.`;
+
+  const userPrompt = `Translate these texts to Korean for a children's educational app:
+
+${texts.map((t, i) => `${i + 1}. [${t.key}]: "${t.text}"`).join("\n")}
+
+Return JSON format:
+{
+  "translations": [
+    { "key": "key1", "text": "Korean translation" },
+    ...
+  ]
+}`;
+
+  try {
+    const response = await openai.chat.completions.create({
+      model: "gpt-4o",
+      max_tokens: 2048,
+      response_format: { type: "json_object" },
+      messages: [
+        { role: "system", content: systemPrompt },
+        { role: "user", content: userPrompt },
+      ],
+    });
+
+    const content = response.choices[0]?.message?.content;
+    if (!content) {
+      throw new Error("No response from AI");
+    }
+
+    const parsed = JSON.parse(content);
+    return {
+      translations: parsed.translations || texts.map(t => ({ key: t.key, text: t.text })),
+    };
+  } catch (error) {
+    console.error("Translation error:", error);
+    return {
+      translations: texts.map(t => ({ key: t.key, text: t.text })),
+    };
+  }
+}
+
 export interface CareerInsightRequest {
   learningPatterns: {
     puzzleType: string;
