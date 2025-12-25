@@ -46,7 +46,21 @@ export default function TariqReflectionOverlay({ onComplete }: TariqReflectionOv
   const t = getTranslations(language);
   
   const diagnostics = useMemo(() => loadDiagnostics("student_1", "tariq_711_module"), []);
-  const scaffoldPrompts = useMemo(() => getReflectionPrompts(diagnostics), [diagnostics]);
+  const basePrompts = useMemo(() => getReflectionPrompts(diagnostics), [diagnostics]);
+  
+  const SCAFFOLD_PROMPTS_TRANSLATED: Record<string, string> = {
+    basic_1: t.scaffoldBasic1,
+    basic_2: t.scaffoldBasic2,
+    empathy_1: t.scaffoldEmpathy1,
+    empathy_2: t.scaffoldEmpathy2,
+    comparative_1: t.scaffoldComparative1,
+    comparative_2: t.scaffoldComparative2,
+  };
+  
+  const scaffoldPrompts = basePrompts.map(prompt => ({
+    ...prompt,
+    text: SCAFFOLD_PROMPTS_TRANSLATED[prompt.id] || prompt.text,
+  }));
   
   const GROUPS_TRANSLATED = [
     { id: "berbers", name: t.berbersName, description: t.berbersDesc },

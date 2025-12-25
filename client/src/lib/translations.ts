@@ -206,6 +206,12 @@ export interface Translations {
   hideIdeas: string;
   thinkAboutQuestions: string;
   tellUsWhatYouThink: string;
+  scaffoldBasic1: string;
+  scaffoldBasic2: string;
+  scaffoldEmpathy1: string;
+  scaffoldEmpathy2: string;
+  scaffoldComparative1: string;
+  scaffoldComparative2: string;
   completeLevel: string;
   tariqCompletionMessage: string;
   newBadgesEarned: string;
@@ -723,6 +729,12 @@ const translations: Record<Language, Translations> = {
     hideIdeas: "Hide Ideas",
     thinkAboutQuestions: "Think about these questions:",
     tellUsWhatYouThink: "Tell us what you think each group felt during the journey...",
+    scaffoldBasic1: "How did the Berbers feel when they saw the mountain?",
+    scaffoldBasic2: "Were the Visigoths happy or worried?",
+    scaffoldEmpathy1: "How might the Visigoths have felt when they saw the ships?",
+    scaffoldEmpathy2: "What do you think Tariq felt leading his people?",
+    scaffoldComparative1: "How might Córdoba feel different from Toledo after this journey?",
+    scaffoldComparative2: "Compare how explorers and locals might have different feelings.",
     completeLevel: "Complete Level!",
     tariqCompletionMessage: "You did it! You learned all about Tariq ibn Ziyad and his amazing journey!",
     newBadgesEarned: "New Badges Earned!",
@@ -1238,6 +1250,12 @@ const translations: Record<Language, Translations> = {
     hideIdeas: "아이디어 숨기기",
     thinkAboutQuestions: "이 질문들을 생각해보세요:",
     tellUsWhatYouThink: "여정 중 각 그룹이 어떤 기분이었을지 말해주세요...",
+    scaffoldBasic1: "베르베르인들이 산을 봤을 때 어떤 기분이었을까요?",
+    scaffoldBasic2: "서고트족은 행복했을까요, 아니면 걱정했을까요?",
+    scaffoldEmpathy1: "서고트족은 배들을 봤을 때 어떤 기분이었을까요?",
+    scaffoldEmpathy2: "타리크가 사람들을 이끌 때 어떤 기분이었을까요?",
+    scaffoldComparative1: "이 여정 이후 코르도바와 톨레도는 어떻게 다르게 느꼈을까요?",
+    scaffoldComparative2: "탐험가들과 원주민들이 서로 다른 감정을 느꼈을 수 있는 점을 비교해보세요.",
     completeLevel: "레벨 완료!",
     tariqCompletionMessage: "해냈어요! 타리크 이븐 지야드와 그의 놀라운 여정에 대해 모두 배웠어요!",
     newBadgesEarned: "새 배지를 획득했어요!",
