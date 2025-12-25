@@ -609,12 +609,12 @@ export default function HistoryLevel() {
                     message={phase === "result" 
                       ? isCorrect 
                         ? levelId === 10 
-                          ? `${t.learnedAbout} Katherine Johnson, Mary Jackson, and Dorothy Vaughan!`
-                          : `${t.learnedAbout} ${levelText.figure}!` 
+                          ? t.learnedAboutTemplate("Katherine Johnson, Mary Jackson, Dorothy Vaughan")
+                          : t.learnedAboutTemplate(levelText.figure)
                         : t.oopsTryAgain
                       : levelId === 10 
-                        ? `${t.help} Katherine Johnson, Mary Jackson, and Dorothy Vaughan!`
-                        : `${t.help} ${levelText.figure}!`
+                        ? t.helpTemplate("Katherine Johnson, Mary Jackson, Dorothy Vaughan")
+                        : t.helpTemplate(levelText.figure)
                     }
                     size="small"
                     customAvatarUrl={levelId === 10 ? hiddenFiguresImg : undefined}

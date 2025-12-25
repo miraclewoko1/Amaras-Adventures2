@@ -117,8 +117,8 @@ export interface Translations {
   animals: string;
   sounds: string;
   levelNotFound: string;
-  help: string;
-  learnedAbout: string;
+  helpTemplate: (name: string) => string;
+  learnedAboutTemplate: (name: string) => string;
   
   // Math Level Instructions
   mathL1Instruction: string;
@@ -640,8 +640,8 @@ const translations: Record<Language, Translations> = {
     animals: "Animals",
     sounds: "Sounds",
     levelNotFound: "Level not found",
-    help: "Help",
-    learnedAbout: "Amazing! You learned about",
+    helpTemplate: (name: string) => `Help ${name}!`,
+    learnedAboutTemplate: (name: string) => `Amazing! You learned about ${name}!`,
     
     // Math Level Instructions
     mathL1Instruction: "How many apples do you see?",
@@ -1161,8 +1161,8 @@ const translations: Record<Language, Translations> = {
     animals: "동물",
     sounds: "소리",
     levelNotFound: "레벨을 찾을 수 없어요",
-    help: "도와주세요,",
-    learnedAbout: "대단해! 이제 알게 되었어요:",
+    helpTemplate: (name: string) => `${name}을 도와주세요!`,
+    learnedAboutTemplate: (name: string) => `대단해! ${name}에 대해 배웠어요!`,
     
     // Math Level Instructions
     mathL1Instruction: "사과가 몇 개 보이나요?",
