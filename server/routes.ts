@@ -33,12 +33,14 @@ export async function registerRoutes(
   app.post("/api/reflective-feedback", async (req, res) => {
     try {
       const request: ReflectiveFeedbackRequest = req.body;
+      console.log("[Reflective Feedback] Language received:", request.language, "| isKorean:", request.language === "ko");
       
       if (!request.puzzleType || !request.stepsRecorded) {
         return res.status(400).json({ error: "Missing required fields" });
       }
 
       const feedback = await generateReflectiveFeedback(request);
+      console.log("[Reflective Feedback] Response strategyUsed:", feedback.strategyUsed?.substring(0, 50));
       res.json(feedback);
     } catch (error) {
       console.error("Reflective feedback error:", error);

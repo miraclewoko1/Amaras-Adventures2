@@ -64,9 +64,20 @@ export default function ReflectiveFeedback({
 
   useEffect(() => {
     let isCancelled = false;
+    const currentTranslations = getTranslations(language);
     
     async function fetchFeedback() {
       setLoading(true);
+      
+      // For Korean, use translated defaults directly for reliable translation
+      if (language === "ko") {
+        if (!isCancelled) {
+          setFeedback(getDefaultFeedback(outcome, currentTranslations));
+          setLoading(false);
+        }
+        return;
+      }
+      
       try {
         const response = await fetch("/api/reflective-feedback", {
           method: "POST",
@@ -86,14 +97,12 @@ export default function ReflectiveFeedback({
             const data = await response.json();
             setFeedback(data);
           } else {
-            const currentTranslations = getTranslations(language);
             setFeedback(getDefaultFeedback(outcome, currentTranslations));
           }
         }
       } catch (error) {
         console.error("Failed to fetch feedback:", error);
         if (!isCancelled) {
-          const currentTranslations = getTranslations(language);
           setFeedback(getDefaultFeedback(outcome, currentTranslations));
         }
       } finally {
