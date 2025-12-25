@@ -63,7 +63,10 @@ export default function ReflectiveFeedback({
   }
 
   useEffect(() => {
+    let isCancelled = false;
+    
     async function fetchFeedback() {
+      setLoading(true);
       try {
         const response = await fetch("/api/reflective-feedback", {
           method: "POST",
@@ -78,28 +81,34 @@ export default function ReflectiveFeedback({
           }),
         });
 
-        if (response.ok) {
-          const data = await response.json();
-          setFeedback(data);
-        } else {
-          setFeedback(getDefaultFeedback(outcome, t));
+        if (!isCancelled) {
+          if (response.ok) {
+            const data = await response.json();
+            setFeedback(data);
+          } else {
+            const currentTranslations = getTranslations(language);
+            setFeedback(getDefaultFeedback(outcome, currentTranslations));
+          }
         }
       } catch (error) {
         console.error("Failed to fetch feedback:", error);
-        setFeedback(getDefaultFeedback(outcome, t));
+        if (!isCancelled) {
+          const currentTranslations = getTranslations(language);
+          setFeedback(getDefaultFeedback(outcome, currentTranslations));
+        }
       } finally {
-        setLoading(false);
+        if (!isCancelled) {
+          setLoading(false);
+        }
       }
     }
 
     fetchFeedback();
-  }, [puzzleType, stepsRecorded, timeSpent, hintsUsed, outcome, language, t]);
-
-  useEffect(() => {
-    if (feedback && !loading) {
-      setFeedback(getDefaultFeedback(outcome, t));
-    }
-  }, [language, outcome, t]);
+    
+    return () => {
+      isCancelled = true;
+    };
+  }, [puzzleType, stepsRecorded, timeSpent, hintsUsed, outcome, language]);
 
   const sections = feedback
     ? [
