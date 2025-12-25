@@ -6,6 +6,7 @@ import {
   generateReflectiveFeedback,
   generateCareerInsights,
   translateToKorean,
+  translateTemplateToKorean,
   type AdaptiveFeedbackRequest,
   type ReflectiveFeedbackRequest,
   type CareerInsightRequest,
@@ -98,6 +99,22 @@ export async function registerRoutes(
     } catch (error) {
       console.error("Translation error:", error);
       res.status(500).json({ error: "Failed to translate" });
+    }
+  });
+
+  app.post("/api/translate-template", async (req, res) => {
+    try {
+      const { templateType, name, englishText } = req.body;
+      
+      if (!templateType || !name || !englishText) {
+        return res.status(400).json({ error: "Missing required fields" });
+      }
+
+      const translation = await translateTemplateToKorean(templateType, name, englishText);
+      res.json({ translation });
+    } catch (error) {
+      console.error("Template translation error:", error);
+      res.status(500).json({ error: "Failed to translate template" });
     }
   });
 

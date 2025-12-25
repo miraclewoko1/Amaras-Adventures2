@@ -16,6 +16,7 @@ import TariqLevelOneExperience from "@/components/history/TariqLevelOneExperienc
 import { useLanguage } from "@/context/LanguageContext";
 import { getTranslations, type Translations } from "@/lib/translations";
 import { FlagIcon } from "@/components/FlagIcon";
+import { translateWithName } from "@/lib/aiTranslation";
 
 interface DragMatchData {
   items: Array<{ id: string; label: string; icon: string }>;
@@ -226,6 +227,8 @@ export default function HistoryLevel() {
   const [showReflectiveFeedback, setShowReflectiveFeedback] = useState(false);
   const [hintsUsed, setHintsUsed] = useState(0);
   const [sproutMessage, setSproutMessage] = useState<string | null>(null);
+  const [translatedHelpMessage, setTranslatedHelpMessage] = useState<string | null>(null);
+  const [translatedLearnedMessage, setTranslatedLearnedMessage] = useState<string | null>(null);
 
   useEffect(() => {
     setProgress(loadProgress());
@@ -272,6 +275,20 @@ export default function HistoryLevel() {
   const levelData = progress?.historyLevels.find((l) => l.id === levelId);
   const levelText = getHistoryLevelText(levelId, t);
   const translatedDragMatchData = getTranslatedDragMatchData(levelId, t);
+
+  useEffect(() => {
+    if (language === "ko" && levelText.figure) {
+      const figureName = levelId === 10 
+        ? "Katherine Johnson, Mary Jackson, Dorothy Vaughan" 
+        : levelText.figure;
+      
+      translateWithName("help", figureName).then(setTranslatedHelpMessage);
+      translateWithName("learnedAbout", figureName).then(setTranslatedLearnedMessage);
+    } else {
+      setTranslatedHelpMessage(null);
+      setTranslatedLearnedMessage(null);
+    }
+  }, [language, levelId, levelText.figure]);
 
   const shuffledIndices = useMemo(() => {
     if (levelContent.randomize) {
@@ -608,13 +625,13 @@ export default function HistoryLevel() {
                   <PrincessAmara
                     message={phase === "result" 
                       ? isCorrect 
-                        ? levelId === 10 
-                          ? t.learnedAboutTemplate("Katherine Johnson, Mary Jackson, Dorothy Vaughan")
-                          : t.learnedAboutTemplate(levelText.figure)
+                        ? language === "ko" && translatedLearnedMessage
+                          ? translatedLearnedMessage
+                          : t.learnedAboutTemplate(levelId === 10 ? "Katherine Johnson, Mary Jackson, Dorothy Vaughan" : levelText.figure)
                         : t.oopsTryAgain
-                      : levelId === 10 
-                        ? t.helpTemplate("Katherine Johnson, Mary Jackson, Dorothy Vaughan")
-                        : t.helpTemplate(levelText.figure)
+                      : language === "ko" && translatedHelpMessage
+                        ? translatedHelpMessage
+                        : t.helpTemplate(levelId === 10 ? "Katherine Johnson, Mary Jackson, Dorothy Vaughan" : levelText.figure)
                     }
                     size="small"
                     customAvatarUrl={levelId === 10 ? hiddenFiguresImg : undefined}

@@ -1,31 +1,93 @@
 const translationCache = new Map<string, string>();
+const pendingTranslations = new Map<string, Promise<string>>();
 
 export async function translateText(text: string): Promise<string> {
   if (translationCache.has(text)) {
     return translationCache.get(text)!;
   }
 
-  try {
-    const response = await fetch("/api/translate", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        texts: [{ key: "text", text }],
-      }),
-    });
-
-    if (!response.ok) {
-      throw new Error("Translation failed");
-    }
-
-    const data = await response.json();
-    const translated = data.translations?.[0]?.text || text;
-    translationCache.set(text, translated);
-    return translated;
-  } catch (error) {
-    console.error("Translation error:", error);
-    return text;
+  if (pendingTranslations.has(text)) {
+    return pendingTranslations.get(text)!;
   }
+
+  const promise = (async () => {
+    try {
+      const response = await fetch("/api/translate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          texts: [{ key: "text", text }],
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Translation failed");
+      }
+
+      const data = await response.json();
+      const translated = data.translations?.[0]?.text || text;
+      translationCache.set(text, translated);
+      return translated;
+    } catch (error) {
+      console.error("Translation error:", error);
+      return text;
+    } finally {
+      pendingTranslations.delete(text);
+    }
+  })();
+
+  pendingTranslations.set(text, promise);
+  return promise;
+}
+
+export async function translateWithName(
+  templateType: "help" | "learnedAbout",
+  name: string
+): Promise<string> {
+  const cacheKey = `${templateType}:${name}`;
+  
+  if (translationCache.has(cacheKey)) {
+    return translationCache.get(cacheKey)!;
+  }
+
+  if (pendingTranslations.has(cacheKey)) {
+    return pendingTranslations.get(cacheKey)!;
+  }
+
+  const englishText = templateType === "help" 
+    ? `Help ${name}!`
+    : `Amazing! You learned about ${name}!`;
+
+  const promise = (async () => {
+    try {
+      const response = await fetch("/api/translate-template", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          templateType,
+          name,
+          englishText,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Translation failed");
+      }
+
+      const data = await response.json();
+      const translated = data.translation || englishText;
+      translationCache.set(cacheKey, translated);
+      return translated;
+    } catch (error) {
+      console.error("Template translation error:", error);
+      return englishText;
+    } finally {
+      pendingTranslations.delete(cacheKey);
+    }
+  })();
+
+  pendingTranslations.set(cacheKey, promise);
+  return promise;
 }
 
 export async function translateMultiple(
@@ -64,4 +126,5 @@ export async function translateMultiple(
 
 export function clearTranslationCache(): void {
   translationCache.clear();
+  pendingTranslations.clear();
 }

@@ -218,6 +218,59 @@ export interface TranslationResponse {
   translations: { key: string; text: string }[];
 }
 
+export async function translateTemplateToKorean(
+  templateType: "help" | "learnedAbout",
+  name: string,
+  englishText: string
+): Promise<string> {
+  const systemPrompt = `You are a professional Korean translator specializing in content for young children (ages 3-7).
+Translate the given English sentence to natural, colloquial Korean.
+
+CRITICAL RULES for Korean particles:
+- Use 을 after syllables ending with a consonant (받침): 존을, 마르코스를 -> WRONG, should be 존을, 마르코스를
+- Use 를 after syllables ending with a vowel: 아마라를, 타리크를
+- The name "${name}" - check its final character to determine the correct particle
+
+For "Help [name]!" sentences:
+- Structure: [name] + 을/를 + 도와주세요!
+- Example: "Help John!" -> "존을 도와주세요!" (존 ends with ㄴ consonant, so use 을)
+- Example: "Help Amara!" -> "아마라를 도와주세요!" (라 ends with vowel, so use 를)
+
+For "Amazing! You learned about [name]!" sentences:
+- Structure: 대단해요! [name] + 에 대해 배웠어요!
+- The particle 에 대해 doesn't change based on the name
+
+Use simple, friendly Korean appropriate for young children.`;
+
+  const userPrompt = `Translate to Korean: "${englishText}"
+
+The name in this sentence is: "${name}"
+Template type: ${templateType}
+
+Return ONLY the Korean translation, nothing else.`;
+
+  try {
+    const response = await openai.chat.completions.create({
+      model: "gpt-4o",
+      max_tokens: 256,
+      messages: [
+        { role: "system", content: systemPrompt },
+        { role: "user", content: userPrompt },
+      ],
+    });
+
+    const content = response.choices[0]?.message?.content;
+    if (!content) {
+      throw new Error("No response from AI");
+    }
+
+    return content.trim().replace(/^["']|["']$/g, '');
+  } catch (error) {
+    console.error("Template translation error:", error);
+    return englishText;
+  }
+}
+
 export async function translateToKorean(
   texts: { key: string; text: string }[]
 ): Promise<TranslationResponse> {
