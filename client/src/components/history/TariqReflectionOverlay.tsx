@@ -5,6 +5,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Check, HelpCircle } from "lucide-react";
 import type { ReflectionData } from "@/lib/gameProgress";
 import { loadDiagnostics, getReflectionPrompts } from "@/lib/adaptiveDiagnostics";
+import { useLanguage } from "@/context/LanguageContext";
+import { getTranslations } from "@/lib/translations";
 
 interface TariqReflectionOverlayProps {
   onComplete: (reflectionData: ReflectionData) => void;
@@ -40,8 +42,26 @@ const GROUPS = [
 ];
 
 export default function TariqReflectionOverlay({ onComplete }: TariqReflectionOverlayProps) {
+  const { language } = useLanguage();
+  const t = getTranslations(language);
+  
   const diagnostics = useMemo(() => loadDiagnostics("student_1", "tariq_711_module"), []);
   const scaffoldPrompts = useMemo(() => getReflectionPrompts(diagnostics), [diagnostics]);
+  
+  const GROUPS_TRANSLATED = [
+    { id: "berbers", name: t.berbersName, description: t.berbersDesc },
+    { id: "visigoths", name: t.visigothsName, description: t.visigothsDesc },
+    { id: "allies", name: t.alliesName, description: t.alliesDesc },
+  ];
+  
+  const FEELING_COLORS_TRANSLATED = [
+    { id: "happy", color: "#FFD700", label: t.happyGold },
+    { id: "brave", color: "#FF6347", label: t.braveRed },
+    { id: "scared", color: "#9370DB", label: t.scaredPurple },
+    { id: "curious", color: "#32CD32", label: t.curiousGreen },
+    { id: "proud", color: "#4169E1", label: t.proudBlue },
+    { id: "worried", color: "#808080", label: t.worriedGray },
+  ];
   
   const [reflections, setReflections] = useState<Record<string, GroupReflection>>({
     berbers: { color: FEELING_COLORS[0].color, emoji: FEELING_EMOJIS[0].emoji },
@@ -66,15 +86,15 @@ export default function TariqReflectionOverlay({ onComplete }: TariqReflectionOv
     >
       <div className="text-center mb-6">
         <h2 className="text-2xl font-bold text-foreground mb-2">
-          How Did They Feel?
+          {t.howDidTheyFeel}
         </h2>
         <p className="text-muted-foreground">
-          Choose a color and emoji for how each group might have felt during Tariq's journey.
+          {t.howDidTheyFeelDesc}
         </p>
       </div>
 
       <div className="space-y-6">
-        {GROUPS.map((group) => (
+        {GROUPS_TRANSLATED.map((group) => (
           <div
             key={group.id}
             className="p-4 rounded-2xl border border-border"
@@ -90,9 +110,9 @@ export default function TariqReflectionOverlay({ onComplete }: TariqReflectionOv
 
             <div className="space-y-3">
               <div>
-                <p className="text-sm font-medium text-muted-foreground mb-2">Pick a feeling color:</p>
+                <p className="text-sm font-medium text-muted-foreground mb-2">{t.pickFeelingColor}</p>
                 <div className="flex flex-wrap gap-2">
-                  {FEELING_COLORS.map((fc) => (
+                  {FEELING_COLORS_TRANSLATED.map((fc) => (
                     <button
                       key={fc.id}
                       onClick={() => updateReflection(group.id, "color", fc.color)}
@@ -110,7 +130,7 @@ export default function TariqReflectionOverlay({ onComplete }: TariqReflectionOv
               </div>
 
               <div>
-                <p className="text-sm font-medium text-muted-foreground mb-2">Pick a feeling emoji:</p>
+                <p className="text-sm font-medium text-muted-foreground mb-2">{t.pickFeelingEmoji}</p>
                 <div className="flex flex-wrap gap-2">
                   {FEELING_EMOJIS.map((fe) => (
                     <button
@@ -137,7 +157,7 @@ export default function TariqReflectionOverlay({ onComplete }: TariqReflectionOv
       <div className="mt-6">
         <div className="flex items-center gap-2 mb-2">
           <p className="text-sm font-medium text-muted-foreground">
-            Why did you pick these feelings? (optional)
+            {t.whyPickFeelings}
           </p>
           {scaffoldPrompts.length > 0 && (
             <Button
@@ -147,14 +167,14 @@ export default function TariqReflectionOverlay({ onComplete }: TariqReflectionOv
               data-testid="button-show-prompts"
             >
               <HelpCircle className="w-4 h-4 mr-1" />
-              {showPrompts ? "Hide Ideas" : "Need Ideas?"}
+              {showPrompts ? t.hideIdeas : t.needIdeas}
             </Button>
           )}
         </div>
         
         {showPrompts && scaffoldPrompts.length > 0 && (
           <div className="mb-3 p-3 bg-muted rounded-xl">
-            <p className="text-sm font-medium text-foreground mb-2">Think about these questions:</p>
+            <p className="text-sm font-medium text-foreground mb-2">{t.thinkAboutQuestions}</p>
             <ul className="space-y-1">
               {scaffoldPrompts.map((prompt) => (
                 <li key={prompt.id} className="text-sm text-muted-foreground flex items-start gap-2">
@@ -169,7 +189,7 @@ export default function TariqReflectionOverlay({ onComplete }: TariqReflectionOv
         <Textarea
           value={explanation}
           onChange={(e) => setExplanation(e.target.value)}
-          placeholder="Tell us what you think each group felt during the journey..."
+          placeholder={t.tellUsWhatYouThink}
           className="mb-4"
           data-testid="textarea-explanation"
         />
@@ -206,7 +226,7 @@ export default function TariqReflectionOverlay({ onComplete }: TariqReflectionOv
           data-testid="button-finish-reflection"
         >
           <Check className="w-5 h-5 mr-2" />
-          Complete Level!
+          {t.completeLevel}
         </Button>
       </div>
     </motion.div>

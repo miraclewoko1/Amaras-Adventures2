@@ -195,6 +195,31 @@ export interface Translations {
   startAdventure: string;
   tariqArtPrompt: string;
   tariqReflectionPrompt: string;
+  
+  // Tariq Reflection Overlay
+  howDidTheyFeel: string;
+  howDidTheyFeelDesc: string;
+  pickFeelingColor: string;
+  pickFeelingEmoji: string;
+  whyPickFeelings: string;
+  needIdeas: string;
+  hideIdeas: string;
+  thinkAboutQuestions: string;
+  tellUsWhatYouThink: string;
+  completeLevel: string;
+  berbersName: string;
+  berbersDesc: string;
+  visigothsName: string;
+  visigothsDesc: string;
+  alliesName: string;
+  alliesDesc: string;
+  happyGold: string;
+  braveRed: string;
+  scaredPurple: string;
+  curiousGreen: string;
+  proudBlue: string;
+  worriedGray: string;
+  
   histL2Greeting: string;
   histL2Activity: string;
   histL3Greeting: string;
@@ -684,6 +709,31 @@ const translations: Record<Language, Translations> = {
     startAdventure: "Start the Adventure!",
     tariqArtPrompt: "Great job with the song! Now let's draw the Mountain of Gibraltar!",
     tariqReflectionPrompt: "Beautiful artwork! Now let's think about how different people felt during this adventure.",
+    
+    // Tariq Reflection Overlay
+    howDidTheyFeel: "How Did They Feel?",
+    howDidTheyFeelDesc: "Choose a color and emoji for how each group might have felt during Tariq's journey.",
+    pickFeelingColor: "Pick a feeling color:",
+    pickFeelingEmoji: "Pick a feeling emoji:",
+    whyPickFeelings: "Why did you pick these feelings? (optional)",
+    needIdeas: "Need Ideas?",
+    hideIdeas: "Hide Ideas",
+    thinkAboutQuestions: "Think about these questions:",
+    tellUsWhatYouThink: "Tell us what you think each group felt during the journey...",
+    completeLevel: "Complete Level!",
+    berbersName: "Berbers",
+    berbersDesc: "The brave explorers from North Africa",
+    visigothsName: "Visigoths",
+    visigothsDesc: "The people already living in Spain",
+    alliesName: "Allies",
+    alliesDesc: "Friends who helped on the journey",
+    happyGold: "Happy (Gold)",
+    braveRed: "Brave (Red)",
+    scaredPurple: "Scared (Purple)",
+    curiousGreen: "Curious (Green)",
+    proudBlue: "Proud (Blue)",
+    worriedGray: "Worried (Gray)",
+    
     histL2Greeting: "Welcome! I built grand palaces and gardens in Córdoba. Let's design something amazing together!",
     histL2Activity: "Build the courtyard! Tap in order: Crane, Palace, Trees, Fountain, Flowers!",
     histL3Greeting: "Thinking is my favorite thing! I studied science and philosophy. Can you find the ideas?",
@@ -1171,6 +1221,31 @@ const translations: Record<Language, Translations> = {
     startAdventure: "모험 시작!",
     tariqArtPrompt: "노래 잘 했어요! 이제 지브롤터 산을 그려봐요!",
     tariqReflectionPrompt: "아름다운 그림이에요! 이제 이 모험에서 사람들이 어떻게 느꼈는지 생각해봐요.",
+    
+    // Tariq Reflection Overlay
+    howDidTheyFeel: "그들은 어떤 기분이었을까요?",
+    howDidTheyFeelDesc: "타리크의 여정에서 각 그룹이 어떤 기분이었을지 색깔과 이모지를 선택해보세요.",
+    pickFeelingColor: "감정 색깔을 골라보세요:",
+    pickFeelingEmoji: "감정 이모지를 골라보세요:",
+    whyPickFeelings: "왜 이런 감정을 골랐나요? (선택사항)",
+    needIdeas: "아이디어가 필요해요?",
+    hideIdeas: "아이디어 숨기기",
+    thinkAboutQuestions: "이 질문들을 생각해보세요:",
+    tellUsWhatYouThink: "여정 중 각 그룹이 어떤 기분이었을지 말해주세요...",
+    completeLevel: "레벨 완료!",
+    berbersName: "베르베르인",
+    berbersDesc: "북아프리카에서 온 용감한 탐험가들",
+    visigothsName: "서고트족",
+    visigothsDesc: "이미 스페인에 살고 있던 사람들",
+    alliesName: "동맹",
+    alliesDesc: "여정을 도와준 친구들",
+    happyGold: "행복해요 (금색)",
+    braveRed: "용감해요 (빨간색)",
+    scaredPurple: "무서워요 (보라색)",
+    curiousGreen: "궁금해요 (초록색)",
+    proudBlue: "자랑스러워요 (파란색)",
+    worriedGray: "걱정돼요 (회색)",
+    
     histL2Greeting: "환영해요! 나는 코르도바에 웅장한 궁전과 정원을 지었어요. 함께 멋진 것을 디자인해봐요!",
     histL2Activity: "정원을 만들어요! 순서대로 탭하세요: 크레인, 궁전, 나무, 분수, 꽃!",
     histL3Greeting: "생각하는 것이 내가 가장 좋아하는 일이에요! 나는 과학과 철학을 공부했어요. 아이디어를 찾을 수 있나요?",
