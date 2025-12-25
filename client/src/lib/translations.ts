@@ -209,6 +209,7 @@ export interface Translations {
   completeLevel: string;
   tariqCompletionMessage: string;
   newBadgesEarned: string;
+  singAlongInstruction: string;
   berbersName: string;
   berbersDesc: string;
   visigothsName: string;
@@ -725,6 +726,7 @@ const translations: Record<Language, Translations> = {
     completeLevel: "Complete Level!",
     tariqCompletionMessage: "You did it! You learned all about Tariq ibn Ziyad and his amazing journey!",
     newBadgesEarned: "New Badges Earned!",
+    singAlongInstruction: "Sing along and tap the symbols when they glow!",
     berbersName: "Berbers",
     berbersDesc: "The brave explorers from North Africa",
     visigothsName: "Visigoths",
@@ -1239,6 +1241,7 @@ const translations: Record<Language, Translations> = {
     completeLevel: "레벨 완료!",
     tariqCompletionMessage: "해냈어요! 타리크 이븐 지야드와 그의 놀라운 여정에 대해 모두 배웠어요!",
     newBadgesEarned: "새 배지를 획득했어요!",
+    singAlongInstruction: "노래를 따라 부르고 기호가 빛나면 탭하세요!",
     berbersName: "베르베르인",
     berbersDesc: "북아프리카에서 온 용감한 탐험가들",
     visigothsName: "서고트족",

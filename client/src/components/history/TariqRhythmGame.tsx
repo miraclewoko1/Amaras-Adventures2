@@ -8,6 +8,8 @@ import tariqAvatarPath from "@assets/generated_images/tariq_ibn_ziyad_cartoon.pn
 import lyricsData from "@/data/tariq-lyrics.json";
 import type { PerformanceData } from "@/lib/gameProgress";
 import { loadDiagnostics, getRhythmSettings, type TempoSetting } from "@/lib/adaptiveDiagnostics";
+import { useLanguage } from "@/context/LanguageContext";
+import { getTranslations } from "@/lib/translations";
 
 interface LyricLine {
   text: string;
@@ -110,6 +112,9 @@ export default function TariqRhythmGame({ onComplete }: TariqRhythmGameProps) {
   const totalTapsRef = useRef(0);
   const correctTapsRef = useRef(0);
   const bestStreakRef = useRef(0);
+
+  const { language } = useLanguage();
+  const t = getTranslations(language);
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
@@ -406,7 +411,7 @@ export default function TariqRhythmGame({ onComplete }: TariqRhythmGameProps) {
             {lyricsData.title}
           </h2>
           <p className="text-muted-foreground mb-4">
-            Sing along and tap the symbols when they glow!
+            {t.singAlongInstruction}
           </p>
           <div className="flex flex-wrap justify-center gap-3 mb-6">
             {emojiButtons.map((item) => (
