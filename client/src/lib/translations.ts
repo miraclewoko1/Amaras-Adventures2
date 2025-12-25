@@ -212,6 +212,121 @@ export interface Translations {
   scaffoldEmpathy2: string;
   scaffoldComparative1: string;
   scaffoldComparative2: string;
+  
+  thinkLikeDetective: string;
+  thinkLikeDetectiveDesc: string;
+  letsLearn: string;
+  cardOf: string;
+  exampleLabel: string;
+  prevCard: string;
+  nextCard: string;
+  startPractice: string;
+  spotMistake: string;
+  spotMistakeDesc: string;
+  whichMistake: string;
+  correctLabel: string;
+  tryAgainLabel: string;
+  nextQuestion: string;
+  fixMistake: string;
+  fixMistakeDesc: string;
+  wrongThinking: string;
+  pickBetterWay: string;
+  chooseFairAnswer: string;
+  chooseFairAnswerDesc: string;
+  whichFair: string;
+  superDetective: string;
+  youGot: string;
+  outOf: string;
+  rightAnswers: string;
+  wrongAnswers: string;
+  points: string;
+  keepPracticing: string;
+  playAgain: string;
+  finishGame: string;
+  
+  fallacyHastyName: string;
+  fallacyHastyKidName: string;
+  fallacyHastyDef: string;
+  fallacyHastyExample: string;
+  fallacyBandwagonName: string;
+  fallacyBandwagonKidName: string;
+  fallacyBandwagonDef: string;
+  fallacyBandwagonExample: string;
+  fallacyStrawmanName: string;
+  fallacyStrawmanKidName: string;
+  fallacyStrawmanDef: string;
+  fallacyStrawmanExample: string;
+  fallacyAdHominemName: string;
+  fallacyAdHominemKidName: string;
+  fallacyAdHominemDef: string;
+  fallacyAdHominemExample: string;
+  fallacyFalseCauseName: string;
+  fallacyFalseCauseKidName: string;
+  fallacyFalseCauseDef: string;
+  fallacyFalseCauseExample: string;
+  
+  scenarioS1D1: string;
+  scenarioS1D2: string;
+  scenarioS1Exp: string;
+  scenarioS2D1: string;
+  scenarioS2D2: string;
+  scenarioS2Exp: string;
+  scenarioS3D1: string;
+  scenarioS3D2: string;
+  scenarioS3Exp: string;
+  scenarioS4D1: string;
+  scenarioS4D2: string;
+  scenarioS4Exp: string;
+  scenarioS5D1: string;
+  scenarioS5D2: string;
+  scenarioS5Exp: string;
+  
+  fixFm1Situation: string;
+  fixFm1Wrong: string;
+  fixFm1Fix1: string;
+  fixFm1Fix2: string;
+  fixFm1Fix3: string;
+  fixFm1Exp: string;
+  fixFm2Situation: string;
+  fixFm2Wrong: string;
+  fixFm2Fix1: string;
+  fixFm2Fix2: string;
+  fixFm2Fix3: string;
+  fixFm2Exp: string;
+  fixFm3Situation: string;
+  fixFm3Wrong: string;
+  fixFm3Fix1: string;
+  fixFm3Fix2: string;
+  fixFm3Fix3: string;
+  fixFm3Exp: string;
+  
+  fairFc1Situation: string;
+  fairFc1Fallacy: string;
+  fairFc1Fair: string;
+  fairFc1Exp: string;
+  fairFc2Situation: string;
+  fairFc2Fallacy: string;
+  fairFc2Fair: string;
+  fairFc2Exp: string;
+  fairFc3Situation: string;
+  fairFc3Fallacy: string;
+  fairFc3Fair: string;
+  fairFc3Exp: string;
+  fairFc4Situation: string;
+  fairFc4Fallacy: string;
+  fairFc4Fair: string;
+  fairFc4Exp: string;
+  fairFc5Situation: string;
+  fairFc5Fallacy: string;
+  fairFc5Fair: string;
+  fairFc5Exp: string;
+  
+  bonusWelcome: string;
+  bonusResultHigh: string;
+  bonusResultMid: string;
+  bonusResultLow: string;
+  learnSpotMistakes: string;
+  
   completeLevel: string;
   tariqCompletionMessage: string;
   newBadgesEarned: string;
@@ -735,6 +850,121 @@ const translations: Record<Language, Translations> = {
     scaffoldEmpathy2: "What do you think Tariq felt leading his people?",
     scaffoldComparative1: "How might Córdoba feel different from Toledo after this journey?",
     scaffoldComparative2: "Compare how explorers and locals might have different feelings.",
+    
+    thinkLikeDetective: "Think Like a Detective!",
+    thinkLikeDetectiveDesc: "Sometimes our brains make little mistakes when thinking. Let's learn to spot them and think more clearly!",
+    letsLearn: "Let's Learn!",
+    cardOf: "Card",
+    exampleLabel: "Example:",
+    prevCard: "Previous",
+    nextCard: "Next",
+    startPractice: "Start Practice!",
+    spotMistake: "Spot the Mistake!",
+    spotMistakeDesc: "Can you find the thinking mistake?",
+    whichMistake: "Which thinking mistake is this?",
+    correctLabel: "Correct!",
+    tryAgainLabel: "Try again!",
+    nextQuestion: "Next Question",
+    fixMistake: "Fix the Mistake!",
+    fixMistakeDesc: "Help fix the wrong thinking!",
+    wrongThinking: "Wrong thinking:",
+    pickBetterWay: "Pick the better way to think:",
+    chooseFairAnswer: "Choose the Fair Answer!",
+    chooseFairAnswerDesc: "Pick the answer that shows good thinking!",
+    whichFair: "Which answer is fair?",
+    superDetective: "Super Detective!",
+    youGot: "You got",
+    outOf: "out of",
+    rightAnswers: "right answers",
+    wrongAnswers: "wrong answers",
+    points: "points",
+    keepPracticing: "You're learning to think like a detective! Keep practicing to spot thinking mistakes!",
+    playAgain: "Play Again",
+    finishGame: "Finish",
+    
+    fallacyHastyName: "Hasty Generalization",
+    fallacyHastyKidName: "Jumping to Conclusions",
+    fallacyHastyDef: "When you decide something is always true after seeing it just once or twice!",
+    fallacyHastyExample: "I tried broccoli once and didn't like it. All vegetables must be yucky!",
+    fallacyBandwagonName: "Bandwagon",
+    fallacyBandwagonKidName: "Everyone Says So!",
+    fallacyBandwagonDef: "When you think something is right just because lots of people do it or say it!",
+    fallacyBandwagonExample: "Everyone at school says blue is the best color, so it must be true!",
+    fallacyStrawmanName: "Strawman",
+    fallacyStrawmanKidName: "That's Not What I Said!",
+    fallacyStrawmanDef: "When someone changes what you said to make it easier to argue against!",
+    fallacyStrawmanExample: "I said I want a cookie. They said I want to eat candy all day!",
+    fallacyAdHominemName: "Ad Hominem",
+    fallacyAdHominemKidName: "Being Mean Instead!",
+    fallacyAdHominemDef: "When someone says mean things about a person instead of talking about their idea!",
+    fallacyAdHominemExample: "Your idea is wrong because you're just a little kid!",
+    fallacyFalseCauseName: "False Cause",
+    fallacyFalseCauseKidName: "It Happened Before!",
+    fallacyFalseCauseDef: "When you think one thing caused another just because it happened first!",
+    fallacyFalseCauseExample: "I wore my lucky socks and we won the game. My socks made us win!",
+    
+    scenarioS1D1: "I met one grumpy cat yesterday.",
+    scenarioS1D2: "All cats must be grumpy then!",
+    scenarioS1Exp: "Bear jumped to a conclusion! Meeting one grumpy cat doesn't mean ALL cats are grumpy!",
+    scenarioS2D1: "Why do you think pizza is the best food?",
+    scenarioS2D2: "Because everyone in my class says so!",
+    scenarioS2Exp: "Fox is following the crowd! Just because everyone says something doesn't make it true for everyone!",
+    scenarioS3D1: "I think we should play inside today.",
+    scenarioS3D2: "So you never want to go outside ever again?!",
+    scenarioS3Exp: "Dog changed what Cat said! Cat just wanted to play inside TODAY, not forever!",
+    scenarioS4D1: "I think we should share the toys equally.",
+    scenarioS4D2: "That's a silly idea because you're the youngest!",
+    scenarioS4Exp: "Tiger was being mean instead of talking about the idea! Being young doesn't make an idea wrong!",
+    scenarioS5D1: "Why did you eat three cookies for breakfast?",
+    scenarioS5D2: "Last time I did that, I got an A on my test!",
+    scenarioS5Exp: "Panda thinks cookies caused the good grade! But studying hard is what really helps on tests!",
+    
+    fixFm1Situation: "Sam tried one new food and didn't like it.",
+    fixFm1Wrong: "I hate ALL new foods forever!",
+    fixFm1Fix1: "I'll never try anything new again!",
+    fixFm1Fix2: "Maybe I'll like a different new food. I can try again!",
+    fixFm1Fix3: "New foods are always yucky!",
+    fixFm1Exp: "Great fix! One food doesn't tell us about ALL foods!",
+    fixFm2Situation: "Everyone in class picked red as their favorite color.",
+    fixFm2Wrong: "Red must be the BEST color since everyone picked it!",
+    fixFm2Fix1: "I should pick red too because everyone else did!",
+    fixFm2Fix2: "Red is definitely better than all other colors!",
+    fixFm2Fix3: "I can still like my own favorite color, even if it's different!",
+    fixFm2Exp: "Perfect! You can have your own favorite, even if others pick something different!",
+    fixFm3Situation: "Your friend said they want to play alone for 10 minutes.",
+    fixFm3Wrong: "They don't want to be my friend anymore!",
+    fixFm3Fix1: "They hate me now!",
+    fixFm3Fix2: "I'll never talk to them again!",
+    fixFm3Fix3: "They just need a little break. We can play soon!",
+    fixFm3Exp: "You got it! Wanting alone time doesn't mean they don't like you!",
+    
+    fairFc1Situation: "Your friend tried one math problem and got it wrong.",
+    fairFc1Fallacy: "Math is too hard! I'll never be good at it!",
+    fairFc1Fair: "That was just one problem. Let me try more and practice!",
+    fairFc1Exp: "One mistake doesn't mean you can't learn! Practice makes progress!",
+    fairFc2Situation: "Everyone at the playground says the swings are better than slides.",
+    fairFc2Fallacy: "Everyone says swings are better, so I should only use swings!",
+    fairFc2Fair: "I can try both and decide what I like best!",
+    fairFc2Exp: "You can have your own favorite! What others like doesn't have to be what you like!",
+    fairFc3Situation: "Your sister says she wants to read quietly for a bit.",
+    fairFc3Fallacy: "She never wants to play with me anymore!",
+    fairFc3Fair: "She wants quiet time now. We can play later!",
+    fairFc3Exp: "Wanting quiet time now doesn't mean never wanting to play!",
+    fairFc4Situation: "A younger kid shares an idea for a game.",
+    fairFc4Fallacy: "That's a baby idea because you're little!",
+    fairFc4Fair: "That sounds fun! Let's try it!",
+    fairFc4Exp: "Good ideas can come from anyone, no matter their age!",
+    fairFc5Situation: "It rained on your birthday last year.",
+    fairFc5Fallacy: "It always rains on my birthday! It will rain this year too!",
+    fairFc5Fair: "Last year was rainy, but this year might be sunny!",
+    fairFc5Exp: "Weather changes every year! One rainy day doesn't predict the future!",
+    
+    bonusWelcome: "Welcome, young detective! Let's learn to spot thinking mistakes together. When we think clearly, we make better choices!",
+    bonusResultHigh: "Amazing! You're becoming a thinking detective! You spotted so many thinking mistakes!",
+    bonusResultMid: "Great job learning about thinking traps! Keep practicing!",
+    bonusResultLow: "Good effort! Learning to think clearly takes practice. Want to try again?",
+    learnSpotMistakes: "Learn to spot thinking mistakes and think more clearly!",
+    
     completeLevel: "Complete Level!",
     tariqCompletionMessage: "You did it! You learned all about Tariq ibn Ziyad and his amazing journey!",
     newBadgesEarned: "New Badges Earned!",
@@ -1256,6 +1486,121 @@ const translations: Record<Language, Translations> = {
     scaffoldEmpathy2: "타리크가 사람들을 이끌 때 어떤 기분이었을까요?",
     scaffoldComparative1: "이 여정 이후 코르도바와 톨레도는 어떻게 다르게 느꼈을까요?",
     scaffoldComparative2: "탐험가들과 원주민들이 서로 다른 감정을 느꼈을 수 있는 점을 비교해보세요.",
+    
+    thinkLikeDetective: "탐정처럼 생각해요!",
+    thinkLikeDetectiveDesc: "가끔 우리 뇌는 생각할 때 작은 실수를 해요. 실수를 찾아내고 더 똑똑하게 생각하는 법을 배워요!",
+    letsLearn: "배워봐요!",
+    cardOf: "카드",
+    exampleLabel: "예시:",
+    prevCard: "이전",
+    nextCard: "다음",
+    startPractice: "연습 시작!",
+    spotMistake: "실수를 찾아요!",
+    spotMistakeDesc: "생각의 실수를 찾을 수 있나요?",
+    whichMistake: "이건 어떤 생각의 실수일까요?",
+    correctLabel: "정답이에요!",
+    tryAgainLabel: "다시 해봐요!",
+    nextQuestion: "다음 문제",
+    fixMistake: "실수를 고쳐요!",
+    fixMistakeDesc: "잘못된 생각을 고쳐주세요!",
+    wrongThinking: "잘못된 생각:",
+    pickBetterWay: "더 좋은 생각을 골라요:",
+    chooseFairAnswer: "공정한 답을 골라요!",
+    chooseFairAnswerDesc: "좋은 생각을 보여주는 답을 골라요!",
+    whichFair: "어떤 답이 공정할까요?",
+    superDetective: "훌륭한 탐정이에요!",
+    youGot: "",
+    outOf: "개 중",
+    rightAnswers: "개 맞았어요",
+    wrongAnswers: "개 틀렸어요",
+    points: "점",
+    keepPracticing: "탐정처럼 생각하는 법을 배우고 있어요! 계속 연습해서 생각의 실수를 찾아봐요!",
+    playAgain: "다시 하기",
+    finishGame: "끝내기",
+    
+    fallacyHastyName: "성급한 일반화",
+    fallacyHastyKidName: "섣불리 결론 내리기",
+    fallacyHastyDef: "한두 번만 보고 항상 그렇다고 결정하는 거예요!",
+    fallacyHastyExample: "브로콜리를 한 번 먹었는데 맛이 없었어요. 모든 채소는 맛없을 거야!",
+    fallacyBandwagonName: "편승 오류",
+    fallacyBandwagonKidName: "다들 그렇게 말해요!",
+    fallacyBandwagonDef: "많은 사람들이 하거나 말한다고 해서 그게 맞다고 생각하는 거예요!",
+    fallacyBandwagonExample: "학교에서 다들 파란색이 최고라고 해서 그게 맞을 거야!",
+    fallacyStrawmanName: "허수아비 오류",
+    fallacyStrawmanKidName: "내가 그렇게 말한 게 아니야!",
+    fallacyStrawmanDef: "누군가 네가 한 말을 바꿔서 반박하기 쉽게 만드는 거예요!",
+    fallacyStrawmanExample: "나는 쿠키 하나 먹고 싶다고 했어요. 그런데 사탕을 하루 종일 먹고 싶다고 했대요!",
+    fallacyAdHominemName: "인신공격 오류",
+    fallacyAdHominemKidName: "대신 나쁘게 말하기!",
+    fallacyAdHominemDef: "누군가의 생각 대신 그 사람에 대해 나쁘게 말하는 거예요!",
+    fallacyAdHominemExample: "네 생각은 틀렸어, 왜냐하면 넌 어린애니까!",
+    fallacyFalseCauseName: "거짓 원인 오류",
+    fallacyFalseCauseKidName: "전에 일어났잖아!",
+    fallacyFalseCauseDef: "먼저 일어났다고 해서 그게 원인이라고 생각하는 거예요!",
+    fallacyFalseCauseExample: "행운의 양말을 신었더니 경기에서 이겼어요. 양말 덕분에 이긴 거야!",
+    
+    scenarioS1D1: "어제 심술궂은 고양이 한 마리를 만났어요.",
+    scenarioS1D2: "그럼 모든 고양이가 심술궂겠네!",
+    scenarioS1Exp: "곰이 섣불리 결론을 내렸어요! 심술궂은 고양이 한 마리를 만났다고 모든 고양이가 심술궂은 건 아니에요!",
+    scenarioS2D1: "왜 피자가 최고의 음식이라고 생각해요?",
+    scenarioS2D2: "우리 반 모두가 그렇게 말하니까요!",
+    scenarioS2Exp: "여우가 다른 사람들을 따라가고 있어요! 다들 그렇게 말한다고 해서 모두에게 맞는 건 아니에요!",
+    scenarioS3D1: "오늘은 안에서 놀았으면 좋겠어요.",
+    scenarioS3D2: "그럼 영원히 밖에 나가고 싶지 않다는 거야?!",
+    scenarioS3Exp: "강아지가 고양이의 말을 바꿨어요! 고양이는 오늘만 안에서 놀고 싶다고 했지, 영원히 그러겠다고 한 게 아니에요!",
+    scenarioS4D1: "장난감을 똑같이 나누면 좋겠어요.",
+    scenarioS4D2: "넌 막내니까 그 생각은 바보 같아!",
+    scenarioS4Exp: "호랑이가 생각에 대해 말하는 대신 나쁘게 말했어요! 어리다고 생각이 틀린 게 아니에요!",
+    scenarioS5D1: "왜 아침에 쿠키를 세 개나 먹었어요?",
+    scenarioS5D2: "지난번에 그랬더니 시험에서 A를 받았거든요!",
+    scenarioS5Exp: "판다는 쿠키 때문에 성적이 좋아졌다고 생각해요! 하지만 열심히 공부하는 게 시험에 정말 도움이 돼요!",
+    
+    fixFm1Situation: "샘이 새로운 음식을 먹어봤는데 맛이 없었어요.",
+    fixFm1Wrong: "모든 새로운 음식이 싫어! 영원히!",
+    fixFm1Fix1: "다시는 새로운 것을 먹지 않을 거야!",
+    fixFm1Fix2: "다른 새 음식은 맛있을 수도 있어요. 다시 도전해볼래요!",
+    fixFm1Fix3: "새 음식은 항상 맛없어!",
+    fixFm1Exp: "잘했어요! 음식 하나가 모든 음식에 대해 말해주는 건 아니에요!",
+    fixFm2Situation: "반 친구들 모두 빨간색을 좋아하는 색으로 골랐어요.",
+    fixFm2Wrong: "다들 빨간색을 골랐으니까 빨간색이 최고야!",
+    fixFm2Fix1: "다들 그랬으니까 나도 빨간색을 골라야겠어!",
+    fixFm2Fix2: "빨간색이 다른 색보다 확실히 나아!",
+    fixFm2Fix3: "다른 사람과 다르더라도 내가 좋아하는 색을 좋아해도 돼요!",
+    fixFm2Exp: "완벽해요! 다른 사람들이 다른 걸 골라도 나만의 좋아하는 걸 가질 수 있어요!",
+    fixFm3Situation: "친구가 10분 동안 혼자 놀고 싶다고 했어요.",
+    fixFm3Wrong: "더 이상 내 친구 하고 싶지 않은 거야!",
+    fixFm3Fix1: "이제 나를 싫어하나 봐!",
+    fixFm3Fix2: "다시는 말 안 할 거야!",
+    fixFm3Fix3: "잠깐 쉬고 싶은 거예요. 곧 같이 놀 수 있어요!",
+    fixFm3Exp: "맞아요! 혼자만의 시간을 원한다고 해서 너를 싫어하는 게 아니에요!",
+    
+    fairFc1Situation: "친구가 수학 문제 하나를 틀렸어요.",
+    fairFc1Fallacy: "수학은 너무 어려워! 절대 못 할 거야!",
+    fairFc1Fair: "그건 문제 하나일 뿐이에요. 더 연습해볼게요!",
+    fairFc1Exp: "실수 하나가 배울 수 없다는 뜻이 아니에요! 연습하면 늘어요!",
+    fairFc2Situation: "놀이터에서 다들 그네가 미끄럼틀보다 좋다고 해요.",
+    fairFc2Fallacy: "다들 그네가 좋다고 하니까 그네만 타야겠어!",
+    fairFc2Fair: "둘 다 해보고 뭐가 좋은지 직접 결정할 수 있어요!",
+    fairFc2Exp: "나만의 좋아하는 걸 가질 수 있어요! 다른 사람이 좋아하는 게 내가 좋아해야 할 게 아니에요!",
+    fairFc3Situation: "언니가 잠깐 조용히 책을 읽고 싶다고 했어요.",
+    fairFc3Fallacy: "언니는 더 이상 나랑 놀고 싶지 않은 거야!",
+    fairFc3Fair: "지금은 조용한 시간이 필요한 거예요. 나중에 같이 놀 수 있어요!",
+    fairFc3Exp: "지금 조용한 시간을 원한다고 해서 절대 놀고 싶지 않다는 게 아니에요!",
+    fairFc4Situation: "어린 아이가 게임 아이디어를 얘기해요.",
+    fairFc4Fallacy: "넌 어리니까 그건 애기 같은 생각이야!",
+    fairFc4Fair: "재밌겠다! 해보자!",
+    fairFc4Exp: "좋은 생각은 나이에 상관없이 누구에게나 나올 수 있어요!",
+    fairFc5Situation: "작년 생일에 비가 왔어요.",
+    fairFc5Fallacy: "내 생일에는 항상 비가 와! 올해도 비가 올 거야!",
+    fairFc5Fair: "작년에는 비가 왔지만, 올해는 햇빛이 날 수도 있어요!",
+    fairFc5Exp: "날씨는 매년 바뀌어요! 비 온 날 하루가 미래를 예측하는 게 아니에요!",
+    
+    bonusWelcome: "어서 와요, 꼬마 탐정! 생각의 실수를 찾는 법을 함께 배워요. 똑똑하게 생각하면 더 좋은 선택을 할 수 있어요!",
+    bonusResultHigh: "대단해요! 진짜 탐정이 되고 있어요! 생각의 실수를 정말 많이 찾았어요!",
+    bonusResultMid: "생각의 함정에 대해 잘 배웠어요! 계속 연습해요!",
+    bonusResultLow: "잘했어요! 똑똑하게 생각하려면 연습이 필요해요. 다시 해볼래요?",
+    learnSpotMistakes: "생각의 실수를 찾고 더 똑똑하게 생각하는 법을 배워요!",
+    
     completeLevel: "레벨 완료!",
     tariqCompletionMessage: "해냈어요! 타리크 이븐 지야드와 그의 놀라운 여정에 대해 모두 배웠어요!",
     newBadgesEarned: "새 배지를 획득했어요!",

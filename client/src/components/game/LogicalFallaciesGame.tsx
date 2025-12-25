@@ -1,7 +1,8 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Check, X, Star, HelpCircle, RotateCcw } from "lucide-react";
+import { getTranslations } from "@/lib/translations";
 
 interface FallacyCard {
   id: string;
@@ -229,11 +230,13 @@ const FAIR_CHOICES: FairChoiceQuestion[] = [
 interface LogicalFallaciesGameProps {
   onComplete: (score: number, correct: string[], incorrect: string[]) => void;
   onProgress?: (score: number, total: number) => void;
+  language?: "en" | "ko";
 }
 
 type GamePhase = "intro" | "learn" | "spot" | "fix" | "choose" | "results";
 
-export default function LogicalFallaciesGame({ onComplete, onProgress }: LogicalFallaciesGameProps) {
+export default function LogicalFallaciesGame({ onComplete, onProgress, language = "en" }: LogicalFallaciesGameProps) {
+  const t = getTranslations(language);
   const [phase, setPhase] = useState<GamePhase>("intro");
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
   const [currentScenarioIndex, setCurrentScenarioIndex] = useState(0);
@@ -246,9 +249,39 @@ export default function LogicalFallaciesGame({ onComplete, onProgress }: Logical
   const [feedbackMessage, setFeedbackMessage] = useState("");
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [currentFixIndex, setCurrentFixIndex] = useState(0);
-  const [shuffledScenarios] = useState(() => [...SCENARIOS].sort(() => Math.random() - 0.5).slice(0, 3));
-  const [shuffledFixes] = useState(() => [...FIX_MISTAKES].sort(() => Math.random() - 0.5).slice(0, 3));
-  const [shuffledChoices] = useState(() => [...FAIR_CHOICES].sort(() => Math.random() - 0.5).slice(0, 3));
+  const [shuffledScenarioIndices] = useState(() => [0, 1, 2, 3, 4].sort(() => Math.random() - 0.5).slice(0, 3));
+  const [shuffledFixIndices] = useState(() => [0, 1, 2].sort(() => Math.random() - 0.5));
+  const [shuffledChoiceIndices] = useState(() => [0, 1, 2, 3, 4].sort(() => Math.random() - 0.5).slice(0, 3));
+  
+  const translatedFallacyCards = useMemo(() => [
+    { id: "hasty_generalization", name: t.fallacyHastyName, kidName: t.fallacyHastyKidName, icon: "🦘", definition: t.fallacyHastyDef, example: t.fallacyHastyExample, color: "from-orange-400 to-red-400" },
+    { id: "bandwagon", name: t.fallacyBandwagonName, kidName: t.fallacyBandwagonKidName, icon: "🎪", definition: t.fallacyBandwagonDef, example: t.fallacyBandwagonExample, color: "from-blue-400 to-purple-400" },
+    { id: "strawman", name: t.fallacyStrawmanName, kidName: t.fallacyStrawmanKidName, icon: "🧸", definition: t.fallacyStrawmanDef, example: t.fallacyStrawmanExample, color: "from-yellow-400 to-orange-400" },
+    { id: "ad_hominem", name: t.fallacyAdHominemName, kidName: t.fallacyAdHominemKidName, icon: "😤", definition: t.fallacyAdHominemDef, example: t.fallacyAdHominemExample, color: "from-red-400 to-pink-400" },
+    { id: "false_cause", name: t.fallacyFalseCauseName, kidName: t.fallacyFalseCauseKidName, icon: "🔮", definition: t.fallacyFalseCauseDef, example: t.fallacyFalseCauseExample, color: "from-purple-400 to-indigo-400" }
+  ], [t]);
+
+  const translatedScenarios = useMemo(() => [
+    { id: "s1", fallacyId: "hasty_generalization", characters: ["🐰", "🐻"] as [string, string], dialogue: [t.scenarioS1D1, t.scenarioS1D2] as [string, string], explanation: t.scenarioS1Exp },
+    { id: "s2", fallacyId: "bandwagon", characters: ["🐸", "🦊"] as [string, string], dialogue: [t.scenarioS2D1, t.scenarioS2D2] as [string, string], explanation: t.scenarioS2Exp },
+    { id: "s3", fallacyId: "strawman", characters: ["🐱", "🐶"] as [string, string], dialogue: [t.scenarioS3D1, t.scenarioS3D2] as [string, string], explanation: t.scenarioS3Exp },
+    { id: "s4", fallacyId: "ad_hominem", characters: ["🦁", "🐯"] as [string, string], dialogue: [t.scenarioS4D1, t.scenarioS4D2] as [string, string], explanation: t.scenarioS4Exp },
+    { id: "s5", fallacyId: "false_cause", characters: ["🐨", "🐼"] as [string, string], dialogue: [t.scenarioS5D1, t.scenarioS5D2] as [string, string], explanation: t.scenarioS5Exp }
+  ], [t]);
+
+  const translatedFixes = useMemo(() => [
+    { id: "fm1", situation: t.fixFm1Situation, wrongThinking: t.fixFm1Wrong, fixes: [t.fixFm1Fix1, t.fixFm1Fix2, t.fixFm1Fix3], correctFixIndex: 1, fallacyId: "hasty_generalization", explanation: t.fixFm1Exp },
+    { id: "fm2", situation: t.fixFm2Situation, wrongThinking: t.fixFm2Wrong, fixes: [t.fixFm2Fix1, t.fixFm2Fix2, t.fixFm2Fix3], correctFixIndex: 2, fallacyId: "bandwagon", explanation: t.fixFm2Exp },
+    { id: "fm3", situation: t.fixFm3Situation, wrongThinking: t.fixFm3Wrong, fixes: [t.fixFm3Fix1, t.fixFm3Fix2, t.fixFm3Fix3], correctFixIndex: 2, fallacyId: "strawman", explanation: t.fixFm3Exp }
+  ], [t]);
+
+  const translatedChoices = useMemo(() => [
+    { id: "fc1", situation: t.fairFc1Situation, fallacyAnswer: t.fairFc1Fallacy, fairAnswer: t.fairFc1Fair, fallacyId: "hasty_generalization", explanation: t.fairFc1Exp },
+    { id: "fc2", situation: t.fairFc2Situation, fallacyAnswer: t.fairFc2Fallacy, fairAnswer: t.fairFc2Fair, fallacyId: "bandwagon", explanation: t.fairFc2Exp },
+    { id: "fc3", situation: t.fairFc3Situation, fallacyAnswer: t.fairFc3Fallacy, fairAnswer: t.fairFc3Fair, fallacyId: "strawman", explanation: t.fairFc3Exp },
+    { id: "fc4", situation: t.fairFc4Situation, fallacyAnswer: t.fairFc4Fallacy, fairAnswer: t.fairFc4Fair, fallacyId: "ad_hominem", explanation: t.fairFc4Exp },
+    { id: "fc5", situation: t.fairFc5Situation, fallacyAnswer: t.fairFc5Fallacy, fairAnswer: t.fairFc5Fair, fallacyId: "false_cause", explanation: t.fairFc5Exp }
+  ], [t]);
 
   const handleStartLearning = () => {
     setPhase("learn");
@@ -271,7 +304,8 @@ export default function LogicalFallaciesGame({ onComplete, onProgress }: Logical
   };
 
   const handleSpotAnswer = useCallback((fallacyId: string) => {
-    const scenario = shuffledScenarios[currentScenarioIndex];
+    const scenarioIdx = shuffledScenarioIndices[currentScenarioIndex];
+    const scenario = translatedScenarios[scenarioIdx];
     const correct = fallacyId === scenario.fallacyId;
     
     setSelectedAnswer(fallacyId);
@@ -287,13 +321,13 @@ export default function LogicalFallaciesGame({ onComplete, onProgress }: Logical
     }
     
     onProgress?.(score + (correct ? 10 : 0), 90);
-  }, [currentScenarioIndex, shuffledScenarios, score, onProgress]);
+  }, [currentScenarioIndex, shuffledScenarioIndices, translatedScenarios, score, onProgress]);
 
   const handleNextScenario = () => {
     setShowFeedback(false);
     setSelectedAnswer(null);
     
-    if (currentScenarioIndex < shuffledScenarios.length - 1) {
+    if (currentScenarioIndex < shuffledScenarioIndices.length - 1) {
       setCurrentScenarioIndex(currentScenarioIndex + 1);
     } else {
       setPhase("fix");
@@ -302,7 +336,8 @@ export default function LogicalFallaciesGame({ onComplete, onProgress }: Logical
   };
 
   const handleFixAnswer = useCallback((fixIndex: number) => {
-    const fixQuestion = shuffledFixes[currentFixIndex];
+    const fixIdx = shuffledFixIndices[currentFixIndex];
+    const fixQuestion = translatedFixes[fixIdx];
     const correct = fixIndex === fixQuestion.correctFixIndex;
     
     setSelectedAnswer(String(fixIndex));
@@ -318,13 +353,13 @@ export default function LogicalFallaciesGame({ onComplete, onProgress }: Logical
     }
     
     onProgress?.(score + (correct ? 10 : 0), 90);
-  }, [currentFixIndex, shuffledFixes, score, onProgress]);
+  }, [currentFixIndex, shuffledFixIndices, translatedFixes, score, onProgress]);
 
   const handleNextFix = () => {
     setShowFeedback(false);
     setSelectedAnswer(null);
     
-    if (currentFixIndex < shuffledFixes.length - 1) {
+    if (currentFixIndex < shuffledFixIndices.length - 1) {
       setCurrentFixIndex(currentFixIndex + 1);
     } else {
       setPhase("choose");
@@ -333,7 +368,8 @@ export default function LogicalFallaciesGame({ onComplete, onProgress }: Logical
   };
 
   const handleChooseAnswer = useCallback((isFair: boolean) => {
-    const choice = shuffledChoices[currentChoiceIndex];
+    const choiceIdx = shuffledChoiceIndices[currentChoiceIndex];
+    const choice = translatedChoices[choiceIdx];
     const correct = isFair;
     
     setSelectedAnswer(isFair ? "fair" : "fallacy");
@@ -349,13 +385,13 @@ export default function LogicalFallaciesGame({ onComplete, onProgress }: Logical
     }
     
     onProgress?.(score + (correct ? 10 : 0), 90);
-  }, [currentChoiceIndex, shuffledChoices, score, onProgress]);
+  }, [currentChoiceIndex, shuffledChoiceIndices, translatedChoices, score, onProgress]);
 
   const handleNextChoice = () => {
     setShowFeedback(false);
     setSelectedAnswer(null);
     
-    if (currentChoiceIndex < shuffledChoices.length - 1) {
+    if (currentChoiceIndex < shuffledChoiceIndices.length - 1) {
       setCurrentChoiceIndex(currentChoiceIndex + 1);
     } else {
       setPhase("results");
@@ -383,21 +419,21 @@ export default function LogicalFallaciesGame({ onComplete, onProgress }: Logical
       className="text-center space-y-6"
     >
       <div className="text-6xl mb-4">🧠✨</div>
-      <h2 className="text-2xl font-bold text-foreground">Think Like a Detective!</h2>
+      <h2 className="text-2xl font-bold text-foreground">{t.thinkLikeDetective}</h2>
       <p className="text-lg text-muted-foreground max-w-md mx-auto">
-        Sometimes our brains make little mistakes when thinking. Let's learn to spot them and think more clearly!
+        {t.thinkLikeDetectiveDesc}
       </p>
       <Button 
         onClick={handleStartLearning}
         className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white text-lg px-8 py-6 rounded-2xl"
       >
-        Let's Learn! 🎓
+        {t.letsLearn} 🎓
       </Button>
     </motion.div>
   );
 
   const renderLearnPhase = () => {
-    const card = FALLACY_CARDS[currentCardIndex];
+    const card = translatedFallacyCards[currentCardIndex];
     return (
       <motion.div
         key={card.id}
@@ -408,10 +444,10 @@ export default function LogicalFallaciesGame({ onComplete, onProgress }: Logical
       >
         <div className="flex justify-between items-center mb-4">
           <span className="text-sm font-medium text-muted-foreground">
-            Card {currentCardIndex + 1} of {FALLACY_CARDS.length}
+            {t.cardOf} {currentCardIndex + 1} / {translatedFallacyCards.length}
           </span>
           <div className="flex gap-1">
-            {FALLACY_CARDS.map((_, i) => (
+            {translatedFallacyCards.map((_, i) => (
               <div 
                 key={i} 
                 className={`w-2 h-2 rounded-full ${i === currentCardIndex ? 'bg-primary' : 'bg-muted'}`}
@@ -433,7 +469,7 @@ export default function LogicalFallaciesGame({ onComplete, onProgress }: Logical
           
           <div className="bg-white/10 rounded-2xl p-4">
             <p className="text-sm opacity-90">
-              <span className="font-bold">Example: </span>
+              <span className="font-bold">{t.exampleLabel} </span>
               "{card.example}"
             </p>
           </div>
@@ -446,13 +482,13 @@ export default function LogicalFallaciesGame({ onComplete, onProgress }: Logical
             disabled={currentCardIndex === 0}
             className="flex-1"
           >
-            ← Back
+            ← {t.prevCard}
           </Button>
           <Button
             onClick={handleNextCard}
             className="flex-1 bg-gradient-to-r from-green-500 to-emerald-500"
           >
-            {currentCardIndex === FALLACY_CARDS.length - 1 ? "Start Game! 🎮" : "Next →"}
+            {currentCardIndex === translatedFallacyCards.length - 1 ? `${t.startPractice} 🎮` : `${t.nextCard} →`}
           </Button>
         </div>
       </motion.div>
@@ -460,7 +496,8 @@ export default function LogicalFallaciesGame({ onComplete, onProgress }: Logical
   };
 
   const renderSpotPhase = () => {
-    const scenario = shuffledScenarios[currentScenarioIndex];
+    const scenarioIdx = shuffledScenarioIndices[currentScenarioIndex];
+    const scenario = translatedScenarios[scenarioIdx];
     return (
       <motion.div
         key={scenario.id}
@@ -469,9 +506,9 @@ export default function LogicalFallaciesGame({ onComplete, onProgress }: Logical
         className="space-y-6"
       >
         <div className="text-center mb-4">
-          <h3 className="text-xl font-bold text-foreground">🔍 Spot the Mistake!</h3>
+          <h3 className="text-xl font-bold text-foreground">🔍 {t.spotMistake}</h3>
           <p className="text-sm text-muted-foreground">
-            Round {currentScenarioIndex + 1} of {shuffledScenarios.length}
+            {currentScenarioIndex + 1} / {shuffledScenarioIndices.length}
           </p>
         </div>
 
@@ -498,7 +535,7 @@ export default function LogicalFallaciesGame({ onComplete, onProgress }: Logical
         </div>
 
         <p className="text-center font-medium text-foreground">
-          Which thinking mistake is this?
+          {t.whichMistake}
         </p>
 
         <AnimatePresence>
@@ -515,17 +552,17 @@ export default function LogicalFallaciesGame({ onComplete, onProgress }: Logical
                   <X className="w-6 h-6 text-red-600" />
                 )}
                 <span className={`font-bold ${isCorrect ? 'text-green-700 dark:text-green-400' : 'text-red-700 dark:text-red-400'}`}>
-                  {isCorrect ? "Great job!" : "Not quite!"}
+                  {isCorrect ? t.correctLabel : t.tryAgainLabel}
                 </span>
               </div>
               <p className="text-sm text-foreground">{feedbackMessage}</p>
               <Button onClick={handleNextScenario} className="mt-4 w-full">
-                Continue →
+                {t.nextQuestion} →
               </Button>
             </motion.div>
           ) : (
             <div className="grid grid-cols-2 gap-3">
-              {FALLACY_CARDS.map((card) => (
+              {translatedFallacyCards.map((card) => (
                 <Button
                   key={card.id}
                   variant="outline"
@@ -545,7 +582,8 @@ export default function LogicalFallaciesGame({ onComplete, onProgress }: Logical
   };
 
   const renderFixPhase = () => {
-    const fixQuestion = shuffledFixes[currentFixIndex];
+    const fixIdx = shuffledFixIndices[currentFixIndex];
+    const fixQuestion = translatedFixes[fixIdx];
     
     return (
       <motion.div
@@ -555,9 +593,9 @@ export default function LogicalFallaciesGame({ onComplete, onProgress }: Logical
         className="space-y-6"
       >
         <div className="text-center mb-4">
-          <h3 className="text-xl font-bold text-foreground">🔧 Fix the Mistake!</h3>
+          <h3 className="text-xl font-bold text-foreground">🔧 {t.fixMistake}</h3>
           <p className="text-sm text-muted-foreground">
-            Round {currentFixIndex + 1} of {shuffledFixes.length}
+            {currentFixIndex + 1} / {shuffledFixIndices.length}
           </p>
         </div>
 
@@ -570,13 +608,13 @@ export default function LogicalFallaciesGame({ onComplete, onProgress }: Logical
           </p>
           <div className="bg-red-100 dark:bg-red-900/30 rounded-xl p-3 border-2 border-red-300 dark:border-red-700">
             <p className="text-center font-medium text-red-700 dark:text-red-400">
-              ❌ {fixQuestion.wrongThinking}
+              ❌ {t.wrongThinking} {fixQuestion.wrongThinking}
             </p>
           </div>
         </div>
 
         <p className="text-center font-medium text-foreground">
-          Which answer fixes this thinking mistake?
+          {t.pickBetterWay}
         </p>
 
         <AnimatePresence>
@@ -593,12 +631,12 @@ export default function LogicalFallaciesGame({ onComplete, onProgress }: Logical
                   <X className="w-6 h-6 text-red-600" />
                 )}
                 <span className={`font-bold ${isCorrect ? 'text-green-700 dark:text-green-400' : 'text-red-700 dark:text-red-400'}`}>
-                  {isCorrect ? "Great fix!" : "Try a different fix!"}
+                  {isCorrect ? t.correctLabel : t.tryAgainLabel}
                 </span>
               </div>
               <p className="text-sm text-foreground">{feedbackMessage}</p>
               <Button onClick={handleNextFix} className="mt-4 w-full">
-                Continue →
+                {t.nextQuestion} →
               </Button>
             </motion.div>
           ) : (
@@ -622,7 +660,8 @@ export default function LogicalFallaciesGame({ onComplete, onProgress }: Logical
   };
 
   const renderChoosePhase = () => {
-    const choice = shuffledChoices[currentChoiceIndex];
+    const choiceIdx = shuffledChoiceIndices[currentChoiceIndex];
+    const choice = translatedChoices[choiceIdx];
     const shuffledAnswers = Math.random() > 0.5 
       ? [{ text: choice.fairAnswer, isFair: true }, { text: choice.fallacyAnswer, isFair: false }]
       : [{ text: choice.fallacyAnswer, isFair: false }, { text: choice.fairAnswer, isFair: true }];
@@ -635,9 +674,9 @@ export default function LogicalFallaciesGame({ onComplete, onProgress }: Logical
         className="space-y-6"
       >
         <div className="text-center mb-4">
-          <h3 className="text-xl font-bold text-foreground">⚖️ Choose the Fair Answer!</h3>
+          <h3 className="text-xl font-bold text-foreground">⚖️ {t.chooseFairAnswer}</h3>
           <p className="text-sm text-muted-foreground">
-            Round {currentChoiceIndex + 1} of {shuffledChoices.length}
+            {currentChoiceIndex + 1} / {shuffledChoiceIndices.length}
           </p>
         </div>
 
@@ -651,7 +690,7 @@ export default function LogicalFallaciesGame({ onComplete, onProgress }: Logical
         </div>
 
         <p className="text-center font-medium text-foreground">
-          Which answer is fair thinking?
+          {t.whichFair}
         </p>
 
         <AnimatePresence>
@@ -668,12 +707,12 @@ export default function LogicalFallaciesGame({ onComplete, onProgress }: Logical
                   <X className="w-6 h-6 text-red-600" />
                 )}
                 <span className={`font-bold ${isCorrect ? 'text-green-700 dark:text-green-400' : 'text-red-700 dark:text-red-400'}`}>
-                  {isCorrect ? "You're thinking clearly!" : "That's a thinking trap!"}
+                  {isCorrect ? t.correctLabel : t.tryAgainLabel}
                 </span>
               </div>
               <p className="text-sm text-foreground">{feedbackMessage}</p>
               <Button onClick={handleNextChoice} className="mt-4 w-full">
-                {currentChoiceIndex === shuffledChoices.length - 1 ? "See Results! 🏆" : "Continue →"}
+                {currentChoiceIndex === translatedChoices.length - 1 ? `${t.finishGame} 🏆` : `${t.nextQuestion} →`}
               </Button>
             </motion.div>
           ) : (
@@ -706,34 +745,34 @@ export default function LogicalFallaciesGame({ onComplete, onProgress }: Logical
         {score >= 50 ? "🏆" : score >= 30 ? "⭐" : "🌟"}
       </div>
       <h2 className="text-2xl font-bold text-foreground">
-        {score >= 50 ? "Amazing Thinker!" : score >= 30 ? "Great Job!" : "Good Try!"}
+        {t.superDetective}
       </h2>
       
       <div className="bg-gradient-to-br from-purple-100 to-pink-100 dark:from-purple-900/30 dark:to-pink-900/30 rounded-3xl p-6">
         <div className="flex justify-center items-center gap-2 mb-4">
           <Star className="w-8 h-8 text-yellow-500 fill-yellow-500" />
           <span className="text-4xl font-bold text-foreground">{score}</span>
-          <span className="text-lg text-muted-foreground">points</span>
+          <span className="text-lg text-muted-foreground">{t.points}</span>
         </div>
         
         <div className="grid grid-cols-2 gap-4 text-sm">
           <div className="bg-green-100 dark:bg-green-900/30 rounded-xl p-3">
             <Check className="w-5 h-5 text-green-600 mx-auto mb-1" />
             <span className="font-medium text-green-700 dark:text-green-400">
-              {correctFallacies.length} Correct
+              {correctFallacies.length} {t.rightAnswers}
             </span>
           </div>
           <div className="bg-orange-100 dark:bg-orange-900/30 rounded-xl p-3">
             <HelpCircle className="w-5 h-5 text-orange-600 mx-auto mb-1" />
             <span className="font-medium text-orange-700 dark:text-orange-400">
-              {incorrectFallacies.length} To Practice
+              {incorrectFallacies.length} {t.wrongAnswers}
             </span>
           </div>
         </div>
       </div>
 
       <p className="text-muted-foreground">
-        You're learning to think like a detective! Keep practicing to spot thinking mistakes!
+        {t.keepPracticing}
       </p>
 
       <Button
@@ -741,7 +780,7 @@ export default function LogicalFallaciesGame({ onComplete, onProgress }: Logical
         className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white"
       >
         <RotateCcw className="w-4 h-4 mr-2" />
-        Play Again!
+        {t.playAgain}
       </Button>
     </motion.div>
   );
@@ -761,7 +800,7 @@ export default function LogicalFallaciesGame({ onComplete, onProgress }: Logical
         <div className="mt-6 flex justify-center items-center gap-2">
           <Star className="w-5 h-5 text-yellow-500 fill-yellow-500" />
           <span className="font-bold text-foreground">{score}</span>
-          <span className="text-sm text-muted-foreground">points</span>
+          <span className="text-sm text-muted-foreground">{t.points}</span>
         </div>
       )}
     </div>
